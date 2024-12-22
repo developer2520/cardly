@@ -1,11 +1,12 @@
-import React from 'react'
-import Sidebar from '../../components/sidebar/sidebar'
-import Layout from '../../components/layout/layout'
+import React, { useEffect, useState } from 'react';
+import Layout from '../../components/layout/layout';
 
-export default function dashboard() {
+export default function Dashboard() {
+  
   return (
-   <Layout>
-    <h1>this is your dashboard nigga</h1>
-   </Layout>
-  )
+    <Layout>
+      <h1>Hello </h1>
+      
+    </Layout>
+  );
 }

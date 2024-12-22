@@ -4,7 +4,7 @@ import LandingPage from './pages/landingPage/landingPage'
 import Dashboard from './pages/dashboard/dashboard'
 import Settings from './pages/settings/settings'
 import Account from './pages/account/account'
-// import Analytics from './pages/analytics/analytics'
+import Analytics from './pages/analytics/analytics'
 // import Settings from './pages/settings/settings'
 import './App.css'
 
@@ -19,7 +19,7 @@ function App() {
       <Route path='/dashboard' Component={Dashboard} />
       <Route path='/account' Component={Account} />
       <Route path='/settings' Component={Settings} />
-      {/* <Route path='/analytics' Component={Analytics} /> */}
+      <Route path='/analytics' Component={Analytics} />
       
     </Routes>
     
