@@ -58,5 +58,5 @@ app.get('/favicon.ico', (req, res) => res.status(204)); // Prevents the favicon 
 
 // Start the server
 app.listen(4000, () => {
-  console.log("Server is running on http://localhost:5000");
+  console.log("Server is running on http://localhost:4000");
 });
