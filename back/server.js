@@ -8,22 +8,24 @@ const app = express();
 
 // CORS Configuration
 app.use(cors({
-  origin: 'http://localhost:5173' // React ilovangiz domeni
+  origin: 'http://localhost:5173', // Correct frontend URL
+  credentials: true, // Allow cookies and credentials
 }));
 
 // Session Middleware
 app.use(
   session({
-    secret: 'dsjfh3278dgde', // Replace with a secure key
+    secret: process.env.SESSION_SECRET || 'dsjfh3278dgde', // Use an environment variable for security
     resave: false,
     saveUninitialized: true,
     cookie: {
       maxAge: 24 * 60 * 60 * 1000, // 1 day
-      sameSite: 'None', // Required for cross-site cookies
-      secure: false, // Set to true if using HTTPS in production
+      sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
+      secure: process.env.NODE_ENV === 'production', // True in production
     },
   })
 );
+
 
 // Passport Middleware
 app.use(passport.initialize());
