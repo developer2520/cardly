@@ -5,11 +5,11 @@ import Dashboard from './pages/dashboard/dashboard'
 import Settings from './pages/settings/settings'
 import Account from './pages/account/account'
 import Analytics from './pages/analytics/analytics'
-// import Settings from './pages/settings/settings'
 import './App.css'
-
+import Newcard from './pages/newcard/newcard'
+  
 function App() {
-  const [count, setCount] = useState(0)
+  
 
   return (
     <>
@@ -19,7 +19,9 @@ function App() {
       <Route path='/dashboard' Component={Dashboard} />
       <Route path='/account' Component={Account} />
       <Route path='/settings' Component={Settings} />
-      <Route path='/analytics' Component={Analytics} />
+      <Route path='/analytics' Component={Analytics} />]
+      <Route path='/newcard' Component={Newcard} />
+      
       
     </Routes>
     
