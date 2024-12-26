@@ -12,7 +12,7 @@ export default function Settings() {
       });
   
       if (response.status === 200) {
-        console.log('Logged out successfully');
+      
         navigate('/'); // Redirect to the homepage or login page
       } else {
         console.error('Logout failed:', response.statusText);

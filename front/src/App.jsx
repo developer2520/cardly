@@ -19,8 +19,9 @@ function App() {
       <Route path='/dashboard' Component={Dashboard} />
       <Route path='/account' Component={Account} />
       <Route path='/settings' Component={Settings} />
-      <Route path='/analytics' Component={Analytics} />]
+      <Route path='/analytics' Component={Analytics} />
       <Route path='/newcard' Component={Newcard} />
+      {/* <Route path=`${/u Component={Newcard} /> */}
       
       
     </Routes>

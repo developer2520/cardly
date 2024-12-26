@@ -4,6 +4,7 @@ const session = require('express-session');
 const cors = require('cors');
 const passport = require('./passport');
 const LinkPage = require('./models/linkModel');
+const mongoose = require('mongoose');
 
 const app = express();
 
@@ -85,6 +86,29 @@ app.post('/cards', async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 });
+
+
+
+app.get('/cards', (req, res) => {
+  const { googleId } = req.query; // Expecting googleId in the query parameters
+
+ 
+
+  if (!googleId || googleId.trim() === '') {
+    return res.status(400).json({ message: 'googleId is required and cannot be empty' });
+  }
+
+  // Proceed to find the cards with the provided googleId
+  LinkPage.find({ userId: googleId }) // Use googleId directly as a string
+    .then(cards => {
+      res.json(cards);
+    })
+    .catch(err => {
+      res.status(500).json({ message: 'Error fetching cards', error: err });
+    });
+});
+
+
 
 app.get('/cards/:url', async (req, res) => {
   const { url } = req.params;

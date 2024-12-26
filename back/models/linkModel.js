@@ -1,16 +1,12 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
-const LinkPage = mongoose.model('LinkPage', new mongoose.Schema({
-    url: String,
-    title: String,
-    description: String,
-    userId: {
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: "User",
-        required: true
-    }
+const linkPageSchema = new mongoose.Schema({
+    url: { type: String, required: true }, // URL for the link
+    title: { type: String, required: true }, // Title of the link
+    description: { type: String }, // Description of the link
+    userId: { type: String, required: true }, // Storing googleId as a string
+});
 
+const LinkPage = mongoose.models.LinkPage || mongoose.model('LinkPage', linkPageSchema);
 
-}));
-
-module.exports = mongoose.models.LinkPage || mongoose.model("LinkPage", LinkPage);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+module.exports = LinkPage;

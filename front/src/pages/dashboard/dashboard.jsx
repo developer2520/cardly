@@ -7,15 +7,13 @@ export default function Dashboard() {
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [ownCards, setOwncards] = useState([])
-
-  const userId = user.googleId
-  console.log(userId)
+  const [ownCards, setOwnCards] = useState([]);
 
   useEffect(() => {
+    // Fetch the user data
     axios.get('http://localhost:4000/user', { withCredentials: true })
       .then(response => {
-        setUser(response.data);
+        setUser(response.data); // Update user state
         setLoading(false);
       })
       .catch(error => {
@@ -25,35 +23,49 @@ export default function Dashboard() {
   }, []);
 
   useEffect(() => {
-    axios.get(`http://localhost:4000/cards?googleId=${userId}`, { withCredentials: true })
-      .then(response => {
-        setOwncards(response.data);
-        setLoading(false);
-      })
-      .catch(error => {
-        setError(error.message);
-        setLoading(false);
-      });
-  }, []);
+    // Fetch user's cards only when the user data (googleId) is available
+    if (user.googleId) {
+    
+      axios.get(`http://localhost:4000/cards?googleId=${user.googleId}`, { withCredentials: true })
+        .then(response => {
+          setOwnCards(response.data); // Update ownCards state
+        })
+        .catch(error => {
+          setError(error.message);
+        });
+    }
+  }, [user.googleId]); // Run this effect only when user.googleId is updated
+  // Run this effect only when user.googleId is updated
+
+  if (loading) {
+    return <Layout>Loading...</Layout>;
+  }
+
+  if (error) {
+    return <Layout>Error: {error}</Layout>;
+  }
 
   return (
     <Layout>
       <h1>Hello {user.name}</h1>
-      <h2>{user.email} </h2>  
-      <h2>{user.id} </h2>
-      <img src={user.pfp} alt={`${user.name}'s profile`} />
+      
 
       <h1>Your cards</h1>
 
       {ownCards.map((card) => (
-  <div key={card._id}> {/* Assuming each card has a unique _id */}
-    <h1>{card.title}</h1> {/* Display the actual title from the card */}
-  </div>
-))}
+        <div key={card._id}>
+          <h1>{card.title}</h1>
+        </div>
+      ))}
 
-      <Link to='/newcard'>Create a new card</Link>
+      {/* {ownCards.length < 3 ? (
+  <Link to='/newcard'>Create a new card</Link>
+) : (
+  <p>Unavailable</p>
+)} */}
 
-      
+<Link to='/newcard'>Create a new card</Link>
+
     </Layout>
   );
 }
