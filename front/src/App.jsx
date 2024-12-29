@@ -1,36 +1,27 @@
-import { useState } from 'react'
-import {BrowserRouter, Routes, Route} from 'react-router-dom'
-import LandingPage from './pages/landingPage/landingPage'
-import Dashboard from './pages/dashboard/dashboard'
-import Settings from './pages/settings/settings'
-import Account from './pages/account/account'
-import Analytics from './pages/analytics/analytics'
-import './App.css'
-import Newcard from './pages/newcard/newcard'
-  
-function App() {
-  
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import LandingPage from './pages/landingPage/landingPage';
+import Dashboard from './pages/dashboard/dashboard';
+import Settings from './pages/settings/settings';
+import Account from './pages/account/account';
+import Analytics from './pages/analytics/analytics';
+import Newcard from './pages/newcard/newcard';
+import Card from './pages/card/card';
+import './App.css';
 
+function App() {
   return (
-    <>
     <BrowserRouter>
-    <Routes>
-      <Route exact path='/' Component={LandingPage}/>
-      <Route path='/dashboard' Component={Dashboard} />
-      <Route path='/account' Component={Account} />
-      <Route path='/settings' Component={Settings} />
-      <Route path='/analytics' Component={Analytics} />
-      <Route path='/newcard' Component={Newcard} />
-      {/* <Route path=`${/u Component={Newcard} /> */}
-      
-      
-    </Routes>
-    
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/account" element={<Account />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/analytics" element={<Analytics />} />
+        <Route path="/newcard" element={<Newcard />} />
+        <Route path="/:url" element={<Card />} />
+      </Routes>
     </BrowserRouter>
-      
-       
-    </>
-  )
+  );
 }
 
-export default App
+export default App;

@@ -110,19 +110,27 @@ app.get('/cards', (req, res) => {
 
 
 
-app.get('/cards/:url', async (req, res) => {
-  const { url } = req.params;
+app.get("/cards/:url", async (req, res) => {
   try {
-    const user = await LinkPage.findOne({ url });
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-    res.json(user);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Server error' });
+      const { url } = req.params;
+      const card = await LinkPage.findOne({ url });
+      if (!card) {
+          return res.status(404).json({ message: 'User not found' });
+      }
+
+
+
+
+      res.json(card);
+  } catch (err) {
+      console.error('Error fetching user:', err);
+      res.status(500).json({
+          message: 'Internal Server Error - Failed to fetch user',
+          error: err.message,
+      });
   }
 });
+
 
 // Start Server
 const PORT = 4000;

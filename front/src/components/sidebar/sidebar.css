@@ -3,34 +3,63 @@
     padding: 0;
     box-sizing: border-box;
 }
+
 .sidebar {
-    width: 250px; /* Sidebar width */
-    height: 100vh; /* Full viewport height */
-    background-color: #2c3e50; /* Dark background color */
-    color: white; /* Text color */
-    position: sticky; /* Fix the sidebar to the left */
+    width: 90px;
+    height: 100vh;
+    background-color: #ffffff; /* Set sidebar background to white */
+    color: #2c3e50; /* Set text color to dark */
+    position: sticky;
     top: 0;
     left: 0;
-    padding-top: 20px; /* Space from the top */
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for separation */
-    z-index: 1000; /* Keep it on top */
-    transition: all 0.3s ease-in-out; /* Smooth transition for animations */
+    padding-top: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    transition: all 0.3s;
     display: flex;
     flex-direction: column;
-  }
+    align-items: center;
+    
+}
 
-  .sidebar .sidebar-link {
-    display: block;
-    padding: 15px 20px;
+.sidebar-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #2c3e50; /* Set title color to dark */
+}
+
+.sidebar-link {
+    width: 100%;
+    margin-bottom: 10px;
+
+}
+
+.sidebar-linkk {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0;
+    width: 100%;
+    color: #2c3e50; /* Set link color to dark */
     text-decoration: none;
-    color: white;
-    font-size: 1.1rem;
-    margin: 5px 0;
-    border-radius: 4px;
     transition: background-color 0.3s;
-  }
-  .sidebar .sidebar-link.active {
-    background-color: #16a085;
-  }
+}
 
-  
+.sidebar-linkk:hover {
+    background-color: #f0f0f0; /* Set hover background color */
+}
+
+.icon {
+    font-size: 24px;
+    margin-bottom: 5px;
+    color: #2c3e50; /* Set icon color to dark */
+}
+
+.sidebar-linkk span {
+    font-size: 14px;
+    color: #2c3e50; /* Set text color to dark */
+}
+.last-link {
+  margin-top: auto;
+}
