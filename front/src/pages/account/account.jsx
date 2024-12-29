@@ -1,26 +1,30 @@
-import {React, useState, useEffect} from 'react'
-import Layout from '../../components/layout/layout'
-import axios from 'axios'
+import React, { useState, useEffect, useContext } from 'react';
+import Layout from '../../components/layout/layout';
+import axios from 'axios';
+import { UserContext } from '../../context/userContext';
 
-export default function account() {
-  const [user, setUser] = useState({});
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-  useEffect(() => {
-    axios.get('http://localhost:4000/user', { withCredentials: true })
-      .then(response => {
-        setUser(response.data);
-        setLoading(false);
-      })
-      .catch(error => {
-        setError(error.message);
-        setLoading(false);
-      });
-  }, []);
+export default function Account() {
+  const { user, loading, error } = useContext(UserContext);
+
+  if (loading) {
+    return (
+      <Layout>
+        <h1>Loading...</h1>
+      </Layout>
+    );
+  }
+
+  if (error) {
+    return (
+      <Layout>
+        <h1>Error: {error}</h1>
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
-<h1>{user.name}</h1>
+      <h1>{user ? user.name : 'Guest'}</h1>
     </Layout>
-  )
+  );
 }

@@ -5,7 +5,7 @@
 }
 
 .sidebar {
-    width: 90px;
+    width: 80px;
     height: 100vh;
     background-color: #ffffff; /* Set sidebar background to white */
     color: #2c3e50; /* Set text color to dark */
@@ -19,7 +19,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    
 }
 
 .sidebar-title {
@@ -32,7 +31,6 @@
 .sidebar-link {
     width: 100%;
     margin-bottom: 10px;
-
 }
 
 .sidebar-linkk {
@@ -60,6 +58,12 @@
     font-size: 14px;
     color: #2c3e50; /* Set text color to dark */
 }
+
 .last-link {
-  margin-top: auto;
+    margin-top: auto; /* Push the last link to the bottom */
+}
+
+.active {
+    background-color: #8eaac7; /* Set active background color */
+    color: #ffffff; /* Set active text color */
 }

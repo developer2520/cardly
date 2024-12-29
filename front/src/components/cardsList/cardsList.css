@@ -1,0 +1,23 @@
+* {
+    margin:0;
+    padding:0;
+}
+.cardlist {
+    position: sticky;
+    left: 0;
+    top: 0;
+    
+    width: 200px;
+    height: 100vh;
+}
+
+.card {
+    background-color: rgb(255, 255, 255);
+    height: 90px;
+}
+.card:hover {
+    background-color: rgba(128, 128, 128, 0.178);
+}
+.card p {
+    color: rgb(97, 96, 96);
+}
