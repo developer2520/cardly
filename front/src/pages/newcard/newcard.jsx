@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './newcard.css'
 import Layout from '../../components/layout/layout';
 import {useNavigate} from 'react-router-dom';
 
@@ -40,7 +41,7 @@ export default function NewCard() {
         { withCredentials: true }
       )
       .then((response) => {
-        navigate('/dashboard');
+        navigate('/home');
         alert("Card created successfully");
         // Reset form fields
         setUrl("");
@@ -68,6 +69,7 @@ export default function NewCard() {
 
   return (
     <Layout>
+      <div className="newCardContainer">
       <h1>Create a new card</h1>
       <form onSubmit={handleSubmit}>
         <input
@@ -101,6 +103,8 @@ export default function NewCard() {
         />
         <button type="submit" disabled={!user}>Submit</button> {/* Disable button until user is available */}
       </form>
+      </div>
+     
     </Layout>
   );
 }

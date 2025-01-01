@@ -1,5 +1,17 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+.landingHome {
+    width: 80vw;
+    height: 100vh;
+    display: flex;
+    
+    
+    justify-content: center;
+    flex-direction: column;
+    margin: 0 auto;
+    text-align: center;
+    
+}
+.landingHome h1 {
+    
+    font-size: 85px;
+
 }

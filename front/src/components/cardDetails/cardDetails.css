@@ -1,0 +1,28 @@
+.detailsContainer {
+   
+    display: flex;
+   
+    justify-content: space-between;
+}
+
+.cardDetails {
+   /* Take remaining space */
+   width: 100%;
+    background-color: #0b75cc; /* Adjust to your design */
+    overflow-y: auto;  /* Allows scrolling if content exceeds height */
+    height: 100%;
+    display: block;
+    word-break: break-all;
+    
+
+    
+}
+
+
+
+.titleDetail, .urlCard, .descriptionCard {
+    margin: 0;
+    margin-bottom: 10px; /* Adds spacing between elements */
+    word-wrap: break-word; /* Prevents long text from overflowing */
+    overflow-wrap: break-word;
+}

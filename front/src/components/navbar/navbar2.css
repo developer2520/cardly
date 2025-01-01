@@ -1,0 +1,70 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.navbar {
+  width: 100%;
+  background-color: rgb(255, 255, 255);
+  border-bottom: 0.1px solid rgba(0, 0, 0, 0.39);
+  height: 60px;
+  display: flex;
+  position: sticky;
+  top: 0;
+  left: 0;
+  justify-content: space-between; /* Space between logo and button */
+  align-items: center; /* Center items vertically */
+  padding: 0 20px; /* Add padding for breathing space */
+}
+
+.logo h1 {
+  font-size: 1.8rem; /* Adjust logo size */
+  color: rgb(0, 0, 0); /* Make the text stand out against red background */
+}
+
+.loginButton {
+  max-width: 100%;
+  display: flex;
+  padding: 0.5rem 1.4rem;
+ 
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+  vertical-align: middle;
+  align-items: center;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  gap: 0.75rem;
+  color: rgb(65, 63, 63);
+  background-color: #fff;
+  cursor: pointer;
+  transition: all 0.6s ease;
+}
+span {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.loginButton svg {
+  height: 24px;
+}
+
+.loginButton:hover {
+  transform: scale(1.02);
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    /* Stack items for smaller screens */
+    height: auto;
+    padding: 5px 20px;
+  }
+  span {
+    display: none;
+  }
+
+  .logo h1 {
+    margin-bottom: 10px; /* Add spacing between logo and button */
+  }
+}

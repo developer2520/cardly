@@ -1,4 +1,3 @@
-// src/contexts/OwnCardsContext.js
 import React, { createContext, useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { UserContext } from "./userContext"; // Correct relative path
@@ -14,20 +13,22 @@ export const OwnCardsProvider = ({ children }) => {
     const [error, setError] = useState(null); // To handle errors
 
     useEffect(() => {
-        // Fetch user's cards only when the user data (googleId) is available
-        if (user && user.googleId) {
-            axios.get(`http://localhost:4000/cards?googleId=${user.googleId}`, { withCredentials: true })
-                .then(response => {
-                    setOwnCards(response.data); // Update ownCards state
-                    setLoading(false);
-                })
-                .catch(error => {
-                    setError(error.message);
-                    setLoading(false);
-                });
-        } else {
-            setLoading(false); // Stop loading if user is not available
-        }
+        const fetchCards = async () => {
+            if (user && user.googleId) {
+                try {
+                    const response = await axios.get(`http://localhost:4000/cards?googleId=${user.googleId}`, {
+                        withCredentials: true,
+                    });
+                    setOwnCards(response.data);
+                } catch (err) {
+                    setError(err.message);
+                } finally {
+                    setLoading(false); // Handles both success and failure
+                }
+            }                
+        };
+
+        fetchCards();
     }, [user]);
 
     return (

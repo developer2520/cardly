@@ -1,11 +1,15 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    box-sizing: content-box;
 }
-
+body {
+    display: flex;
+    height: 100vh;
+    overflow: auto;
+}
 .sidebar {
-    width: 80px;
+    width: 90px;
     height: 100vh;
     background-color: #ffffff; /* Set sidebar background to white */
     color: #2c3e50; /* Set text color to dark */
@@ -13,12 +17,19 @@
     top: 0;
     left: 0;
     padding-top: 20px;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+ 
+    /* box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); */
     z-index: 1000;
+    border-right: 0.011px solid rgba(0, 0, 0, 0.288);
     transition: all 0.3s;
     display: flex;
     flex-direction: column;
     align-items: center;
+     padding:  0 10px 0 10px;
+    
+}
+.logo {
+    width: 80px;
 }
 
 .sidebar-title {
@@ -31,8 +42,11 @@
 .sidebar-link {
     width: 100%;
     margin-bottom: 10px;
+    
 }
-
+span {
+    font-size: 10px;
+}
 .sidebar-linkk {
     display: flex;
     flex-direction: column;
@@ -42,6 +56,7 @@
     color: #2c3e50; /* Set link color to dark */
     text-decoration: none;
     transition: background-color 0.3s;
+    border-radius: 6px;
 }
 
 .sidebar-linkk:hover {
@@ -49,7 +64,7 @@
 }
 
 .icon {
-    font-size: 24px;
+    font-size: 21px;
     margin-bottom: 5px;
     color: #2c3e50; /* Set icon color to dark */
 }
@@ -64,6 +79,6 @@
 }
 
 .active {
-    background-color: #8eaac7; /* Set active background color */
+    background-color: #72777e3d; /* Set active background color */
     color: #ffffff; /* Set active text color */
 }

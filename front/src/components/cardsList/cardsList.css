@@ -1,23 +1,134 @@
 * {
-    margin:0;
-    padding:0;
+  margin: 0;
+  padding: 0;
+  box-sizing: content-box; /* Border-box is preferred for more predictable sizing */
 }
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100vh; /* Full height */
+  display: flex;
+  overflow: auto; /* Allow scrolling if necessary */
+}
+
+.layout {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
 .cardlist {
-    position: sticky;
-    left: 0;
-    top: 0;
-    
-    width: 200px;
-    height: 100vh;
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 300px; /* Fixed width */
+  height: 100vh; /* Full height */
+  overflow-y: auto; /* Allow scrolling inside the card list */
+  border-right: 1px solid rgba(0, 0, 0, 0.13);
+  padding: 7px;
+  flex-shrink: 0; /* Prevent shrinking */
 }
 
 .card {
-    background-color: rgb(255, 255, 255);
-    height: 90px;
+  background-color: rgb(255, 255, 255);
+  min-height: 70px; /* Use min-height to allow flexibility */
+  padding: 0 1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.13);
+  border-radius: 6px;
+  word-break: break-all;
 }
+
+.card h3 {
+  font-size: 17px;
+  font-weight: 500
+}
+
 .card:hover {
-    background-color: rgba(128, 128, 128, 0.178);
+  background-color: rgba(0, 0, 0, 0.13);
 }
+
 .card p {
-    color: rgb(97, 96, 96);
+  color: rgb(97, 96, 96);
+}
+
+/* Loader styles */
+.loaderContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.loader {
+  border: 4px solid rgba(0, 0, 0, .1);
+  border-left-color: transparent;
+  width: 36px;
+  height: 36px;
+  animation: spin89345 1s linear infinite;
+}
+
+@keyframes spin89345 {
+  0% {
+      transform: rotate(0deg);
+  }
+  100% {
+      transform: rotate(360deg);
+  }
+}
+
+/* Button styles */
+.buttonContainer {
+  position: relative;
+}
+
+.button-58 {
+  align-items: center;
+  background-color: #06f;
+  border: 2px solid #06f;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  fill: #000;
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  height: 48px;
+  justify-content: center;
+  letter-spacing: -.8px;
+  line-height: 24px;
+  width: 100%;
+  outline: 0;
+  padding: 0 17px;
+  text-align: center;
+  text-decoration: none;
+  transition: all .3s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  margin-bottom: 20px;
+  position: sticky;
+  border-radius: 10px;
+}
+
+.button-58:focus {
+  color: #171e29;
+}
+
+.button-58:hover {
+  background-color: #3385ff;
+  border-color: #3385ff;
+  fill: #06f;
+}
+
+.button-58:active {
+  background-color: #3385ff;
+  border-color: #3385ff;
+  fill: #06f;
+}
+
+@media (min-width: 768px) {
+  .button-58 {
+      min-width: 170px;
+  }
 }

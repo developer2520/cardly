@@ -1,0 +1,55 @@
+* {
+    font-family: "Poppins", serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    width: 100%;
+}
+
+#root {
+    height: 100%;
+    display: flex;
+    flex-direction: column; /* Stack content vertically */
+   
+    width: 100%; /* Take full width */
+    max-width: 1400px; /* Limit maximum width for large screens */
+    margin: 0 auto;
+}
+
+body {
+    width: 100%; /* Ensure body spans the full width */
+}
+
+.settings {
+    width: 100%; /* Allow the settings container to fill the parent width */
+    max-width: 100%; /* Optional: Limit width for readability */
+    padding: 20px; /* Add padding for aesthetics */
+    background-color: red;
+    height: 100vh
+}
+
+button.logout {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #0b75cc;
+    color: white;
+    cursor: pointer;
+}
+
+button.logout:hover {
+    background-color: #084c9b;
+}
+
+.settingsContent {
+    width: 80%;
+    margin: 0 auto;
+}

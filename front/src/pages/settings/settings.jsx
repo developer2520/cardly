@@ -1,4 +1,5 @@
 import React from 'react';
+import './settings.css'
 import Layout from '../../components/layout/layout';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -24,8 +25,16 @@ export default function Settings() {
 
   return (
     <Layout>
-      <h1>Settings</h1>
-      <button onClick={handleLogout}>Logout</button>
+      <div className="settings">
+        <div className="settingsContent">
+        <h1>Settings</h1>
+        <button className='logout' onClick={handleLogout}>Logout</button>
+
+        </div>
+     
+
+      </div>
+      
     </Layout>
   );
 }

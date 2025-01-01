@@ -10,7 +10,9 @@ import Newcard from './pages/newcard/newcard';
 import Card from './pages/card/card';
 import UserProvider from './context/userContext';
 import OwnCardsProvider from './context/ownCardsContext';
-import CardsList from './components/cardsList/cardsList';
+import Navbar2 from './components/navbar/navbar2';
+
+
 import './App.css';
 
 function App() {
@@ -22,13 +24,14 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/account" element={<Account />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/analytics" element={<Analytics />} />
-          <Route path="/newcard" element={<Newcard />} />
-          <Route path="/cards/:url" element={<Card />} /> {/* Corrected dynamic route */}
-          <Route path="/cards" element={<CardsList />} />
+          <Route path="/home" element={<Dashboard />} />
+          <Route path="/home/account" element={<Account />} />
+          <Route path="/home/settings" element={<Settings />} />
+          <Route path="/home/analytics" element={<Analytics />} />
+          <Route path="/home/newcard" element={<Newcard />} />
+          <Route path="/:url" element={<Card />} /> {/* Corrected dynamic route */}
+          {/* <Route path="/cards" element={<CardsList />} /> */}
+          <Route path='/navbar2' element={<Navbar2 />} />
 
         </Routes>
       </BrowserRouter>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import './card.css'
 import { useParams } from 'react-router-dom';
 
 export default function Card() {
@@ -20,7 +21,7 @@ export default function Card() {
       .catch(error => {
         setLoading(false)
         if (error.status && error.response.status === 404) {
-          setError("No user found")
+          setError("No card found")
 
         } else {
           setError("Something went wrong")
@@ -36,9 +37,10 @@ export default function Card() {
   }
 
   return (
-    <div>
-      <h1>{card.title}</h1>
+    <div className='cardPage'>
+      <h1 className='cardTitle'>{card.title}</h1>
       <p>{card.description}</p>
+      <p>{card.userId}</p>
       <a href={card.link}>{card.link}</a>
     </div>
   );
