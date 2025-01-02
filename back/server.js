@@ -8,31 +8,34 @@ const mongoose = require('mongoose');
 
 const app = express();
 
+// Trust proxy - required for Render
+app.set('trust proxy', 1);
+
 // Middleware
-app.use(express.json()); // Parse JSON request bodies
+app.use(express.json());
 
 // CORS Middleware
 app.use(cors({
   origin: [
-    'http://localhost:5173', // Local frontend URL for development
-    'https://cardly-uz-website.onrender.com', // Replace with your production frontend URL
-  ], 
-  credentials: true, // Allow cookies (credentials) to be sent
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow the required HTTP methods
-  allowedHeaders: ['Content-Type', 'Authorization'], // Allow necessary headers
+    'http://localhost:5173',
+    'https://cardly-uz-website.onrender.com',
+  ],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
 // Session Middleware
 app.use(
   session({
-    secret: 'my-secret-key',
+    secret: process.env.SESSION_SECRET || 'my-secret-key', // Better to use env variable
     resave: false,
     saveUninitialized: false,
     cookie: {
-      maxAge: 24 * 60 * 60 * 1000, // 1 day
-      sameSite: 'None', // Required for cross-origin cookies
-      secure: process.env.NODE_ENV === 'production', // Secure cookies only in production
-      httpOnly: true, // Cookie is not accessible via JavaScript
+      maxAge: 24 * 60 * 60 * 1000,
+      sameSite: 'None',
+      secure: true, // Always true for cross-origin on Render
+      httpOnly: true,
     },
   })
 );
@@ -43,11 +46,12 @@ app.use(passport.session());
 
 // Routes
 app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+
 app.get(
   '/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
-    res.redirect('http://localhost:5173/home'); // Update if deploying frontend
+    res.redirect('https://cardly-uz-website.onrender.com/home');
   }
 );
 
@@ -62,8 +66,12 @@ app.get('/logout', (req, res, next) => {
         console.error('Error destroying session:', err);
         return next(err);
       }
-      res.clearCookie('connect.sid');
-      res.redirect('http://localhost:5173/'); // Update if deploying frontend
+      res.clearCookie('connect.sid', {
+        sameSite: 'None',
+        secure: true,
+        httpOnly: true
+      });
+      res.redirect('https://cardly-uz-website.onrender.com/');
     });
   });
 });
@@ -95,13 +103,12 @@ app.post('/cards', async (req, res) => {
 });
 
 app.get('/cards', (req, res) => {
-  const { googleId } = req.query; // Expecting googleId in the query parameters
+  const { googleId } = req.query;
 
   if (!googleId || googleId.trim() === '') {
     return res.status(400).json({ message: 'googleId is required and cannot be empty' });
   }
 
-  // Proceed to find the cards with the provided googleId
   LinkPage.find({ userId: googleId })
     .then(cards => {
       res.json(cards);
@@ -128,6 +135,8 @@ app.get("/cards/:url", async (req, res) => {
     });
   }
 });
+
+// Connect to MongoDB
 
 // Start Server
 const PORT = process.env.PORT || 5000;
