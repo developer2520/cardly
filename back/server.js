@@ -21,13 +21,13 @@ app.use(cors(corsOptions)); // Use CORS middleware
 // Session Middleware
 app.use(
   session({
-    secret: 'my-secret-key',
+    secret: 'Abboskhonow252020202020434hhff',
     resave: false,
     saveUninitialized: false,
     cookie: {
       maxAge: 24 * 60 * 60 * 1000, // 1 day
       sameSite: 'None', // Required for cross-origin cookies
-      secure: process.env.NODE_ENV === 'production', // Ensure cookies are secure in production (https)
+      secure: false, // Ensure cookies are secure in production (https)
       httpOnly: true, // Cookie is not accessible via JavaScript
     },
   })
