@@ -13,9 +13,12 @@ const app = express();
 app.use(express.json()); // Parse JSON request bodies
 
 // CORS Middleware
+// CORS Middleware
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://your-frontend.onrender.com'], // Add both local and production frontend URLs
+  origin: ['http://localhost:5173', 'https://your-frontend.onrender.com'], // Replace with your actual frontend URL
   credentials: true, // Allow cookies (credentials) to be sent
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow the required HTTP methods
+  allowedHeaders: ['Content-Type', 'Authorization'], // Allow necessary headers
 }));
 
 // Session Middleware
