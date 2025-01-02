@@ -51,7 +51,7 @@ app.get(
   '/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
-    res.redirect('https://cardly-uz-website.onrender.com/home');
+    res.redirect('http://localhost:5173/home');
   }
 );
 
@@ -71,7 +71,7 @@ app.get('/logout', (req, res, next) => {
         secure: true,
         httpOnly: true
       });
-      res.redirect('https://cardly-uz-website.onrender.com/');
+      res.redirect('http://localhost:5173/');
     });
   });
 });

@@ -6,7 +6,7 @@ export default function Navbar2() {
 
 
   const Login = () => {
-    window.location.href = 'https://cardly-uz-website.onrender.com/auth/google';
+    window.location.href = 'https://cardly-1.onrender.com/auth/google';
 
   }
   return (
