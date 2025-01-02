@@ -17,8 +17,8 @@ import './App.css';
 
 function App() {
 
-  // axios.defaults.baseURL = 'https://cardly-uz-website.onrender.com';
-  axios.defaults.baseURL = 'http://localhost:4000';
+  axios.defaults.baseURL = 'https://cardly-uz-website.onrender.com';
+  // axios.defaults.baseURL = 'http://localhost:4000';
   axios.defaults.withCredentials = true
  
 

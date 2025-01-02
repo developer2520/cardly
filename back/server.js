@@ -9,14 +9,13 @@ const mongoose = require('mongoose');
 const app = express();
 
 // Middleware
-
 app.use(express.json()); // Parse JSON request bodies
 
 // CORS Middleware
 app.use(cors({
   origin: [
     'http://localhost:5173', // Local frontend URL for development
-    'https://your-frontend.onrender.com' // Replace with your production frontend URL
+    'https://cardly-uz-website.onrender.com', // Replace with your production frontend URL
   ], 
   credentials: true, // Allow cookies (credentials) to be sent
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow the required HTTP methods
@@ -131,6 +130,5 @@ app.get("/cards/:url", async (req, res) => {
 });
 
 // Start Server
-
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
