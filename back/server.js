@@ -9,22 +9,15 @@ const mongoose = require('mongoose');
 const app = express();
 
 // Middleware
-app.use(cors({
-  origin: 'http://localhost:5173', // Frontend URL
-  credentials: true, // Allow credentials
-}));
-
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  next();
-});
 
 app.use(express.json()); // Parse JSON request bodies
 
 // Session Middleware
+app.use(cors({
+  origin: 'http://localhost:5173', // Frontend URL
+  credentials: true, // Allow credentials (cookies)
+}));
+
 app.use(
   session({
     secret: 'my-secret-key',
@@ -32,9 +25,9 @@ app.use(
     saveUninitialized: false,
     cookie: {
       maxAge: 24 * 60 * 60 * 1000, // 1 day
-      sameSite: 'Lax',
-      secure: false,
-      httpOnly: true,
+      sameSite: 'Lax', // Adjust for cross-site cookies
+      secure: process.env.NODE_ENV === 'production', // Secure cookie in production
+      httpOnly: true, // Cookie is not accessible via JavaScript
     },
   })
 );
