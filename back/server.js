@@ -5,7 +5,10 @@ const cors = require('cors');
 const passport = require('./passport');
 const LinkPage = require('./models/linkModel');
 const mongoose = require('mongoose');
+const connectDB = require('./db')
 
+
+connectDB()
 const app = express();
 
 // Trust proxy - required for Render
@@ -52,7 +55,7 @@ app.get(
   '/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
-    res.redirect('https://cardly-1.onrender.com/auth/google/callback');
+    res.redirect('http://localhost:5173/home');
 
   }
 );
@@ -73,7 +76,7 @@ app.get('/logout', (req, res, next) => {
         secure: true,
         httpOnly: true
       });
-      res.redirect('https://cardly-1.onrender.com/auth/google/callback');
+      res.redirect('http://localhost:5173/');
 
     });
   });
