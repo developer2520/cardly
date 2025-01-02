@@ -12,12 +12,13 @@ const app = express();
 
 app.use(express.json()); // Parse JSON request bodies
 
-// Session Middleware
+// CORS Middleware
 app.use(cors({
-  origin: 'http://localhost:5173', // Frontend URL
-  credentials: true, // Allow credentials (cookies)
+  origin: ['http://localhost:5173', 'https://your-frontend.onrender.com'], // Add both local and production frontend URLs
+  credentials: true, // Allow cookies (credentials) to be sent
 }));
 
+// Session Middleware
 app.use(
   session({
     secret: 'my-secret-key',
@@ -25,8 +26,8 @@ app.use(
     saveUninitialized: false,
     cookie: {
       maxAge: 24 * 60 * 60 * 1000, // 1 day
-      sameSite: 'Lax', // Adjust for cross-site cookies
-      secure: process.env.NODE_ENV === 'production', // Secure cookie in production
+      sameSite: 'None', // Required for cross-origin cookies
+      secure: process.env.NODE_ENV === 'production', // Secure cookies in production
       httpOnly: true, // Cookie is not accessible via JavaScript
     },
   })
@@ -42,7 +43,7 @@ app.get(
   '/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
-    res.redirect('http://localhost:5173/home');
+    res.redirect('http://localhost:5173/home'); // Update if deploying frontend
   }
 );
 
@@ -58,7 +59,7 @@ app.get('/logout', (req, res, next) => {
         return next(err);
       }
       res.clearCookie('connect.sid');
-      res.redirect('http://localhost:5173/');
+      res.redirect('http://localhost:5173/'); // Update if deploying frontend
     });
   });
 });
@@ -89,19 +90,15 @@ app.post('/cards', async (req, res) => {
   }
 });
 
-
-
 app.get('/cards', (req, res) => {
   const { googleId } = req.query; // Expecting googleId in the query parameters
-
- 
 
   if (!googleId || googleId.trim() === '') {
     return res.status(400).json({ message: 'googleId is required and cannot be empty' });
   }
 
   // Proceed to find the cards with the provided googleId
-  LinkPage.find({ userId: googleId }) // Use googleId directly as a string
+  LinkPage.find({ userId: googleId })
     .then(cards => {
       res.json(cards);
     })
@@ -110,29 +107,23 @@ app.get('/cards', (req, res) => {
     });
 });
 
-
-
 app.get("/cards/:url", async (req, res) => {
   try {
-      const { url } = req.params;
-      const card = await LinkPage.findOne({ url });
-      if (!card) {
-          return res.status(404).json({ message: 'User not found' });
-      }
+    const { url } = req.params;
+    const card = await LinkPage.findOne({ url });
+    if (!card) {
+      return res.status(404).json({ message: 'User not found' });
+    }
 
-
-
-
-      res.json(card);
+    res.json(card);
   } catch (err) {
-      console.error('Error fetching user:', err);
-      res.status(500).json({
-          message: 'Internal Server Error - Failed to fetch user',
-          error: err.message,
-      });
+    console.error('Error fetching user:', err);
+    res.status(500).json({
+      message: 'Internal Server Error - Failed to fetch user',
+      error: err.message,
+    });
   }
 });
-
 
 // Start Server
 
