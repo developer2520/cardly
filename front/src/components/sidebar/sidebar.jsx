@@ -32,16 +32,17 @@ export default function Sidebar() {
           <span>Home</span>
         </NavLink>
       </div>
-      <div className="sidebar-link">
-        <NavLink to="/home/settings" className="sidebar-linkk">
-          <TbSettings2 className="icon" />
-          <span>Settings</span>
-        </NavLink>
-      </div>
+      
       <div className="sidebar-link">
         <NavLink to="/home/analytics" className="sidebar-linkk">
         <SlChart className='icon' />
           <span>Stats</span>
+        </NavLink>
+      </div>
+      <div className="sidebar-link">
+        <NavLink to="/home/settings" className="sidebar-linkk">
+          <TbSettings2 className="icon" />
+          <span>Settings</span>
         </NavLink>
       </div>
       <div className="sidebar-link last-link">

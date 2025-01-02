@@ -8,7 +8,7 @@
 .cardDetails {
    /* Take remaining space */
    width: 100%;
-    background-color: #0b75cc; /* Adjust to your design */
+    background-color: #ffffff; /* Adjust to your design */
     overflow-y: auto;  /* Allows scrolling if content exceeds height */
     height: 100%;
     display: block;

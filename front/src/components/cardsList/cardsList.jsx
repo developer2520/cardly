@@ -1,4 +1,4 @@
-import {React, useContext, useEffect} from 'react'
+import {React, useContext, useEffect, useState} from 'react'
 import './cardsList.css'
 import { OwnCardsContext } from '../../context/ownCardsContext'
 import { Link } from 'react-router-dom';
@@ -6,7 +6,11 @@ import { Link } from 'react-router-dom';
 
 export default function cardsList({onCardSelect}) {
   const { ownCards, loading, error } = useContext(OwnCardsContext);
+  const [notVisible, setNotVisible] = useState(false)
 
+  const handleVisible = () => {
+    setNotVisible(!notVisible)
+  }
   if (loading) { 
     return (
       /* From Uiverse.io by Fernando-sv */ 

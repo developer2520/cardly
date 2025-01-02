@@ -1,19 +1,18 @@
-// src/components/Layout.jsx
 import React from 'react';
 import Sidebar from '../sidebar/sidebar';
-import './layout.css'
+import './layout.css';
+import { CardListProvider } from './../../context/cardListContext'; // Correct import for context provider
 
 const Layout = ({ children }) => {
   return (
-    <div className="layout">
-    
-      <Sidebar />
-      
-      
-      <div className="content">
-        {children}
+    <CardListProvider>
+      <div className="layout">
+        <Sidebar />
+        <div className="content">
+          {children}
+        </div>
       </div>
-    </div>
+    </CardListProvider>
   );
 };
 

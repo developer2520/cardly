@@ -4,7 +4,7 @@
     display: flex;
     background-color: red;
     justify-content: center;
-    align-items: center;
+    align-items:center;
     position: relative;
    
    
@@ -14,7 +14,7 @@
     width: 100%;
     max-height: 100%;
     position: relative; /* iPhone frame stays relative to the parent */
-    z-index: 1; /* Ensure the frame is above the iframe */
+    z-index: 2; /* Ensure the frame is above the iframe */
   }
  
   iframe {
@@ -23,9 +23,9 @@
     /* Adjust to match the screen's top position on the iPhone */
     /* Adjust to match the screen's left position on the iPhone */
     width: calc(100% - 20px); /* Adjust to fit the screen's width */
-    min-height: calc(100% - 54px); /* Adjust to fit the screen's height */
-    z-index: 2; /* Ensure the iframe stays behind the frame */
+    height: 507px; /* Adjust to fit the screen's height */
+    z-index: 1; /* Ensure the iframe stays behind the frame */
     border: none; /* Remove the border for a cleaner look */
-    border-radius: 50px;
+    border-radius: 30px;
   }
   

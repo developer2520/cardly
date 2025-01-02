@@ -8,7 +8,7 @@ export default function Settings() {
   const navigate = useNavigate();
   const handleLogout = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/logout', {
+      const response = await axios.get('/logout', {
         withCredentials: true, // Ensure cookies are included in the request
       });
   

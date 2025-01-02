@@ -15,7 +15,7 @@ export default function NewCard() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    axios.get('http://localhost:4000/user', { withCredentials: true })
+    axios.get('/user', { withCredentials: true })
       .then(response => {
         setUser(response.data);
         setLoading(false); // Set loading to false once user data is fetched

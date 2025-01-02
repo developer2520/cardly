@@ -30,7 +30,13 @@ export default function Card() {
   }, [url]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+    <div className="loaderContainer">
+<div className="loader"></div>
+
+    </div>
+    )
+    
   }
   if (error) {
     return <h1>{error}</h1>
