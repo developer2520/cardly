@@ -19,6 +19,7 @@ app.use(cors({
   origin: [
     'http://localhost:5173',
     'https://cardly-uz-website.onrender.com',
+    'https://cardly-1.onrender.com'
   ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
@@ -28,13 +29,13 @@ app.use(cors({
 // Session Middleware
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || 'my-secret-key', // Better to use env variable
+    secret: process.env.SESSION_SECRET || 'my-secret-key',
     resave: false,
     saveUninitialized: false,
     cookie: {
       maxAge: 24 * 60 * 60 * 1000,
       sameSite: 'None',
-      secure: true, // Always true for cross-origin on Render
+      secure: true,
       httpOnly: true,
     },
   })
@@ -51,7 +52,7 @@ app.get(
   '/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
-    res.redirect('http://localhost:5173/home');
+    res.redirect('https://cardly-uz-website.onrender.com/home');
   }
 );
 
@@ -71,7 +72,7 @@ app.get('/logout', (req, res, next) => {
         secure: true,
         httpOnly: true
       });
-      res.redirect('http://localhost:5173/');
+      res.redirect('https://cardly-uz-website.onrender.com/');
     });
   });
 });
@@ -137,6 +138,9 @@ app.get("/cards/:url", async (req, res) => {
 });
 
 // Connect to MongoDB
+// mongoose.connect(process.env.MONGODB_URI)
+//   .then(() => console.log('Connected to MongoDB'))
+//   .catch(err => console.error('MongoDB connection error:', err));
 
 // Start Server
 const PORT = process.env.PORT || 5000;
