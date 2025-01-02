@@ -16,7 +16,7 @@ export const OwnCardsProvider = ({ children }) => {
         const fetchCards = async () => {
             if (user && user.googleId) {
                 try {
-                    const response = await axios.get(`http://localhost:4000/cards?googleId=${user.googleId}`, {
+                    const response = await axios.get(`/cards?googleId=${user.googleId}`, {
                         withCredentials: true,
                     });
                     setOwnCards(response.data);

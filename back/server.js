@@ -13,9 +13,11 @@ const app = express();
 app.use(express.json()); // Parse JSON request bodies
 
 // CORS Middleware
-// CORS Middleware
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://your-frontend.onrender.com'], // Replace with your actual frontend URL
+  origin: [
+    'http://localhost:5173', // Local frontend URL for development
+    'https://your-frontend.onrender.com' // Replace with your production frontend URL
+  ], 
   credentials: true, // Allow cookies (credentials) to be sent
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow the required HTTP methods
   allowedHeaders: ['Content-Type', 'Authorization'], // Allow necessary headers
@@ -30,7 +32,7 @@ app.use(
     cookie: {
       maxAge: 24 * 60 * 60 * 1000, // 1 day
       sameSite: 'None', // Required for cross-origin cookies
-      secure: process.env.NODE_ENV === 'production', // Secure cookies in production
+      secure: process.env.NODE_ENV === 'production', // Secure cookies only in production
       httpOnly: true, // Cookie is not accessible via JavaScript
     },
   })

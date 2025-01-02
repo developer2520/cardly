@@ -1,6 +1,6 @@
 {
   "name": "front",
-  "proxy": "http://localhost:4000",
+
   "private": true,
   "version": "0.0.0",
   "type": "module",

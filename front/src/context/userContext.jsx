@@ -16,11 +16,11 @@ export const UserProvider = ({ children }) => {
         const fetchUser = async () => {
             try {
                 const { data } = await axios.get('/user', {
-                    withCredentials: true,
+                    withCredentials: true, // Include cookies in the request
                 });
                 setState({ user: data, loading: false, error: null });
-            } catch (err) {
-                setState({ user: null, loading: false, error: err.message });
+            } catch (error) {
+                setState({ user: null, loading: false, error: error.response ? error.response.data.error : error.message });
             }
         };
 
@@ -35,4 +35,3 @@ export const UserProvider = ({ children }) => {
 };
 
 export default UserProvider;
- 

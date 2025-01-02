@@ -36,7 +36,7 @@ export default function NewCard() {
 
     axios
       .post(
-        "http://localhost:4000/cards",
+        "/cards",
         { url, title, description, link, userId: user.googleId},
         { withCredentials: true }
       )
