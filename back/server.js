@@ -52,7 +52,8 @@ app.get(
   '/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
-    res.redirect('https://cardly-uz-website.onrender.com/home');
+    res.redirect('https://cardly-1.onrender.com/auth/google/callback');
+
   }
 );
 
@@ -72,7 +73,8 @@ app.get('/logout', (req, res, next) => {
         secure: true,
         httpOnly: true
       });
-      res.redirect('https://cardly-uz-website.onrender.com/');
+      res.redirect('https://cardly-1.onrender.com/auth/google/callback');
+
     });
   });
 });
