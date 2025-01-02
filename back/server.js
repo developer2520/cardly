@@ -25,6 +25,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
+      path: '/',
       maxAge: 24 * 60 * 60 * 1000, // 1 day
       sameSite: 'None', // Required for cross-origin cookies
       secure: false, // Ensure cookies are secure in production (https)
