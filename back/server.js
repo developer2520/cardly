@@ -25,30 +25,34 @@ app.use(cors({
     'https://cardly-uz-website.onrender.com',
     'https://cardly-1.onrender.com'
   ],
-  credentials: true, // Required to include cookies in requests
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
+  exposedHeaders: ['Set-Cookie']
 }));
 
 // Session Middleware
 app.use(
   session({
     secret: process.env.SESSION_SECRET || 'my-secret-key',
-    resave: false,
-    saveUninitialized: false,
+    resave: true,
+    saveUninitialized: true,
     store: MongoStore.create({
       mongoUrl: process.env.MONGO_URI,
-      ttl: 24 * 60 * 60 // 1 day
+      ttl: 24 * 60 * 60
     }),
     cookie: {
-      maxAge: 24 * 60 * 60 * 1000, // 24 hours
+      maxAge: 24 * 60 * 60 * 1000,
       sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
       secure: process.env.NODE_ENV === 'production',
-      httpOnly: true
+      httpOnly: true,
+      path: '/',
+      domain: process.env.NODE_ENV === 'production' ? '.onrender.com' : undefined
     },
     name: 'sessionId'
   })
 );
+
 
 // Passport Middleware
 app.use(passport.initialize());
