@@ -12,7 +12,7 @@ export default function Account() {
         <h1>Loading...</h1>
       </Layout>
     );
-  }
+  } 
 
   if (error) {
     return (

@@ -4,14 +4,14 @@ const session = require('express-session');
 const cors = require('cors');
 const passport = require('./passport');
 const LinkPage = require('./models/linkModel');
-const mongoose = require('mongoose');
-const connectDB = require('./db')
+const connectDB = require('./db');
 
+// Connect to the database
+connectDB();
 
-connectDB()
 const app = express();
 
-// Trust proxy - required for Render
+// Trust proxy - required for environments like Render
 app.set('trust proxy', 1);
 
 // Middleware
@@ -30,7 +30,7 @@ app.use(cors({
   exposedHeaders: ['set-cookie']
 }));
 
-// Session Middleware - Updated configuration
+// Session Middleware
 app.use(
   session({
     secret: process.env.SESSION_SECRET || 'my-secret-key',
@@ -43,14 +43,15 @@ app.use(
       httpOnly: true,
       domain: process.env.NODE_ENV === 'production' ? '.your-domain.com' : 'localhost'
     },
-    name: 'sessionId' // Custom name for the cookie
+    name: 'sessionId'
   })
 );
+
 // Passport Middleware
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Routes
+// Google Authentication Routes
 app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 app.get(
@@ -58,7 +59,6 @@ app.get(
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
     res.redirect('http://localhost:5173/home');
-
   }
 );
 
@@ -73,17 +73,17 @@ app.get('/logout', (req, res, next) => {
         console.error('Error destroying session:', err);
         return next(err);
       }
-      res.clearCookie('connect.sid', {
+      res.clearCookie('sessionId', {
         sameSite: 'None',
         secure: true,
         httpOnly: true
       });
       res.redirect('http://localhost:5173/');
-
     });
   });
 });
 
+// User Route
 app.get('/user', (req, res) => {
   if (req.isAuthenticated()) {
     res.json(req.user);
@@ -92,6 +92,7 @@ app.get('/user', (req, res) => {
   }
 });
 
+// Create Card Route
 app.post('/cards', async (req, res) => {
   const { title, description, link, url, userId } = req.body;
 
@@ -101,8 +102,8 @@ app.post('/cards', async (req, res) => {
       return res.status(400).json({ error: 'Card already exists' });
     }
 
-    const Card = new LinkPage({ title, description, link, url, userId });
-    await Card.save();
+    const card = new LinkPage({ title, description, link, url, userId });
+    await card.save();
     res.status(201).json({ message: 'Card created successfully' });
   } catch (err) {
     console.error(err);
@@ -110,44 +111,47 @@ app.post('/cards', async (req, res) => {
   }
 });
 
-app.get('/cards', (req, res) => {
+// Get Cards Route
+app.get('/cards', async (req, res) => {
   const { googleId } = req.query;
 
   if (!googleId || googleId.trim() === '') {
     return res.status(400).json({ message: 'googleId is required and cannot be empty' });
   }
 
-  LinkPage.find({ userId: googleId })
-    .then(cards => {
-      res.json(cards);
-    })
-    .catch(err => {
-      res.status(500).json({ message: 'Error fetching cards', error: err });
-    });
+  try {
+    const cards = await LinkPage.find({ userId: googleId });
+    res.json(cards);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error fetching cards', error: err });
+  }
 });
 
-app.get("/cards/:url", async (req, res) => {
+// Get Card by URL Route
+app.get('/cards/:url', async (req, res) => {
   try {
     const { url } = req.params;
     const card = await LinkPage.findOne({ url });
     if (!card) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: 'Card not found' });
     }
 
     res.json(card);
   } catch (err) {
-    console.error('Error fetching user:', err);
+    console.error('Error fetching card:', err);
     res.status(500).json({
-      message: 'Internal Server Error - Failed to fetch user',
-      error: err.message,
+      message: 'Internal Server Error - Failed to fetch card',
+      error: err.message
     });
   }
 });
 
-// Connect to MongoDB
-// mongoose.connect(process.env.MONGODB_URI)
-//   .then(() => console.log('Connected to MongoDB'))
-//   .catch(err => console.error('MongoDB connection error:', err));
+// Global Error Handler
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(err.status || 500).json({ error: err.message });
+});
 
 // Start Server
 const PORT = process.env.PORT || 5000;
