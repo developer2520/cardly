@@ -35,14 +35,17 @@ app.use(
     secret: process.env.SESSION_SECRET || 'my-secret-key',
     resave: false,
     saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGODB_URI,
+      ttl: 24 * 60 * 60 // 1 day
+    }),
     cookie: {
       maxAge: 24 * 60 * 60 * 1000, // 24 hours
-      sameSite: 'none', // Required for cross-origin cookies
-      secure: process.env.NODE_ENV === 'production', // Only on HTTPS in production
-      httpOnly: true,
-      domain: process.env.NODE_ENV === 'production' ? '.onrender.com' : 'localhost'
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+      secure: process.env.NODE_ENV === 'production',
+      httpOnly: true
     },
-    name: 'sessionId' // Custom cookie name
+    name: 'sessionId'
   })
 );
 
