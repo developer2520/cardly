@@ -10,7 +10,7 @@ export default function Card() {
   const { url } = useParams(); // Destructure the url parameter
 
   useEffect(() => {
-    axios.get(`http://localhost:4000/cards/${url}`, {
+    axios.get(`/cards/${url}`, {
       withCredentials: true
   
     })

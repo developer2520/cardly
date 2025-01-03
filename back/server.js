@@ -27,23 +27,25 @@ app.use(cors({
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
+  exposedHeaders: ['set-cookie']
 }));
 
-// Session Middleware
+// Session Middleware - Updated configuration
 app.use(
   session({
     secret: process.env.SESSION_SECRET || 'my-secret-key',
     resave: false,
     saveUninitialized: false,
     cookie: {
-      maxAge: 24 * 60 * 60 * 1000,
-      sameSite: 'None',
-      secure: true,
+      maxAge: 24 * 60 * 60 * 1000, // 24 hours
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+      secure: process.env.NODE_ENV === 'production',
       httpOnly: true,
+      domain: process.env.NODE_ENV === 'production' ? '.your-domain.com' : 'localhost'
     },
+    name: 'sessionId' // Custom name for the cookie
   })
 );
-
 // Passport Middleware
 app.use(passport.initialize());
 app.use(passport.session());
