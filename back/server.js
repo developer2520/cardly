@@ -47,8 +47,8 @@ app.use(
       secure: process.env.NODE_ENV === 'production',
       httpOnly: true,
       path: '/',
-      domain: process.env.NODE_ENV === 'production' ? '.onrender.com' : undefined
-    },
+      domain: "localhost"
+    },  
     name: 'sessionId'
   })
 );
