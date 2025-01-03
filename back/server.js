@@ -47,7 +47,7 @@ app.use(
       secure: process.env.NODE_ENV === 'production',
       httpOnly: true,
       path: '/',
-      domain: "localhost"
+      domain: localhost
     },  
     name: 'sessionId'
   })
