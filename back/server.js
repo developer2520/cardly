@@ -92,7 +92,7 @@ app.get('/logout', (req, res, next) => {
         sameSite: 'none',
         secure: true,
         httpOnly: true,
-        domain: process.env.NODE_ENV === 'production' ? '.onrender.com' : 'localhost'
+       
       });
       res.redirect('http://localhost:5173/'); // Adjust URL for production
     });
