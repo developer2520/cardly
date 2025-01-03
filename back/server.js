@@ -24,10 +24,9 @@ app.use(cors({
     'https://cardly-uz-website.onrender.com',
     'https://cardly-1.onrender.com'
   ],
-  credentials: true,
+  credentials: true, // Required to include cookies in requests
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  exposedHeaders: ['set-cookie']
 }));
 
 // Session Middleware
@@ -38,18 +37,25 @@ app.use(
     saveUninitialized: false,
     cookie: {
       maxAge: 24 * 60 * 60 * 1000, // 24 hours
-      sameSite: none,
-      secure: true,
+      sameSite: 'none', // Required for cross-origin cookies
+      secure: process.env.NODE_ENV === 'production', // Only on HTTPS in production
       httpOnly: true,
-      domain: process.env.NODE_ENV === 'production' ? '.your-domain.com' : 'localhost'
+      domain: process.env.NODE_ENV === 'production' ? '.onrender.com' : 'localhost'
     },
-    name: 'sessionId'
+    name: 'sessionId' // Custom cookie name
   })
 );
 
 // Passport Middleware
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Debugging Middleware (Optional)
+app.use((req, res, next) => {
+  console.log('Session:', req.session);
+  console.log('User:', req.user);
+  next();
+});
 
 // Google Authentication Routes
 app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
@@ -58,10 +64,11 @@ app.get(
   '/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
-    res.redirect('http://localhost:5173/home');
+    res.redirect('http://localhost:5173/home'); // Adjust URL for production
   }
 );
 
+// Logout Route
 app.get('/logout', (req, res, next) => {
   req.logout((err) => {
     if (err) {
@@ -74,17 +81,18 @@ app.get('/logout', (req, res, next) => {
         return next(err);
       }
       res.clearCookie('sessionId', {
-        sameSite: 'None',
+        sameSite: 'none',
         secure: true,
-        httpOnly: true
+        httpOnly: true,
+        domain: process.env.NODE_ENV === 'production' ? '.onrender.com' : 'localhost'
       });
-      res.redirect('http://localhost:5173/');
+      res.redirect('http://localhost:5173/'); // Adjust URL for production
     });
   });
 });
 
 // User Route
-app.get('/user', {withCredentials: true}, (req, res) => {
+app.get('/user', (req, res) => {
   if (req.isAuthenticated()) {
     res.json(req.user);
   } else {
