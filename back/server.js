@@ -84,7 +84,7 @@ app.get('/logout', (req, res, next) => {
 });
 
 // User Route
-app.get('/user', (req, res) => {
+app.get('/user', {withCredentials: true}, (req, res) => {
   if (req.isAuthenticated()) {
     res.json(req.user);
   } else {
