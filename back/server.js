@@ -47,6 +47,7 @@ app.use(
       secure: true,
       httpOnly: true,
       path: '/',
+      domain: undefined
       
     },  
     name: 'sessionId'
