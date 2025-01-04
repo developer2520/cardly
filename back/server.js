@@ -19,12 +19,16 @@ app.set('trust proxy', 1);
 app.use(express.json());
 
 // CORS Middleware
-app.use(
-  cors({
-    origin: 'http://localhost:5173', // Your frontend origin
-    credentials: true, // Allow credentials
-  })
-);
+const corsOptions = {
+  origin: ['http://localhost:5173', 'https://cardly-uz-website.onrender.com', 'https://cardly-1.onrender.com'], // Adjust these origins as needed
+  credentials: true, // Allow cookies (credentials) to be sent
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow the required HTTP methods
+  allowedHeaders: ['Content-Type', 'Authorization', 'Accept'], // Allow necessary headers
+  exposedHeaders: ['Set-Cookie'],
+};
+
+app.use(cors(corsOptions)); // Use CORS middleware
+
 // Session Middleware
 app.use(
   session({

@@ -5,7 +5,8 @@ const User = require('./models/UserModel'); // Import your User model
 
 const connectDB = require('./db');
 
-connectDB()
+// Connect to the database
+connectDB();
 
 // Serialize user ID into the session
 passport.serializeUser((user, done) => {
@@ -28,7 +29,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: 'https://cardly-1.onrender.com/auth/google/callback', // Make sure this URL is correct
+      callbackURL: 'https://cardly-1.onrender.com/auth/google/callback', // Ensure this matches the URL in Google Cloud Console
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
