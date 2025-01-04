@@ -96,6 +96,19 @@ app.get('/logout', (req, res, next) => {
 
 // User Route
 app.get('/user', (req, res) => {
+  const rawCookies = req.headers.cookie; // Raw cookie string
+  console.log('Raw Cookies:', rawCookies);
+
+  if (rawCookies) {
+    const cookies = Object.fromEntries(
+      rawCookies.split('; ').map((cookie) => cookie.split('='))
+    );
+    console.log('Parsed Cookies:', cookies);
+    console.log('SessionID Cookie:', cookies.sessionId); // Logs the sessionId cookie
+  } else {
+    console.log('No cookies found');
+  }
+
   if (req.isAuthenticated()) {
     res.json(req.user);
   } else {
