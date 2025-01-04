@@ -20,10 +20,11 @@ app.use(express.json());
 
 // CORS Middleware
 app.use(cors({
-  origin: ['http://localhost:5173'] ing cookies and credentials
+  origin: ['http://localhost:5173'], // Allow specific origin
+  credentials: true, // Enable sending cookies and credentials
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed methods
   allowedHeaders: ['Content-Type', 'Authorization', 'Accept'], // Remove 'Cookie' (not required here)
-  exposedHeaders: ['Set-Cookie'], // Expose 'Set-Cookie' to the client
+  exposedHeaders: ['Set-Cookie'], // Expose 'Set-Cookie' to the 
 }));
 // Session Middleware
 app.use(
