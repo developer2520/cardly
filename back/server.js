@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
 const cors = require('cors');
-const MongoStore = require('connect-mongo')
+const MongoStore = require('connect-mongo');
 const passport = require('./passport');
 const LinkPage = require('./models/linkModel');
 const connectDB = require('./db');
@@ -20,14 +20,13 @@ app.use(express.json());
 
 // CORS Middleware
 const corsOptions = {
-  origin: ['http://localhost:5173', 'https://cardly-uz-website.onrender.com', 'https://cardly-1.onrender.com'], // Adjust these origins as needed
+  origin: 'http://localhost:5173', // Frontend origin
   credentials: true, // Allow cookies (credentials) to be sent
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow the required HTTP methods
   allowedHeaders: ['Content-Type', 'Authorization', 'Accept'], // Allow necessary headers
-  exposedHeaders: ['Set-Cookie'],
+  exposedHeaders: ['Set-Cookie'], // Expose cookies to the frontend
 };
-
-app.use(cors(corsOptions)); // Use CORS middleware
+app.use(cors(corsOptions));
 
 // Session Middleware
 app.use(
@@ -37,26 +36,21 @@ app.use(
     saveUninitialized: true,
     store: MongoStore.create({
       mongoUrl: process.env.MONGO_URI,
-      ttl: 24 * 60 * 60
+      ttl: 24 * 60 * 60, // 1 day
     }),
     cookie: {
-      maxAge: 24 * 60 * 60 * 1000,
-      sameSite: 'none',
-      secure: false,
-      httpOnly: true,
-      path: '/',
-      
-      
-    },  
-    name: 'sessionId'
+      maxAge: 24 * 60 * 60 * 1000, // 1 day
+      sameSite: 'lax', // Allow cross-origin for localhost
+      secure: false, // Disable for local development (HTTP)
+      httpOnly: true, // Prevent client-side JavaScript access
+    },
+    name: 'sessionId',
   })
 );
-
 
 // Passport Middleware
 app.use(passport.initialize());
 app.use(passport.session());
-
 
 // Google Authentication Routes
 app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
@@ -82,10 +76,9 @@ app.get('/logout', (req, res, next) => {
         return next(err);
       }
       res.clearCookie('sessionId', {
-        sameSite: 'none',
-        secure: true,
+        sameSite: 'lax',
+        secure: false,
         httpOnly: true,
-       
       });
       res.redirect('http://localhost:5173/'); // Adjust URL for production
     });
@@ -94,18 +87,8 @@ app.get('/logout', (req, res, next) => {
 
 // User Route
 app.get('/user', (req, res) => {
-  const rawCookies = req.headers.cookie; // Raw cookie string
-  console.log('Raw Cookies:', rawCookies);
-
-  if (rawCookies) {
-    const cookies = Object.fromEntries(
-      rawCookies.split('; ').map((cookie) => cookie.split('='))
-    );
-    console.log('Parsed Cookies:', cookies);
-    console.log('SessionID Cookie:', cookies.sessionId); // Logs the sessionId cookie
-  } else {
-    console.log('No cookies found');
-  }
+  console.log('Session:', req.session); // Debugging session
+  console.log('User:', req.user); // Debugging user
 
   if (req.isAuthenticated()) {
     res.json(req.user);
@@ -147,25 +130,6 @@ app.get('/cards', async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Error fetching cards', error: err });
-  }
-});
-
-// Get Card by URL Route
-app.get('/cards/:url', async (req, res) => {
-  try {
-    const { url } = req.params;
-    const card = await LinkPage.findOne({ url });
-    if (!card) {
-      return res.status(404).json({ message: 'Card not found' });
-    }
-
-    res.json(card);
-  } catch (err) {
-    console.error('Error fetching card:', err);
-    res.status(500).json({
-      message: 'Internal Server Error - Failed to fetch card',
-      error: err.message
-    });
   }
 });
 
