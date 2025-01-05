@@ -42,7 +42,7 @@ app.use(
     cookie: {
       maxAge: 24 * 60 * 60 * 1000,
       sameSite: 'none',
-      secure: true,
+      secure: false,
       httpOnly: true,
       path: '/',
       
@@ -57,12 +57,6 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Debugging Middleware (Optional)
-app.use((req, res, next) => {
-  console.log('Session:', req.session);
-  console.log('User:', req.user);
-  next();
-});
 
 // Google Authentication Routes
 app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
