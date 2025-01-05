@@ -14,17 +14,17 @@ export default function NewCard() {
   const [error, setError] = useState(null); // For error handling
   const navigate = useNavigate()
 
-  useEffect(() => {
-    axios.get('/user', { withCredentials: true })
-      .then(response => {
-        setUser(response.data);
-        setLoading(false); // Set loading to false once user data is fetched
-      })
-      .catch(error => {
-        setError(error.message);
-        setLoading(false); // Also stop loading if there's an error
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios.get('/user', { withCredentials: true })
+  //     .then(response => {
+  //       setUser(response.data);
+  //       setLoading(false); // Set loading to false once user data is fetched
+  //     })
+  //     .catch(error => {
+  //       setError(error.message);
+  //       setLoading(false); // Also stop loading if there's an error
+  //     });
+  // }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent default form submission behavior

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Layout from '../../components/layout/layout';
-import axios from 'axios';
+
 import { UserContext } from '../../context/userContext';
 
 export default function Account() {
