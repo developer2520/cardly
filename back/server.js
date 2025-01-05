@@ -20,11 +20,11 @@ app.use(express.json());
 
 // CORS Middleware
 const corsOptions = {
-  origin: 'http://localhost:5173', // Frontend origin
-  credentials: true, // Allow cookies (credentials) to be sent
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow the required HTTP methods
-  allowedHeaders: ['Content-Type', 'Authorization', 'Accept'], // Allow necessary headers
-  exposedHeaders: ['Set-Cookie'], // Expose cookies to the frontend
+    origin: 'http://localhost:5173',
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept']
+
 };
 app.use(cors(corsOptions));
 
@@ -40,8 +40,8 @@ app.use(
     }),
     cookie: {
       maxAge: 24 * 60 * 60 * 1000, // 1 day
-      sameSite: 'lax', // Allow cross-origin for localhost
-      secure: false, // Disable for local development (HTTP)
+      sameSite: 'none', // Allow cross-origin for localhost
+      secure: true, // Disable for local development (HTTP)
       httpOnly: true, // Prevent client-side JavaScript access
     },
     name: 'sessionId',
