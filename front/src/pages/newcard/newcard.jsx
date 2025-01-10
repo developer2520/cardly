@@ -12,7 +12,10 @@ export default function NewCard() {
       <CardList />
       
       <TopBar />
+      <div className="phoneView">
       <PhoneView />
+      </div>
+     
       
       </div>
      
