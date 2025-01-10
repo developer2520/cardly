@@ -11,6 +11,7 @@ const connectDB = require('./db');
 connectDB();
 
 const app = express();
+app.use(express.json());
 
 // Trust proxy - required for environments like Render
 app.set('trust proxy', 1);
@@ -23,10 +24,10 @@ const corsOptions = {
     origin: 'http://localhost:5173',
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'Accept']
-
-};
-app.use(cors(corsOptions));
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
+  };
+  
+  app.use(cors(corsOptions));
 
 // Session Middleware
 app.use(
@@ -40,8 +41,8 @@ app.use(
     }),
     cookie: {
       maxAge: 24 * 60 * 60 * 1000, // 1 day
-      sameSite: 'none', // Allow cross-origin for localhost
-      secure: true, // Disable for local development (HTTP)
+      sameSite: 'lax', // Allow cross-origin for localhost
+      secure: false, // Disable for local development (HTTP)
       httpOnly: true, // Prevent client-side JavaScript access
     },
     name: 'sessionId',
@@ -87,8 +88,7 @@ app.get('/logout', (req, res, next) => {
 
 // User Route
 app.get('/user', (req, res) => {
-  console.log('Session:', req.session); // Debugging session
-  console.log('User:', req.user); // Debugging user
+  
 
   if (req.isAuthenticated()) {
     res.json(req.user);
@@ -99,15 +99,15 @@ app.get('/user', (req, res) => {
 
 // Create Card Route
 app.post('/cards', async (req, res) => {
-  const { title, description, link, url, userId } = req.body;
+  const { title, bio,  links, url, userId } = req.body; 
 
   try {
-    const existingCard = await LinkPage.findOne({ link });
+    const existingCard = await LinkPage.findOne({ url });
     if (existingCard) {
       return res.status(400).json({ error: 'Card already exists' });
     }
 
-    const card = new LinkPage({ title, description, link, url, userId });
+    const card = new LinkPage({ title,  bio, links, url, userId });
     await card.save();
     res.status(201).json({ message: 'Card created successfully' });
   } catch (err) {
@@ -133,12 +133,32 @@ app.get('/cards', async (req, res) => {
   }
 });
 
-// Global Error Handler
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(err.status || 500).json({ error: err.message });
+
+
+app.get("/cards/:url", async (req, res) => {
+    try {
+        const { url } = req.params;
+        const card = await LinkPage.findOne({ url });
+
+        if (!card) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        res.json(card);
+    } catch (err) {
+        console.error('Error fetching user:', err);
+        res.status(500).json({
+            message: 'Internal Server Error - Failed to fetch user',
+            error: err.message,
+        });
+    }
 });
 
+
+
+
+// Global Error Handler
+
 // Start Server
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 4000; // Default to port 4000
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

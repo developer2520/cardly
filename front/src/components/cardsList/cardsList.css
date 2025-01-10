@@ -14,7 +14,7 @@ body {
 }
 
 .layout {
-  display: flex;
+  display: flex;    
   width: 100%;
   height: 100%;
 }
@@ -23,20 +23,29 @@ body {
   position: sticky;
   top: 0;
   left: 0;
+  padding: 0;
+  margin: 0;
   width: 300px; /* Fixed width */
   height: 100vh; /* Full height */
   overflow-y: auto; /* Allow scrolling inside the card list */
   border-right: 1px solid rgba(0, 0, 0, 0.13);
-  padding: 7px;
+  
   flex-shrink: 0; /* Prevent shrinking */
 }
+
+@media (max-width: 800px) {
+  .cardlist {
+    width: 100%;
+  }
+}
+
 
 .card {
   background-color: rgb(255, 255, 255);
   min-height: 70px; /* Use min-height to allow flexibility */
-  padding: 0 1rem;
+  /* padding: 0 9rem; */
   border-bottom: 1px solid rgba(0, 0, 0, 0.13);
-  border-radius: 6px;
+  /* border-radius: 6px; */
   word-break: break-all;
 }
 
@@ -84,25 +93,31 @@ body {
 /* Button styles */
 .buttonContainer {
   position: relative;
+  width: 100%;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .button-58 {
   align-items: center;
   background-color: #06f;
   border: 2px solid #06f;
-  box-sizing: border-box;
+  /* box-sizing: content-box */
   color: #fff;
   cursor: pointer;
   display: inline-flex;
   fill: #000;
-  font-family: Inter, sans-serif;
-  font-size: 16px;
-  font-weight: 600;
+  
+  font-size: 20px;
+  font-weight: 400;
   height: 48px;
   justify-content: center;
-  letter-spacing: -.8px;
+  
   line-height: 24px;
-  width: 100%;
+  width: 90%;
+  margin: 0 auto;
   outline: 0;
   padding: 0 17px;
   text-align: center;
@@ -114,6 +129,9 @@ body {
   margin-bottom: 20px;
   position: sticky;
   border-radius: 10px;
+
+
+  
 }
 
 .button-58:focus {

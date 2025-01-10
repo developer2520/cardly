@@ -30,7 +30,7 @@ body {
     width: 100%; /* Allow the settings container to fill the parent width */
     max-width: 100%; /* Optional: Limit width for readability */
     padding: 20px; /* Add padding for aesthetics */
-    background-color: red;
+    background-color: rgb(255, 255, 255);
     height: 100vh
 }
 

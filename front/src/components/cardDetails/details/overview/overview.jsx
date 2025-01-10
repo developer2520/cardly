@@ -1,11 +1,17 @@
-import React from 'react'
-import './overview.css'
+export default function Overview({ card, isNewCard }) {
+  if (isNewCard) {
+    return (
+      // Render new card form
+      <div>
+        {/* Your new card form components */}
+      </div>
+    );
+  }
 
-export default function overview({ card }) {
   return (
+    // Render existing card details
     <div>
-      <h1>{card.title}</h1>
+      {/* Your existing card details */}
     </div>
-  )
-}
-
+  );
+};

@@ -22,7 +22,7 @@ export default function Settings() {
       console.error('Logout error:', error);
     }
   };
-
+document.title = "Settings"
   return (
     <Layout>
       <div className="settings">

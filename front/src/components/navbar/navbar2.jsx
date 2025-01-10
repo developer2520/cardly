@@ -6,13 +6,13 @@ export default function Navbar2() {
 
 
   const Login = () => {
-    window.location.href = 'https://cardly-1.onrender.com/auth/google';
+    window.location.href = 'http://localhost:4000/auth/google';
 
   }
   return (
     
        <div className='navbar'>
-        <div className="logo">
+        <div className="logoNavbar">
             <h1>Cardly</h1>
         </div>
 
@@ -25,7 +25,7 @@ export default function Navbar2() {
 </svg>
   
 
-  <span>
+  <span className='loginBUtton'>
   Continue with Google
   </span>
 </button>

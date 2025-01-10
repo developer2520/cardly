@@ -8,7 +8,7 @@
 .cardDetails {
    /* Take remaining space */
    width: 100%;
-    background-color: #ffffff; /* Adjust to your design */
+    background-color: #c90b0b; /* Adjust to your design */
     overflow-y: auto;  /* Allows scrolling if content exceeds height */
     height: 100%;
     display: block;
@@ -16,6 +16,12 @@
     
 
     
+}
+
+@media (max-width: 800px) {
+    .detailsContainer {
+        flex-direction: column;
+    }
 }
 
 
@@ -26,3 +32,4 @@
     word-wrap: break-word; /* Prevents long text from overflowing */
     overflow-wrap: break-word;
 }
+

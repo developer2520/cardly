@@ -5,6 +5,9 @@ import { UserContext } from '../../context/userContext';
 
 export default function Account() {
   const { user, loading, error } = useContext(UserContext);
+  if (user) {
+    document.title = `${user.name}`
+  }
 
   if (loading) {
     return (

@@ -4,13 +4,11 @@ import { OwnCardsContext } from '../../context/ownCardsContext'
 import { Link } from 'react-router-dom';
 
 
-export default function cardsList({onCardSelect}) {
+export default function cardsList({onCardSelect, selectedCard}) {
   const { ownCards, loading, error } = useContext(OwnCardsContext);
   const [notVisible, setNotVisible] = useState(false)
 
-  const handleVisible = () => {
-    setNotVisible(!notVisible)
-  }
+
   if (loading) { 
     return (
       /* From Uiverse.io by Fernando-sv */ 
@@ -30,7 +28,7 @@ export default function cardsList({onCardSelect}) {
       </div>
      
       {ownCards.map((card) => (
-        <div key={card._id} className="card" onClick={() => onCardSelect(card)}>
+        <div key={card._id} className={`card ${selectedCard ? "active" : ""}`}  onClick={() => onCardSelect(card)}>
           <h3>{card.title}</h3>
           <p>@{card.url}</p>
           <a href={card.link}>{card.link}</a>

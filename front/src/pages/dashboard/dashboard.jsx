@@ -8,15 +8,17 @@ import './dashboard.css';
 export default function Dashboard() {
   const [selectedCard, setSelectedCard] = useState(null);
 
+  document.title = "Home";
+
   return (
-  
     <Layout>
       <div className="dashboard">
-        <CardList onCardSelect={setSelectedCard} />
-        
+        {/* Pass the function to select the card */}
+        <CardList className="cardList" onCardSelect={setSelectedCard} />
+
         {/* Conditionally render the CardDetails component */}
         {selectedCard ? (
-          <CardDetails className="detailsCard" card={selectedCard} />
+          <CardDetails className={`cardDetails ${selectedCard ? 'active' : ''}`} card={selectedCard} />
         ) : (
           <div className="noCardDiv">
             <p>Select a card to start editing</p>
@@ -24,6 +26,5 @@ export default function Dashboard() {
         )}
       </div>
     </Layout>
- 
   );
 }

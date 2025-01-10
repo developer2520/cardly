@@ -3,7 +3,7 @@ require('dotenv').config();
 
 const connectDB = async () => {
     const uri = process.env.MONGO_URI;
-    console.log("Connecting to MongoDB with URI:", uri);
+    
     try {
         // Remove deprecated options
         await mongoose.connect(uri);

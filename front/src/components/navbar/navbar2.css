@@ -60,7 +60,7 @@ span {
     height: auto;
     padding: 5px 20px;
   }
-  span {
+  span.loginBUtton {
     display: none;
   }
 

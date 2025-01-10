@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
-import Overview from './../cardDetails/details/overview/overview';
+// import Overview from './../cardDetails/details/overview/overview';
 import './topbar.css'
+import Page from './../page/page'
+import Design from './../design/design'
 
 const Topbar = ({ card, isNewCard }) => {
   const [activeTab, setActiveTab] = useState("Main");
@@ -21,13 +23,9 @@ const Topbar = ({ card, isNewCard }) => {
   const renderComponent = () => {
     switch (activeTab) {
       case "Main":
-        return isNewCard ? (
-          <Overview isNewCard={true} />
-        ) : (
-          <Overview card={card} />
-        );
+        return <Page />
       case "Design":
-        return <div>Design Content</div>;
+        return <Design />;
       case "Settings":
         return <div>Settings Content</div>;
       default:

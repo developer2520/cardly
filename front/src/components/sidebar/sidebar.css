@@ -28,6 +28,32 @@ body {
      padding:  0 10px 0 10px;
     
 }
+
+@media (max-width: 800px) {
+    .sidebar {
+        position: fixed;
+        bottom: 0;
+        margin: 0;
+        left: 0;
+        top: unset;
+        width: 100vw;
+        height: auto;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        padding: 0;
+        background-color: #ffffff; /* Adjust the background color as needed */
+        border-top: 0.011px solid rgba(0, 0, 0, 0.288);
+        border-right: none;
+    }
+    .logo {
+        display: none;
+    }
+    .icon {
+        font-size: 11px;
+    }
+}
+
 .logo {
     width: 80px;
 }
