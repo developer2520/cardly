@@ -163,20 +163,25 @@ app.delete('/cards/:id', async (req, res) => {
   }
 });
 
+// Assuming you're using Express
 app.get('/templates/:id', async (req, res) => {
   try {
-    const template = await Template.findById(req.params.id); // Get the template by its ID
-
+    // Convert the templateId to a number
+    const templateId = Number(req.params.id);
+     // Log the converted template ID
+    const template = await Template.findOne({ id: templateId });
     if (!template) {
-      return res.status(404).json({ message: 'Template not found' });
+      return res.status(404).json({ error: 'Template not found' });
     }
-
-    res.json(template); // Return the template as a JSON response
+    res.json(template);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ error: 'Server error' });
   }
 });
+
+
+
 
 const seedTemplates = async () => {
   try {

@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 export default function Card() {
   const [loading, setLoading] = useState(true);
   const [card, setCard] = useState(null);
-  const [template, setTemplate] = useState(null); // State to hold the template styles
+  const [template, setTemplate] = useState(null);
   const [error, setError] = useState(null);
   const { url } = useParams(); // Destructure the URL parameter
 
@@ -16,11 +16,6 @@ export default function Card() {
       .get(`/cards/${url}`, { withCredentials: true })
       .then((response) => {
         setCard(response.data); // Set card data
-        // Fetch the template styles using the template ID from the card
-        return axios.get(`/templates/${response.data.template}`);
-      })
-      .then((templateResponse) => {
-        setTemplate(templateResponse.data); // Set template data (styles)
         setLoading(false);
       })
       .catch((err) => {
@@ -34,11 +29,28 @@ export default function Card() {
   }, [url]); // Dependency: Run when URL changes
 
   useEffect(() => {
+    // Fetch template data if card is available and has a template
+    if (card && card.template) {
+      axios
+        .get(`/templates/${card.template}`)  // Fixed URL here
+        .then((response) => {
+          setTemplate(response.data); // Set template data
+        })
+        .catch((err) => {
+          console.error('Error fetching template:', err);
+        });
+    }
+  }, [card]); // Dependency: Run when card changes
+
+  useEffect(() => {
     // Update document title when `card` changes
     if (card) {
       document.title = `${card.title}`;
     }
   }, [card]); // Dependency: Run when `card` is updated
+
+  console.log(template);
+  console.log(card);
 
   if (loading) {
     return (
@@ -52,14 +64,13 @@ export default function Card() {
     return <h1>{error}</h1>;
   }
 
-  // Define inline styles from the template if available
-  const inlineStyles = template ? {
-    backgroundColor: template.styles.backgroundColor || 'white',
-    color: template.styles.textColor || 'black',
-  } : {};
-
   return (
-    <div className="cardPage" style={inlineStyles}>
+    <div
+      className="cardPage"
+      style={{backgroundColor: template?.styles?.backgroundColor,
+        color: template?.styles?.textColor
+      }}
+    >
       <h1 className="cardTitle">{card.title}</h1>
       <p>{card.bio}</p>
 
@@ -74,8 +85,10 @@ export default function Card() {
                 rel="noopener noreferrer"
                 className="link"
                 style={{
-                  backgroundColor: template.styles.linkStyles?.backgroundColor || 'transparent',
-                  color: template.styles.linkStyles?.color || 'blue',
+                  backgroundColor: template?.styles?.linkStyles?.backgroundColor,
+                  borderRadius: template?.styles?.linkStyles?.borderRadius,
+                  border: template?.styles?.linkStyles?.border,
+                  color: template?.styles?.textColor,
                 }}
               >
                 {link.title}
@@ -86,6 +99,9 @@ export default function Card() {
           <p>No links available</p>
         )}
       </div>
+
+      {/* Render the template styles if available */}
+      
     </div>
   );
 }

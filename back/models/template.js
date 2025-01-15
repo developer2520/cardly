@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const templateSchema = new mongoose.Schema({
-  id: { type: String, required: true, unique: true }, // Unique identifier for the template
+  id: { type: Number, required: true, unique: true }, // Unique identifier for the template
   name: { type: String, required: true },
   theme: { type: String, required: true }, // e.g., 'dark' or 'light'
   styles: {
