@@ -5,7 +5,9 @@
     background-color: rgb(255, 255, 255);
     justify-content: center;
     align-items:center;
-    position: relative;
+    position: sticky;
+    right: 0;
+    top: 0;
     border-left: 0.01px solid gray;
     padding-left: 0px;
    

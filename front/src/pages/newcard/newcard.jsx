@@ -5,21 +5,26 @@ import Layout from './../../components/layout/layout';
 import CardList from './../../components/cardsList/cardsList'
 import PhoneView from './phoneView/phoneView'
 
-export default function NewCard() {
+export default function NewCard({setSelectedCard}) {
   return (
-    <Layout>
-      <div className="container">
-      <CardList />
+  
+    <>
+      <div className="detailsContainer">
       
-      <TopBar />
-      <div className="phoneView">
+      <div className="cardDetails">
+      <TopBar setSelectedCard={setSelectedCard}/>
+      </div>
+    
+      
       <PhoneView />
-      </div>
+     
      
       
       </div>
      
+      </>
+  
+
    
-    </Layout>
   );
 }

@@ -4,3 +4,7 @@ body {
     position: relative;
     overflow-x: hidden;
 }
+.container {
+    flex-grow: 1;
+    display: flex;
+}

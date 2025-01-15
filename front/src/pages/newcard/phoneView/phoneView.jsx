@@ -9,7 +9,7 @@ export default function PhoneView({  }) {
       
       <img className="iphoneFrame" src={Iphone14} alt="iPhone Frame" />
       <iframe 
-        src={"https://www.youtube.com"} 
+        src={"https://www.google.com"} 
         
         title="Phone View Content" 
         allowFullScreen

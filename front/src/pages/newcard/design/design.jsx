@@ -1,88 +1,101 @@
-import React, { useState } from "react";
-import { Check } from "lucide-react";
-import './design.css'
+// src/components/TemplateSelector.js
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-const DesignTemplatesTab = () => {
-  const [selectedTemplate, setSelectedTemplate] = useState("minimal");
+const Design = () => {
+  const [templates, setTemplates] = useState([]);  // State to store templates
+  const [selectedTemplate, setSelectedTemplate] = useState(null);  // State to store selected template
 
-  const templates = [
-    {
-      id: "minimal",
-      name: "Minimal",
-      description: "Clean and simple design with focus on content",
-      preview: {
-        backgroundClass: "template-minimal-bg",
-        buttonClass: "template-minimal-button",
-      },
-    },
-    {
-      id: "gradient",
-      name: "Gradient",
-      description: "Modern look with beautiful gradient backgrounds",
-      preview: {
-        backgroundClass: "template-gradient-bg",
-        buttonClass: "template-gradient-button",
-      },
-    },
-    {
-      id: "dark",
-      name: "Dark Mode",
-      description: "Sleek dark theme for a professional look",
-      preview: {
-        backgroundClass: "template-dark-bg",
-        buttonClass: "template-dark-button",
-      },
-    },
-  ];
+  // Fetch templates when the component mounts
+  useEffect(() => {
+    async function fetchTemplates() {
+      try {
+        const response = await axios.get('/templates');
+        setTemplates(response.data);  // Set templates in state
+        // Set the default selected template as "Minimal"
+        const defaultTemplate = response.data.find(template => template.name === 'White');
+        setSelectedTemplate(defaultTemplate);  // Set default selected template
+      } catch (error) {
+        console.error('Error fetching templates:', error);
+      }
+    }
+
+    fetchTemplates();
+  }, []);
+
+  // Handle template selection
+  const handleSelectTemplate = (template) => {
+    setSelectedTemplate(template);  // Set selected template
+  };
 
   return (
-    <div className="design-templates-tab">
-      <h2 className="heading">Choose a template</h2>
-      <div className="templates-container">
+    <div>
+      <h1>Select a Template</h1>
+      
+      {/* Display list of templates as cards */}
+      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
         {templates.map((template) => (
           <div
             key={template.id}
-            className={`template-card ${
-              selectedTemplate === template.id ? "template-selected" : ""
-            }`}
-            onClick={() => setSelectedTemplate(template.id)}
+            onClick={() => handleSelectTemplate(template)}
+            style={{
+              width: '200px',
+              margin: '10px',
+              padding: '20px',
+              borderRadius: '10px',
+              cursor: 'pointer',
+              backgroundColor: template.styles.backgroundColor,
+              color: template.styles.textColor,
+              boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+            }}
           >
-            <div className={`template-preview ${template.preview.backgroundClass}`}>
-              <div className="profile-section">
-                <div className="profile-picture">
-                  <img
-                    src="/api/placeholder/96/96"
-                    alt="Profile"
-                    className="profile-image"
-                  />
-                </div>
-                <h3 className="profile-name">John Doe</h3>
-                <p className="profile-title">Digital Creator & Content Writer</p>
-              </div>
-              <div className="preview-buttons">
-                {["Instagram", "Twitter", "Website", "YouTube"].map((label) => (
-                  <div key={label} className={`button ${template.preview.buttonClass}`}>
-                    {label}
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="template-info">
-              <h3 className="template-name">{template.name}</h3>
-              <p className="template-description">{template.description}</p>
-            </div>
-            {selectedTemplate === template.id && (
-              <div className="selected-indicator">
-                <div className="check-icon">
-                  <Check size={16} />
-                </div>
-              </div>
-            )}
+            <h3>{template.name}</h3>
+
+            {/* Template button with its own styles */}
+            <button
+              style={{
+                backgroundColor: template.styles.linkStyles.backgroundColor,
+                borderRadius: template.styles.linkStyles.borderRadius,
+                border: template.styles.linkStyles.border,
+                padding: '10px 20px',
+                marginTop: '10px',
+                color: template.styles.textColor,
+              }}
+            >
+              Sample Button
+            </button>
           </div>
         ))}
       </div>
+
+      {/* Display selected template preview */}
+      {selectedTemplate && (
+        <div
+          style={{
+            backgroundColor: selectedTemplate.styles.backgroundColor,
+            color: selectedTemplate.styles.textColor,
+            padding: '20px',
+            marginTop: '20px',
+            borderRadius: '10px',
+          }}
+        >
+          <h2>Selected Template: {selectedTemplate.name}</h2>
+          <button
+            style={{
+              backgroundColor: selectedTemplate.styles.linkStyles.backgroundColor,
+              borderRadius: selectedTemplate.styles.linkStyles.borderRadius,
+              border: selectedTemplate.styles.linkStyles.border,
+              padding: '10px 20px',
+              marginTop: '10px',
+              color: selectedTemplate.styles.textColor,
+            }}
+          >
+            Sample Button
+          </button>
+        </div>
+      )}
     </div>
   );
 };
 
-export default DesignTemplatesTab;
+export default Design;

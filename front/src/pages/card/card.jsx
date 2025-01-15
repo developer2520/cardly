@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 export default function Card() {
   const [loading, setLoading] = useState(true);
   const [card, setCard] = useState(null);
+  const [template, setTemplate] = useState(null); // State to hold the template styles
   const [error, setError] = useState(null);
   const { url } = useParams(); // Destructure the URL parameter
 
@@ -15,6 +16,11 @@ export default function Card() {
       .get(`/cards/${url}`, { withCredentials: true })
       .then((response) => {
         setCard(response.data); // Set card data
+        // Fetch the template styles using the template ID from the card
+        return axios.get(`/templates/${response.data.template}`);
+      })
+      .then((templateResponse) => {
+        setTemplate(templateResponse.data); // Set template data (styles)
         setLoading(false);
       })
       .catch((err) => {
@@ -41,29 +47,43 @@ export default function Card() {
       </div>
     );
   }
-console.log(card)
+
   if (error) {
     return <h1>{error}</h1>;
   }
 
+  // Define inline styles from the template if available
+  const inlineStyles = template ? {
+    backgroundColor: template.styles.backgroundColor || 'white',
+    color: template.styles.textColor || 'black',
+  } : {};
+
   return (
-    <div className="cardPage">
+    <div className="cardPage" style={inlineStyles}>
       <h1 className="cardTitle">{card.title}</h1>
       <p>{card.bio}</p>
-      
 
       {/* Render the links */}
       <div className="linksContainer">
         {card.links && card.links.length > 0 ? (
           card.links.map((link, index) => (
             <div key={index} className="linkItem">
-              <a href={link.url} target="_blank" rel="noopener noreferrer" className="link">
+              <a
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="link"
+                style={{
+                  backgroundColor: template.styles.linkStyles?.backgroundColor || 'transparent',
+                  color: template.styles.linkStyles?.color || 'blue',
+                }}
+              >
                 {link.title}
               </a>
             </div>
           ))
         ) : (
-          <p></p>
+          <p>No links available</p>
         )}
       </div>
     </div>

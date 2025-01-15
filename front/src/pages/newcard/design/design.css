@@ -2,12 +2,12 @@
 
 
 .design-templates-tab {
-  padding: 24px; /* Added padding back */
-  flex-grow: 1;
-  height: calc(100%); /* Adjust for any header or navbar */
-  /* Enable scrolling for this section */
-  box-sizing: border-box; 
+  padding: 24px;
+  max-width: 100%;
+  height: calc(50%);
+  box-sizing: border-box;
   overflow-y: scroll;
+  overflow-x: hidden; 
 }
 
 .heading {
@@ -24,13 +24,13 @@
   
 }
 
+
 .template-card {
-  width: 250px;
+  width: 200px;
   cursor: pointer;
   transition: transform 0.3s, box-shadow 0.3s;
   border: 2px solid black;
   border-radius: 8px;
-  /* overflow: hidden; */
   position: relative;
 }
 

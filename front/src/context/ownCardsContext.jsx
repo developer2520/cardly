@@ -12,27 +12,31 @@ export const OwnCardsProvider = ({ children }) => {
     const [loading, setLoading] = useState(true); // To manage loading state
     const [error, setError] = useState(null); // To handle errors
 
-    useEffect(() => {
-        const fetchCards = async () => {
-            if (user && user.googleId) {
-                try {
-                    const response = await axios.get(`/cards?googleId=${user.googleId}`, {
-                        withCredentials: true,
-                    });
-                    setOwnCards(response.data);
-                } catch (err) {
-                    setError(err.message);
-                } finally {
-                    setLoading(false); // Handles both success and failure
-                }
-            }                
-        };
+    // Fetch cards function
+    const fetchCards = async () => {
+        if (user && user.googleId) {
+            setLoading(true);
+            try {
+                const response = await axios.get(`/cards?googleId=${user.googleId}`, {
+                    withCredentials: true,
+                });
+                setOwnCards(response.data);
+                setError(null); // Clear any previous errors
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false); // Handles both success and failure
+            }
+        }
+    };
 
+    // Fetch cards initially when the user changes
+    useEffect(() => {
         fetchCards();
     }, [user]);
 
     return (
-        <OwnCardsContext.Provider value={{ ownCards, loading, error }}>
+        <OwnCardsContext.Provider value={{ ownCards, loading, error, refetch: fetchCards }}>
             {children}
         </OwnCardsContext.Provider>
     );

@@ -5,6 +5,7 @@ const cors = require('cors');
 const MongoStore = require('connect-mongo');
 const passport = require('./passport');
 const LinkPage = require('./models/linkModel');
+const Template = require('./models/template');
 const connectDB = require('./db');
 
 // Connect to the database
@@ -113,6 +114,93 @@ app.post('/cards', async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Server error' });
+  }
+});
+
+app.put('/cards/:id', async (req, res) => {
+  const { id } = req.params; // Get ID from the URL
+  const { title, bio, links, url } = req.body; // Get other data from the request body
+
+  try {
+    // Validate inputs
+    if (!id || !title || !url) {
+      return res.status(400).json({ message: 'ID, title, and URL are required.' });
+    }
+
+    // Update the card in the database
+    const updatedCard = await LinkPage.findByIdAndUpdate(
+      id, // Use the ID from the URL
+      { title, bio, links, url },
+      { new: true, runValidators: true } // Return the updated document and run validations
+    );
+
+    if (!updatedCard) {
+      return res.status(404).json({ message: 'Card not found.' });
+    }
+
+    res.status(200).json({ message: 'Card updated successfully!', card: updatedCard });
+  } catch (error) {
+    console.error('Error updating card:', error);
+    res.status(500).json({ message: 'Internal server error.' });
+  }
+});
+
+
+app.delete('/cards/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+      const deletedCard = await LinkPage.findByIdAndDelete(id);
+
+      if (!deletedCard) {
+          return res.status(404).json({ message: 'Card not found.' });
+      }
+
+      res.status(200).json({ message: 'Card deleted successfully!' });
+  } catch (error) {
+      console.error('Error deleting card:', error);
+      res.status(500).json({ message: 'Internal server error.' });
+  }
+});
+
+app.get('/templates/:id', async (req, res) => {
+  try {
+    const template = await Template.findById(req.params.id); // Get the template by its ID
+
+    if (!template) {
+      return res.status(404).json({ message: 'Template not found' });
+    }
+
+    res.json(template); // Return the template as a JSON response
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+const seedTemplates = async () => {
+  try {
+    const existingTemplates = await Template.find({});
+    if (existingTemplates.length === 0) {
+      await Template.insertMany(templates);
+      console.log('Templates seeded successfully.');
+    } else {
+      console.log('Templates already exist. Skipping seeding.');
+    }
+  } catch (err) {
+    console.error('Error seeding templates:', err);
+  }
+};
+
+
+
+
+app.get('/templates', async (req, res) => {
+  try {
+    const templates = await Template.find({});
+    res.status(200).json(templates);
+  } catch (err) {
+    res.status(500).json({ message: 'Error fetching templates', error: err });
   }
 });
 

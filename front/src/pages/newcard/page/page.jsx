@@ -3,16 +3,18 @@ import axios from 'axios';
 import { PlusCircle, Trash2, Save } from 'lucide-react';
 import Layout from './../../../components/layout/layout';
 import { UserContext } from './../../../context/userContext';
+import {OwnCardsContext} from './../../../context/ownCardsContext'
 
 import './page.css';
 
-export default function Page() {
+export default function Page({setSelectedCard}) {
   const [links, setLinks] = useState([{ title: '', url: '' }]);
   const [bio, setBio] = useState('');
   const [title, setTitle] = useState('');
   const [status, setStatus] = useState({ type: '', message: '' });
   const [isLoading, setIsLoading] = useState(false);
-  const { user } = useContext(UserContext);
+  const { user,  } = useContext(UserContext);
+  const {refetch} = useContext(OwnCardsContext)
   const [url, setUrl] = useState('');
 
   const userId = user?.googleId;
@@ -47,7 +49,14 @@ export default function Page() {
       setStatus({ type: 'error', message: error.response?.data?.message || 'Failed to save' });
     } finally {
       setIsLoading(false);
+      refetch()
+      // setTitle("")
+      // setBio("")
+      // setUrl("")
+      // setLinks([{ title: '', url: '' }])
+      setSelectedCard(null)
     }
+   
   };
 
   return (
@@ -72,6 +81,7 @@ export default function Page() {
             <input
               type="text"
               placeholder="Title"
+              required
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               className="input profile-input"

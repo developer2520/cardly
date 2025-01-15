@@ -1,16 +1,16 @@
 import React from 'react';
 import './cardDetails.css';
 import PhoneView from './phoneView';
-import TopBar from '../../components/topbar/topbar'
+import TopBar from './topbar/topbar'
 
-export default function CardDetails({ card }) {
+export default function CardDetails({ card, setSelectedCard }) {
 
   document.title = `${card.title}`
   return (
     <>
     <div className="detailsContainer">
     <div className="cardDetails">
-      <TopBar card={card} />
+      <TopBar card={card} setSelectedCard={setSelectedCard} />
       
      
      

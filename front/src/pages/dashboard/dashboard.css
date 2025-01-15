@@ -26,17 +26,7 @@
     border-right: 1px solid #ddd;
   }
   
-  .card {
-    background: #f1f1f1;
-    
-    padding: 10px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-  }
   
-  .card:hover {
-    background-color: #e0e0e0;
-  }
   
   .cardDetails {
     flex-grow: 1;
