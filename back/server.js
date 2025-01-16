@@ -182,22 +182,58 @@ app.get('/templates/:id', async (req, res) => {
 
 
 
+// const seedTemplates = async () => {
+//   try {
+//     // Get existing template IDs
+//     const existingTemplates = await Template.find({});
+//     const existingIds = existingTemplates.map(template => template.id);
 
-const seedTemplates = async () => {
-  try {
-    const existingTemplates = await Template.find({});
-    if (existingTemplates.length === 0) {
-      await Template.insertMany(templates);
-      console.log('Templates seeded successfully.');
-    } else {
-      console.log('Templates already exist. Skipping seeding.');
-    }
-  } catch (err) {
-    console.error('Error seeding templates:', err);
+//     // Filter out templates that already exist
+//     const newTemplates = templates.filter(template => !existingIds.includes(template.id));
+
+//     if (newTemplates.length > 0) {
+//       await Template.insertMany(newTemplates);
+//       console.log(`Successfully added ${newTemplates.length} new templates`);
+//     } else {
+//       console.log('No new templates to add');
+//     }
+//   } catch (err) {
+//     console.error('Error seeding templates:', err);
+//   } finally {
+    
+//     console.log('Database connection closed');
+//   }
+// };
+
+app.put('/pages/:pageId/template', async (req, res) => {
+  const { pageId } = req.params;
+  const { templateId } = req.body; // The ID of the selected template
+
+  if (!templateId) {
+    return res.status(400).json({ message: 'Template ID is required.' });
   }
-};
 
+  try {
+    // Find the page and update its default template
+    const updatedPage = await LinkPage.findOne(
+      pageId,
+      { defaultTemplate: templateId },
+      { new: true } // Return the updated document
+    );
 
+    if (!updatedPage) {
+      return res.status(404).json({ message: 'Page not found.' });
+    }
+
+    res.status(200).json({
+      message: 'Default template updated successfully.',
+      page: updatedPage,
+    });
+  } catch (error) {
+    console.error('Error updating default template:', error);
+    res.status(500).json({ message: 'Internal server error.' });
+  }
+});
 
 
 app.get('/templates', async (req, res) => {

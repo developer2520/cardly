@@ -14,7 +14,7 @@ const linkPageSchema = new mongoose.Schema({
   template: {
     type: String, 
     ref: 'Template', // Reference to the Template model, assuming you have a Template model
-    default: '1', // Use the ID of the default template, e.g., 'Minimal'
+    default: '6', // Use the ID of the default template, e.g., 'Minimal'
   },
 }, {
   timestamps: true,

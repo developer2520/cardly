@@ -49,8 +49,7 @@ export default function Card() {
     }
   }, [card]); // Dependency: Run when `card` is updated
 
-  console.log(template);
-  console.log(card);
+  
 
   if (loading) {
     return (
