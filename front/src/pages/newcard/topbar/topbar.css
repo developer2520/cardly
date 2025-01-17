@@ -5,7 +5,7 @@
   word-break: keep-all;
   overflow-x: auto;
   left: 0;
-  
+  width: 100%;
   z-index: 10;
   background-color: white;
   border-bottom: 1px solid #e0e0e0;

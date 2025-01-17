@@ -3,45 +3,45 @@ import axios from 'axios';
 import { PlusCircle, Trash2, Save } from 'lucide-react';
 import Layout from './../../../components/layout/layout';
 import { UserContext } from './../../../context/userContext';
-import {OwnCardsContext} from './../../../context/ownCardsContext'
+import { useCard } from "./../../../context/previewContext";
+import { OwnCardsContext } from './../../../context/ownCardsContext';
 
 import './page.css';
 
-export default function Page({setSelectedCard}) {
-  const [links, setLinks] = useState([{ title: '', url: '' }]);
-  const [bio, setBio] = useState('');
-  const [title, setTitle] = useState('');
+export default function Page({ setSelectedCard }) {
+  const { user } = useContext(UserContext);
+  const { refetch } = useContext(OwnCardsContext);
+  const { data, setData } = useCard();
   const [status, setStatus] = useState({ type: '', message: '' });
   const [isLoading, setIsLoading] = useState(false);
-  const { user,  } = useContext(UserContext);
-  const {refetch} = useContext(OwnCardsContext)
-  const [url, setUrl] = useState('');
 
   const userId = user?.googleId;
 
   const addLink = () => {
-    setLinks([...links, { title: '', url: '' }]);
+    const newLinks = [...(data.links || []), { title: '', url: '' }];
+    setData((prev) => ({ ...prev, links: newLinks }));
   };
 
   const removeLink = (index) => {
-    setLinks(links.filter((_, i) => i !== index));
+    const newLinks = data.links.filter((_, i) => i !== index);
+    setData((prev) => ({ ...prev, links: newLinks }));
   };
 
   const updateLink = (index, field, value) => {
-    const newLinks = links.map((link, i) =>
+    const newLinks = data.links.map((link, i) =>
       i === index ? { ...link, [field]: value } : link
     );
-    setLinks(newLinks);
+    setData((prev) => ({ ...prev, links: newLinks }));
   };
 
   const handleSave = async () => {
     setIsLoading(true);
     try {
       await axios.post('/cards', {
-        title,
-        bio,
-        links: links.filter((link) => link.title && link.url),
-        url,
+        title: data.title,
+        bio: data.bio,
+        links: (data.links || []).filter((link) => link.title && link.url),
+        url: data.url,
         userId,
       });
       setStatus({ type: 'success', message: 'Page saved successfully!' });
@@ -49,101 +49,92 @@ export default function Page({setSelectedCard}) {
       setStatus({ type: 'error', message: error.response?.data?.message || 'Failed to save' });
     } finally {
       setIsLoading(false);
-      refetch()
-      // setTitle("")
-      // setBio("")
-      // setUrl("")
-      // setLinks([{ title: '', url: '' }])
-      setSelectedCard(null)
+      refetch();
+      setData({
+        title: '',
+        bio: '',
+        links: [{ title: '', url: '' }],
+        url: '',
+      });
     }
-   
   };
 
   return (
- 
-      <div className="container">
-        <div className="cardd">
-        
-          <div className="card-header">
-            <h2>Create Your Cardly Page</h2>
-          </div>
-          <div className="card-content">
-            {status.message && (
-              <div
-                className={`alert ${
-                  status.type === 'error' ? 'alert-error' : 'alert-success'
-                }`}
-              >
-                {status.message}
-              </div>
-            )}
-
-            <input
-              type="text"
-              placeholder="Title"
-              required
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              className="input profile-input"
-            />
-            <input
-              type="text"
-              placeholder="URL"
-              value={url}
-              onChange={(e) => setUrl(e.target.value)}
-              className="input"
-            />
-            <textarea
-              name="bio"
-              id="bio"
-              placeholder="Enter your bio here (optional)"
-              className="input"
-              onChange={(e) => setBio(e.target.value)}
-              value={bio}
-            ></textarea>
-
-            {links.map((link, index) => (
-              <div key={index} className="link-row">
-                <input
-                  type="text"
-                  placeholder="Link Title"
-                  value={link.title}
-                  onChange={(e) => updateLink(index, 'title', e.target.value)}
-                  className="input"
-                />
-                <input
-                  type="text"
-                  placeholder="URL"
-                  value={link.url}
-                  onChange={(e) => updateLink(index, 'url', e.target.value)}
-                  className="input"
-                />
-                <button
-                  className="button button-ghost"
-                  onClick={() => removeLink(index)}
-                >
-                  <Trash2 className="icon" />
-                </button>
-              </div>
-            ))}
-
-            <div className="button-row">
-              <button className="button button-outline" onClick={addLink}>
-                <PlusCircle className="iconn white-plus" />
-                Add Link
-              </button>
-              <button
-                className="button button-primary"
-                onClick={handleSave}
-                disabled={isLoading}
-              >
-                <Save className="iconn" />
-                {isLoading ? 'Saving...' : 'Save Page'}
+    <div className="container">
+      <div className="cardd">
+        <div className="card-header">
+          <h2>Create Your Cardly Page</h2>
+        </div>
+        <div className="card-content">
+          {status.message && (
+            <div
+              className={`alert ${
+                status.type === 'error' ? 'alert-error' : 'alert-success'
+              }`}
+            >
+              {status.message}
+            </div>
+          )}
+          <input
+            type="text"
+            placeholder="Title"
+            required
+            value={data.title || ''}
+            onChange={(e) => setData((prev) => ({ ...prev, title: e.target.value }))}
+            className="input profile-input"
+          />
+          <input
+            type="text"
+            placeholder="URL"
+            value={data.url || ''}
+            onChange={(e) => setData((prev) => ({ ...prev, url: e.target.value }))}
+            className="input"
+          />
+          <textarea
+            name="bio"
+            id="bio"
+            placeholder="Enter your bio here (optional)"
+            className="input"
+            value={data.bio || ''}
+            onChange={(e) => setData((prev) => ({ ...prev, bio: e.target.value }))}
+          ></textarea>
+          {(data.links || []).map((link, index) => (
+            <div key={index} className="link-row">
+              <input
+                type="text"
+                placeholder="Link Title"
+                value={link.title}
+                onChange={(e) => updateLink(index, 'title', e.target.value)}
+                className="input"
+              />
+              <input
+                type="text"
+                placeholder="URL"
+                value={link.url}
+                onChange={(e) => updateLink(index, 'url', e.target.value)}
+                className="input"
+              />
+              <button className="button button-ghost" onClick={() => removeLink(index)}>
+                <Trash2 className="icon" />
               </button>
             </div>
+          ))}
+          <div className="button-row">
+            <button className="button button-outline" onClick={addLink}>
+              <PlusCircle className="iconn white-plus" />
+              Add Link
+            </button>
+            <button
+              className="button button-primary"
+              onClick={handleSave}
+              disabled={isLoading}
+            >
+              <Save className="iconn" />
+              {isLoading ? 'Saving...' : 'Save Page'}
+            </button>
           </div>
         </div>
       </div>
-  
+    </div>
   );
 }

@@ -5,7 +5,7 @@ import TopBar from './topbar/topbar'
 
 export default function CardDetails({ card, setSelectedCard }) {
 
-  document.title = `${card.title}`
+  document.title = `${card.title} | Cardly`
   return (
     <>
     <div className="detailsContainer">

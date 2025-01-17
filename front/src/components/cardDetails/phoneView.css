@@ -20,7 +20,7 @@
 iframe {
   position: absolute;
   width: calc(100% + 1 0px); /* Adjust to fit the screen's width */
-  height: 507px; /* Adjust to fit the screen's height */
+  height: 530px; /* Adjust to fit the screen's height */
   z-index: 1; /* Ensure the iframe stays behind the frame */
   border: none; /* Remove the border for a cleaner look */
   border-radius: 30px;

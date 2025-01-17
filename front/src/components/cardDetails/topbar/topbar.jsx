@@ -1,6 +1,8 @@
+
 import React, { useState, useRef, useEffect } from "react";
 import Page from '../details/page/page';
 import Settings from './../details/settings/settings'
+import Design from '../details/design/design'
 import './topbar.css'
 
 const Topbar = ({ card, setSelectedCard }) => {
@@ -24,7 +26,7 @@ const Topbar = ({ card, setSelectedCard }) => {
       case "Main":
         return <Page card={card} />
       case "Design":
-        return <div>Design Content</div>;
+        return <Design />;
       case "Settings":
         return <Settings card={card} setSelectedCard={setSelectedCard}/>;
       case "Stats":

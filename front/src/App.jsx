@@ -10,6 +10,7 @@ import Newcard from './pages/newcard/newcard';
 import Card from './pages/card/card';
 import UserProvider from './context/userContext';
 import OwnCardsProvider from './context/ownCardsContext';
+import { CardProvider } from './context/previewContext';
 import Navbar2 from './components/navbar/navbar2';
 
 
@@ -26,6 +27,7 @@ function App() {
   return (
     <UserProvider>
       <OwnCardsProvider>
+        <CardProvider >
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LandingPage />} />
@@ -40,6 +42,7 @@ function App() {
 
         </Routes>
       </BrowserRouter>
+      </CardProvider>
       </OwnCardsProvider>
     </UserProvider>
   );

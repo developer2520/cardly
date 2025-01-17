@@ -1,0 +1,94 @@
+/* Container styling */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  .design-container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    color: #333;
+  }
+  
+  /* Template grid */
+  .templates-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  /* Template card */
+  /* Template card */
+  .template-card {
+    width: 200px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 0.01px solid gray;
+    border-radius: 10px;
+    cursor: pointer;
+    padding: 15px;
+    margin: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: 
+      transform 0.3s ease, 
+      box-shadow 0.3s ease, 
+      outline-offset 0.3s ease;
+  }
+  
+  
+  .template-card:hover {
+    transform: scale(1.01);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .template-card.selected {
+    
+    outline: 2px solid #007bff; /* Create the visible border */
+    outline-offset: 6px; /* Add space between the border and the content */
+    transform: scale(1.01); /* Slight zoom effect for selected card */
+    box-shadow: 0 6px 12px rgba(0, 123, 255, 0.3); /* Subtle glow */
+  }
+  /* Template links container */
+  .links-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+  
+  /* Placeholder link */
+  .template-link {
+    height: 30px;
+    width: 100%;
+    border: 1px solid transparent;
+    transition: transform 0.3s;
+  }
+  
+  
+  /* Selected template preview */
+  .selected-template-preview {
+    margin-top: 30px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  p.template-name {
+    text-align: center;
+    color: rgb(61, 60, 60);
+  }
+  
+  .loading-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    font-size: 18px;
+    color: #555;
+  }
+  
+  

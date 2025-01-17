@@ -1,35 +1,37 @@
 .phoneView {
-    width: 35%;
-    height: 100%;
-    display: flex;
-    background-color: rgb(255, 255, 255);
-    justify-content: center;
-    align-items:center;
-    position: sticky;
-    right: 0;
-    top: 0;
-    border-left: 0.01px solid gray;
-    padding-left: 0px;
-   
-   
-  }
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 315px; /* Fixed width for the phone view */
+  height: 500px; /* Typical height for a phone view */
+  background-color: rgb(255, 255, 255);
+  border-radius: 30px;
+  border: 7px solid black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  margin: auto;
+  margin-right: 20px;
   
-  .phoneView .iphoneFrame {
-    width: 100%;
-    max-height: 100%;
-    position: relative; /* iPhone frame stays relative to the parent */
-    z-index: 2; /* Ensure the frame is above the iframe */
-  }
- 
-  iframe {
-    position: absolute;
-  
-    /* Adjust to match the screen's top position on the iPhone */
-    /* Adjust to match the screen's left position on the iPhone */
-    width: calc(100% - 20px); /* Adjust to fit the screen's width */
-    height: 507px; /* Adjust to fit the screen's height */
-    z-index: 1; /* Ensure the iframe stays behind the frame */
-    border: none; /* Remove the border for a cleaner look */
-    border-radius: 30px;
-  }
-  
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow-y: scroll; /* Prevent content from overflowing */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.phoneView h1 {
+  word-break: break-word;
+  font-size: 1.25rem; /* Adjust font size for title */
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.phoneView p {
+  word-break: break-word;
+  font-size: 0.8rem;
+  color: rgb(83, 83, 83);
+  text-align: center;
+  margin: 0;
+}

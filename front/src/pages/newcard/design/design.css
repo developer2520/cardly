@@ -7,6 +7,7 @@
 }
 .design-container {
   padding: 20px;
+ width: 100%;
   font-family: Arial, sans-serif;
   color: #333;
 }
@@ -22,7 +23,7 @@
 /* Template card */
 /* Template card */
 .template-card {
-  width: 200px;
+  width: 190px;
   height: 250px;
   display: flex;
   flex-direction: column;
@@ -81,3 +82,14 @@ p.template-name {
   text-align: center;
   color: rgb(61, 60, 60);
 }
+
+.loading-spinner {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  font-size: 18px;
+  color: #555;
+}
+

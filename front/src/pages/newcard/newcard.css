@@ -2,6 +2,7 @@ body {
     height: 100vh;
     overflow-y: auto;
     position: relative;
+    
     overflow-x: hidden;
 }
 .container {

@@ -56,10 +56,8 @@ const Design = () => {
 
       {/* Show loading spinner or message */}
       {loading ? (
-        <div className="design-container" >
         <div className="loading-spinner">
           <p>Loading templates...</p>
-        </div>
         </div>
       ) : (
         <div className="templates-grid">

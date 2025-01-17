@@ -53,8 +53,8 @@ export default function Card() {
 
   if (loading) {
     return (
-      <div className="loaderContainer">
-        <div className="loader"></div>
+      <div className="loaderContainerr">
+        <div className="loaderr"></div>
       </div>
     );
   }

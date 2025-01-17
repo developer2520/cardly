@@ -72,7 +72,7 @@
   }
   
   /* Loader container */
-  .loaderContainer {
+  .loaderContainerr {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -80,7 +80,7 @@
   }
   
   /* Loader styles (you can replace with your custom loader) */
-  .loader {
+  .loaderr {
     border: 8px solid #f3f3f3;
     border-top: 8px solid #3498db;
     border-radius: 50%;
