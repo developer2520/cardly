@@ -100,17 +100,28 @@ app.get('/user', (req, res) => {
 
 // Create Card Route
 app.post('/cards', async (req, res) => {
-  const { title, bio,  links, url, userId } = req.body; 
+  const { title, bio, links, url, userId, template } = req.body;
 
   try {
-    const existingCard = await LinkPage.findOne({ url });
+    // Check if a card with the same normalized URL already exists
+    const existingCard = await LinkPage.findOne({url});
     if (existingCard) {
-      return res.status(400).json({ error: 'Card already exists' });
+      return res.status(400).json({ message: 'Card with this URL already exists' });
     }
+    
 
-    const card = new LinkPage({ title,  bio, links, url, userId });
+    // Create the card
+    const card = new LinkPage({
+      title,
+      bio,
+      links,
+      url,
+      userId,
+      template,
+    });
+
     await card.save();
-    res.status(201).json({ message: 'Card created successfully' });
+    res.status(201).json({ message: 'Card created successfully', card });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Server error' });
@@ -119,7 +130,7 @@ app.post('/cards', async (req, res) => {
 
 app.put('/cards/:id', async (req, res) => {
   const { id } = req.params; // Get ID from the URL
-  const { title, bio, links, url } = req.body; // Get other data from the request body
+  const { title, bio, links, url, template } = req.body; // Get other data from the request body
 
   try {
     // Validate inputs
@@ -130,7 +141,7 @@ app.put('/cards/:id', async (req, res) => {
     // Update the card in the database
     const updatedCard = await LinkPage.findByIdAndUpdate(
       id, // Use the ID from the URL
-      { title, bio, links, url },
+      { title, bio, links, url, template },
       { new: true, runValidators: true } // Return the updated document and run validations
     );
 
@@ -180,61 +191,30 @@ app.get('/templates/:id', async (req, res) => {
   }
 });
 
-
-
-// const seedTemplates = async () => {
-//   try {
-//     // Get existing template IDs
-//     const existingTemplates = await Template.find({});
-//     const existingIds = existingTemplates.map(template => template.id);
-
-//     // Filter out templates that already exist
-//     const newTemplates = templates.filter(template => !existingIds.includes(template.id));
-
-//     if (newTemplates.length > 0) {
-//       await Template.insertMany(newTemplates);
-//       console.log(`Successfully added ${newTemplates.length} new templates`);
-//     } else {
-//       console.log('No new templates to add');
-//     }
-//   } catch (err) {
-//     console.error('Error seeding templates:', err);
-//   } finally {
-    
-//     console.log('Database connection closed');
-//   }
-// };
-
-app.put('/pages/:pageId/template', async (req, res) => {
-  const { pageId } = req.params;
-  const { templateId } = req.body; // The ID of the selected template
-
-  if (!templateId) {
-    return res.status(400).json({ message: 'Template ID is required.' });
-  }
-
+const seedTemplates = async () => {
   try {
-    // Find the page and update its default template
-    const updatedPage = await LinkPage.findOne(
-      pageId,
-      { defaultTemplate: templateId },
-      { new: true } // Return the updated document
-    );
+    // Get existing template IDs
+    const existingTemplates = await Template.find({});
+    const existingIds = existingTemplates.map(template => template.id);
 
-    if (!updatedPage) {
-      return res.status(404).json({ message: 'Page not found.' });
+    // Filter out templates that already exist
+    const newTemplates = templates.filter(template => !existingIds.includes(template.id));
+
+    if (newTemplates.length > 0) {
+      await Template.insertMany(newTemplates);
+      console.log(`Successfully added ${newTemplates.length} new templates`);
+    } else {
+      console.log('No new templates to add');
     }
-
-    res.status(200).json({
-      message: 'Default template updated successfully.',
-      page: updatedPage,
-    });
-  } catch (error) {
-    console.error('Error updating default template:', error);
-    res.status(500).json({ message: 'Internal server error.' });
+  } catch (err) {
+    console.error('Error seeding templates:', err);
+  } finally {
+    
+    console.log('Database connection closed');
   }
-});
+};
 
+// seedTemplates()
 
 app.get('/templates', async (req, res) => {
   try {
@@ -262,26 +242,31 @@ app.get('/cards', async (req, res) => {
   }
 });
 
-
-
 app.get("/cards/:url", async (req, res) => {
-    try {
-        const { url } = req.params;
-        const card = await LinkPage.findOne({ url });
+  try {
+    const { url } = req.params;
+  
+    
 
-        if (!card) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-
-        res.json(card);
-    } catch (err) {
-        console.error('Error fetching user:', err);
-        res.status(500).json({
-            message: 'Internal Server Error - Failed to fetch user',
-            error: err.message,
-        });
+    const card = await LinkPage.findOne({ url });
+    if (!card) {
+      return res.status(404).json({ message: "Card not found" });
     }
+
+    const template = card.template
+      ? await Template.findOne({ id: card.template })
+      : null;
+
+    res.json({ card, template });
+  } catch (err) {
+    console.error("Error fetching card:", err);
+    res.status(500).json({
+      message: "Internal Server Error - Failed to fetch card",
+      error: err.message,
+    });
+  }
 });
+
 
 
 

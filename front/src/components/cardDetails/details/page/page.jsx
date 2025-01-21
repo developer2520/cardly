@@ -2,61 +2,83 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { PlusCircle, Trash2, Save } from 'lucide-react';
 import './page.css';
-import {OwnCardsContext} from './../../../../context/ownCardsContext'
+import { OwnCardsContext } from './../../../../context/ownCardsContext';
+import { useCard } from './../../../../context/editPreviewContext';
 
-export default function Page({ card, onUpdate }) {
-  const [links, setLinks] = useState([]);
-  const [bio, setBio] = useState('');
-  const [title, setTitle] = useState('');
-  const [url, setUrl] = useState('');
+export default function Page({ card }) {
   const [status, setStatus] = useState({ type: '', message: '' });
   const [isLoading, setIsLoading] = useState(false);
-  const {refetch} = useContext(OwnCardsContext)
+  const { refetch } = useContext(OwnCardsContext);
+  const { data, setData } = useCard();
 
-  // Update state when `card` prop changes
+  // Only initialize the context data when the card ID changes or component first mounts
   useEffect(() => {
-    setLinks(card.links || [{ title: '', url: '' }]);
-    setBio(card.bio || '');
-    setTitle(card.title || '');
-    setUrl(card.url || '');
-  }, [card]);
+    if (data.cardId !== card._id) {
+      setData({
+        links: card.links || [{ title: '', url: '' }],
+        bio: card.bio || '',
+        title: card.title || '',
+        url: card.url || '',
+        template: card.template, // Ensure template is initialized
+        cardId: card._id,
+      });
+    }
+  }, [card._id, setData]);
+  
 
   const addLink = () => {
-    setLinks([...links, { title: '', url: '' }]);
+    setData(prev => ({
+      ...prev,
+      links: [...prev.links, { title: '', url: '' }]
+    }));
   };
 
   const removeLink = (index) => {
-    setLinks(links.filter((_, i) => i !== index));
+    setData(prev => ({
+      ...prev,
+      links: prev.links.filter((_, i) => i !== index)
+    }));
   };
 
   const updateLink = (index, field, value) => {
-    const updatedLinks = links.map((link, i) =>
-      i === index ? { ...link, [field]: value } : link
-    );
-    setLinks(updatedLinks);
+    setData(prev => ({
+      ...prev,
+      links: prev.links.map((link, i) =>
+        i === index ? { ...link, [field]: value } : link
+      )
+    }));
+  };
+
+  const updateField = (field, value) => {
+    setData(prev => ({
+      ...prev,
+      [field]: value
+    }));
   };
 
   const handleSave = async () => {
     setIsLoading(true);
     try {
       await axios.put(`/cards/${card._id}`, {
-        title,
-        bio,
-        links: links.filter((link) => link.title && link.url),
-        url,
+        title: data.title,
+        bio: data.bio,
+        links: data.links.filter((link) => link.title && link.url),
+        url: data.url,
+        template: data.template,
       });
       setStatus({ type: 'success', message: 'Card updated successfully!' });
-      if (onUpdate) onUpdate(); // Notify parent about the update
+      refetch();
     } catch (error) {
-      setStatus({ type: 'error', message: error.response?.data?.message || 'Failed to update card' });
+      setStatus({
+        type: 'error',
+        message: error.response?.data?.message || 'Failed to update card',
+      });
     } finally {
       setIsLoading(false);
     }
-    refetch()
   };
 
   useEffect(() => {
-    // Reset status message after a delay
     if (status.message) {
       const timer = setTimeout(() => setStatus({ type: '', message: '' }), 3000);
       return () => clearTimeout(timer);
@@ -71,11 +93,7 @@ export default function Page({ card, onUpdate }) {
         </div>
         <div className="card-content">
           {status.message && (
-            <div
-              className={`alert ${
-                status.type === 'error' ? 'alert-error' : 'alert-success'
-              }`}
-            >
+            <div className={`alert ${status.type === 'error' ? 'alert-error' : 'alert-success'}`}>
               {status.message}
             </div>
           )}
@@ -83,15 +101,15 @@ export default function Page({ card, onUpdate }) {
           <input
             type="text"
             placeholder="Title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            value={data.title}
+            onChange={(e) => updateField('title', e.target.value)}
             className="input profile-input"
           />
           <input
             type="text"
             placeholder="URL"
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
+            value={data.url}
+            onChange={(e) => updateField('url', e.target.value)}
             className="input"
           />
           <textarea
@@ -99,11 +117,11 @@ export default function Page({ card, onUpdate }) {
             id="bio"
             placeholder="Enter your bio here (optional)"
             className="input"
-            onChange={(e) => setBio(e.target.value)}
-            value={bio}
+            onChange={(e) => updateField('bio', e.target.value)}
+            value={data.bio}
           ></textarea>
 
-          {links.map((link, index) => (
+          {data.links.map((link, index) => (
             <div key={index} className="link-row">
               <input
                 type="text"

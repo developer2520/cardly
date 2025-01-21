@@ -1,0 +1,131 @@
+/* General Reset */
+html, body {
+    height: 100%; /* Ensure the body takes the full height */
+    margin: 0;    /* Remove default margin */
+  }
+  
+  body {
+    padding: 0;
+  }
+  
+  /* Container Styling */
+  .containerrr {
+    width: 90%; /* Ensure full viewport width */
+    height: 100vh; /* Full viewport height */
+    display: flex;
+    flex-direction: column; /* Adjust direction as needed */
+    overflow-y: auto;
+    
+    background-color: rgb(255, 255, 255);
+    margin: 0 auto; /* Remove margin */
+  }
+  .containerrr h2 {
+    font-weight: 500;
+  }
+  
+  /* Button Styling */
+  .delete-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f7090d; /* Danger red */
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .delete-button:hover {
+    background-color: #d9363e; /* Darker red on hover */
+    transform: scale(1.05); /* Slight zoom effect */
+  }
+  
+  .delete-button .icon {
+    margin-right: 0.5rem; /* Spacing for the icon */
+    font-size: 1.2rem;
+  }
+  
+  /* react-confirm-alert Modal */
+  .react-confirm-alert-overlay {
+    background: rgba(0, 0, 0, 0.7); /* Semi-transparent black overlay */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000; /* Ensure it's above everything else */
+  }
+  
+  /* .react-confirm-alert {
+    background-color: #1815c9;
+    border-radius: 10px;
+    padding: 1.5rem 2rem;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+  }
+   */
+  .react-confirm-alert h1 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #ff4d4f;
+  }
+  
+  .react-confirm-alert p {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 1.5rem;
+  }
+  
+  .react-confirm-alert-button-group {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .react-confirm-alert-button-group button {
+    border: none;
+    border-radius: 5px;
+    padding: 0.8rem 1.2rem;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .react-confirm-alert-button-group button:first-child {
+    background-color: #ff4d4f; /* Confirm button red */
+    color: white;
+  }
+  
+  .react-confirm-alert-button-group button:first-child:hover {
+    background-color: #d9363e;
+  }
+  
+  .react-confirm-alert-button-group button:last-child {
+    background-color: #ddd; /* Cancel button gray */
+    color: #333;
+  }
+  
+  .react-confirm-alert-button-group button:last-child:hover {
+    background-color: #bbb;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .card-details {
+      padding: 1rem;
+    }
+  
+    .delete-button {
+      padding: 0.6rem 1rem;
+      font-size: 0.9rem;
+    }
+  
+    .react-confirm-alert {
+      padding: 1rem 1.5rem;
+    }
+  }
+  

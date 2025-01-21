@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from '../../components/layout/layout';
 import CardList from '../../components/cardsList/cardsList';
 import CardDetails from '../../components/cardDetails/cardDetails';
@@ -8,9 +8,17 @@ import './dashboard.css';
 
 export default function Dashboard() {
   const [selectedCard, setSelectedCard] = useState(null);
-  const [isCreatingNewCard, setIsCreatingNewCard] = useState(false); // State for NewCard component
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768); // Check initial screen size
+  const [isCreatingNewCard, setIsCreatingNewCard] = useState(false);
 
   document.title = "Home";
+
+  // Update `isMobile` on window resize
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleCreateNewCard = () => {
     setSelectedCard(null); // Deselect any card
@@ -19,19 +27,22 @@ export default function Dashboard() {
 
   return (
     <Layout>
-      <div className="dashboard">
-        <CardList
-          className="cardList"
-          onCardSelect={(card) => {
-            setSelectedCard(card); // Set the selected card
-            setIsCreatingNewCard(false); // Hide the NewCard component
-          }}
-          onCreateNewCard={handleCreateNewCard} // Pass function to handle creating new card
-        />
+      <div className={`dashboard ${isMobile ? 'mobile' : 'desktop'}`}>
+        {/* Chat list */}
+        {!selectedCard || !isMobile ? (
+          <CardList
+            className="cardList"
+            onCardSelect={(card) => {
+              setSelectedCard(card);
+              setIsCreatingNewCard(false);
+            }}
+            onCreateNewCard={handleCreateNewCard}
+          />
+        ) : null}
 
-        {/* Conditionally render CardDetails or NewCard */}
+        {/* Chat details or New Card */}
         {isCreatingNewCard ? (
-          <NewCard setSelectedCard={setSelectedCard} /> // Show NewCard component
+          <NewCard setSelectedCard={setSelectedCard} />
         ) : selectedCard ? (
           <CardDetails
             className={`cardDetails ${selectedCard ? 'active' : ''}`}

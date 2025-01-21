@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './card.css';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
 export default function Card() {
   const [loading, setLoading] = useState(true);
-  const [card, setCard] = useState(null);
-  const [template, setTemplate] = useState(null);
+  const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const { url } = useParams(); // Destructure the URL parameter
 
   useEffect(() => {
-    // Fetch card data
+    // Fetch both card and template data in a single request
     axios
       .get(`/cards/${url}`, { withCredentials: true })
       .then((response) => {
-        setCard(response.data); // Set card data
+        setData(response.data); // Set card and template data
         setLoading(false);
       })
       .catch((err) => {
@@ -29,27 +28,11 @@ export default function Card() {
   }, [url]); // Dependency: Run when URL changes
 
   useEffect(() => {
-    // Fetch template data if card is available and has a template
-    if (card && card.template) {
-      axios
-        .get(`/templates/${card.template}`)  // Fixed URL here
-        .then((response) => {
-          setTemplate(response.data); // Set template data
-        })
-        .catch((err) => {
-          console.error('Error fetching template:', err);
-        });
+    // Update document title when `data.card` is available
+    if (data && data.card) {
+      document.title = data.card.title || 'Card';
     }
-  }, [card]); // Dependency: Run when card changes
-
-  useEffect(() => {
-    // Update document title when `card` changes
-    if (card) {
-      document.title = `${card.title}`;
-    }
-  }, [card]); // Dependency: Run when `card` is updated
-
-  
+  }, [data]);
 
   if (loading) {
     return (
@@ -59,15 +42,30 @@ export default function Card() {
     );
   }
 
-  if (error) {
-    return <h1>{error}</h1>;
+  if (error || !data || !data.card || !data.template) {
+    document.title = '404';
+    return (
+      <div className="notFoundPage">
+        <div className="errorContainer">
+          <h1 className="errorTitle">404</h1>
+          <p className="errorMessage">{error || 'Sorry, this card doesn\'t exist.'}</p>
+          <Link to="/" className="errorLink">Go Home</Link>
+        </div>
+      </div>
+    );
   }
+
+  const card = data.card;
+  const template = data.template;
+  const templateStyles = template.styles || {};
+  const linkStyles = templateStyles.linkStyles || {};
 
   return (
     <div
       className="cardPage"
-      style={{backgroundColor: template?.styles?.backgroundColor,
-        color: template?.styles?.textColor
+      style={{
+        background: templateStyles.backgroundColor || 'white', // Default background if none
+        color: templateStyles.textColor || 'black', // Default text color
       }}
     >
       <h1 className="cardTitle">{card.title}</h1>
@@ -76,18 +74,33 @@ export default function Card() {
       {/* Render the links */}
       <div className="linksContainer">
         {card.links && card.links.length > 0 ? (
-          card.links.map((link, index) => (
-            <div key={index} className="linkItem">
+          card.links.map((link) => (
+            <div key={link._id} className="linkItem">
               <a
                 href={link.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="link"
                 style={{
-                  backgroundColor: template?.styles?.linkStyles?.backgroundColor,
-                  borderRadius: template?.styles?.linkStyles?.borderRadius,
-                  border: template?.styles?.linkStyles?.border,
-                  color: template?.styles?.textColor,
+                  backgroundColor: linkStyles.backgroundColor || 'transparent',
+                  borderRadius: linkStyles.borderRadius || '4px',
+                  border: linkStyles.border || '1px solid #ccc',
+                  color: templateStyles.textColor || 'black',
+                  transition: linkStyles.transition || 'all 0.3s ease',
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.backgroundColor = linkStyles.hoverBackgroundColor || linkStyles.backgroundColor;
+                  e.target.style.color = linkStyles.hoverTextColor || templateStyles.textColor;
+                  e.target.style.border = linkStyles.hoverBorder || linkStyles.border;
+                  if (linkStyles.transform) {
+                    e.target.style.transform = linkStyles.transform;
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.backgroundColor = linkStyles.backgroundColor || 'transparent';
+                  e.target.style.color = templateStyles.textColor || 'black';
+                  e.target.style.border = linkStyles.border || '1px solid #ccc';
+                  e.target.style.transform = 'none';
                 }}
               >
                 {link.title}
@@ -98,9 +111,6 @@ export default function Card() {
           <p>No links available</p>
         )}
       </div>
-
-      {/* Render the template styles if available */}
-      
     </div>
   );
 }

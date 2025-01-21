@@ -1,65 +1,50 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useCard } from "./../../../context/previewContext";
 import './design.css'; // Import external CSS
 
 const Design = () => {
+  const { data, setData } = useCard(); // Access context state
   const [templates, setTemplates] = useState([]);
-  const [selectedTemplate, setSelectedTemplate] = useState(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function fetchTemplates() {
       setLoading(true);
       try {
-        const response = await axios.get('/templates');
+        const response = await axios.get('/templates'); // Fetch templates from server
         setTemplates(response.data);
-        const defaultTemplate = response.data.find(
-          (template) => template.id === '6'
-        );
-        setSelectedTemplate(defaultTemplate);
       } catch (error) {
         console.error('Error fetching templates:', error);
       } finally {
-        setLoading(false); // Ensure loading stops even if there's an error
+        setLoading(false);
       }
     }
 
     fetchTemplates();
   }, []);
 
-  const handleSelectTemplate = (template) => {
-    setSelectedTemplate(template);
-  };
-
-  const handleTemplate = async (template) => {
-    try {
-      // Set the selected template locally
-      setSelectedTemplate(template);
-
-      // Make API call to update the template for the current page
-      const response = await axios.put(`/pages/${pageId}/template`, {
-        templateId: template.id,
-      });
-
-      if (response.status === 200) {
-        console.log('Default template updated successfully:', response.data);
-      }
-    } catch (error) {
-      console.error('Error updating default template:', error);
-      alert('Failed to update template. Please try again.');
-    }
+  const handleTemplate = (template) => {
+    // Update only the context with the selected template ID
+    setData((prevData) => ({
+      ...prevData,
+      template: template.id,
+    }));
   };
 
   return (
     <div className="design-container">
       <h1>Select a Template</h1>
 
-      {/* Show loading spinner or message */}
       {loading ? (
-        <div className="design-container" >
-        <div className="loading-spinner">
-          <p>Loading templates...</p>
-        </div>
+        <div className="templates-grid-loader">
+          {/* Loader cards */}
+          {[...Array(6)].map((_, index) => (
+            <div key={index} className="template-loader">
+              <div className="template-card-skeleton" />
+              <p className="template-name-skeleton"></p>
+            </div>
+          ))}
         </div>
       ) : (
         <div className="templates-grid">
@@ -68,11 +53,11 @@ const Design = () => {
               {/* Template card */}
               <div
                 className={`template-card ${
-                  selectedTemplate?.id === template.id ? 'selected' : ''
+                  data.template === template.id ? 'selected' : ''
                 }`}
-                onClick={() => handleSelectTemplate(template)}
+                onClick={() => handleTemplate(template)} // Update template in context on click
                 style={{
-                  backgroundColor: template.styles.backgroundColor,
+                  background: template.styles.backgroundColor,
                   color: template.styles.textColor,
                 }}
               >
@@ -83,7 +68,7 @@ const Design = () => {
                       key={index}
                       className="template-link"
                       style={{
-                        backgroundColor:
+                        background:
                           template.styles.linkStyles.backgroundColor,
                         borderRadius: template.styles.linkStyles.borderRadius,
                         border: template.styles.linkStyles.border,

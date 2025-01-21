@@ -1,11 +1,14 @@
 body {
-    height: 100vh;
+    height: 100%;
     overflow-y: auto;
     position: relative;
     
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
 }
-.container {
-    flex-grow: 1;
-    display: flex;
+
+.detailsContainer {
+    width: 100%;
+}
+.cardDetails {
+    width: 100%
 }

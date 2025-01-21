@@ -38,7 +38,7 @@ const Topbar = ({ card, setSelectedCard }) => {
   };
 
   return (
-    <div>
+    <div className="topbar-container">
       <div className="tab-container">
         {["Main", "Design", "Settings", "Stats"].map((tab, index) => (
           <div

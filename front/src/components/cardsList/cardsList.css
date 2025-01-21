@@ -70,6 +70,12 @@ body {
   color: rgb(97, 96, 96);
 }
 
+.card.active {
+  border: 2px solid #007bff; /* Highlight border for the active card */
+  background-color: #f0f8ff; /* Light blue background */
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3); /* Glow effect */
+  transform: scale(1.02); /* Slightly enlarge the selected card */
+}
 /* Loader styles */
 .loaderContainer {
   display: flex;

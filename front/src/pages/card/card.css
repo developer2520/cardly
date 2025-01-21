@@ -35,7 +35,7 @@
   .linksContainer {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 0px;
     align-items: center;
     width: 100%;
   }
@@ -50,13 +50,13 @@
   /* Link styles */
   .link {
     display: inline-block;
-    padding: 12px 20px;
+    padding: 19px 20px;
     text-decoration: none;
     border-radius: 8px;
     font-size: 1rem;
     font-weight: 500;
-    transition: background-color 0.3s, transform 0.3s;
-    max-width: 350px;
+    
+    max-width: 550px;
     width: 100%;
     text-align: center;
     box-sizing: border-box;
@@ -66,14 +66,12 @@
   }
   
   /* Link hover effect */
-  .link:hover {
-    background-color: #0056b3;
-    transform: translateY(-2px);
-  }
+  
   
   /* Loader container */
   .loaderContainerr {
     display: flex;
+    width: 100%;
     justify-content: center;
     align-items: center;
     height: 100vh;
@@ -95,3 +93,91 @@
     100% { transform: rotate(360deg); }
   }
   
+
+  /* 404 Page Styling */
+.notFoundPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f7f7f7; /* Light gray background */
+}
+
+.errorContainer {
+  text-align: center;
+  max-width: 400px;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.errorTitle {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.errorMessage {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 1.5rem;
+}
+
+.errorLink {
+  font-size: 1.1rem;
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.errorLink:hover {
+  color: #0056b3;
+}
+
+/* General Card Styling */
+.cardPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+  background-color: #fff;
+  color: #333;
+}
+
+.cardTitle {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.linksContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.linkItem {
+  margin: 10px 0;
+}
+
+.link {
+  font-size: 1.2rem;
+  text-decoration: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 4px;
+  background-color: #1e90ff; /* Dodgerblue background */
+  color: white;
+  border: 1px solid #1e90ff;
+  transition: background-color 0.3s, transform 0.3s, color 0.3s;
+}
+
+.link:hover {
+  background-color: white;
+  color: #1e90ff;
+  transform: scale(1.05); /* Slightly enlarge on hover */
+}

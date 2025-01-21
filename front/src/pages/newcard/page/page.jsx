@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { PlusCircle, Trash2, Save } from 'lucide-react';
 import Layout from './../../../components/layout/layout';
@@ -11,11 +11,14 @@ import './page.css';
 export default function Page({ setSelectedCard }) {
   const { user } = useContext(UserContext);
   const { refetch } = useContext(OwnCardsContext);
+  const userId = user?.googleId;
   const { data, setData } = useCard();
   const [status, setStatus] = useState({ type: '', message: '' });
   const [isLoading, setIsLoading] = useState(false);
+  
 
-  const userId = user?.googleId;
+  // Clear data when the component mounts
+ 
 
   const addLink = () => {
     const newLinks = [...(data.links || []), { title: '', url: '' }];
@@ -43,6 +46,7 @@ export default function Page({ setSelectedCard }) {
         links: (data.links || []).filter((link) => link.title && link.url),
         url: data.url,
         userId,
+        template: data.template
       });
       setStatus({ type: 'success', message: 'Page saved successfully!' });
     } catch (error) {
@@ -55,6 +59,7 @@ export default function Page({ setSelectedCard }) {
         bio: '',
         links: [{ title: '', url: '' }],
         url: '',
+        template: "6",
       });
     }
   };

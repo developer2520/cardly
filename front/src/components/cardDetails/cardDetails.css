@@ -1,35 +1,39 @@
 .detailsContainer {
-   
+    width: 100%;
     display: flex;
-   
-    justify-content: space-between;
-}
-
-.cardDetails {
-   /* Take remaining space */
-   width: 100%;
-    background-color: #c90b0b; /* Adjust to your design */
-    overflow-y: auto;  /* Allows scrolling if content exceeds height */
+    flex-direction: row; /* Default to row for desktop */
+    height: 100%; /* Ensure it fills the parent height */
+    overflow: hidden; /* Prevent overflow issues */
+  }
+  
+  .cardDetails {
+    width: 70%; /* Default width for card details on larger screens */
+    background-color: #fff; /* Keep the existing design */
     height: 100%;
-    display: block;
-    word-break: break-all;
-    
-
-    
-}
-
-@media (max-width: 800px) {
+    display: flex;
+    flex-direction: column;
+    word-break: break-word; /* Prevent long text overflow */
+    overflow-y: auto; /* Enable vertical scrolling for content */
+    flex-grow: 1; /* Take remaining space */
+   
+  }
+  
+  @media (max-width: 800px) {
     .detailsContainer {
-        flex-direction: column;
+      flex-direction: column; /* Stack elements vertically on smaller screens */
+      height: auto; /* Adjust height for stacked layout */
     }
-}
-
-
-
-.titleDetail, .urlCard, .descriptionCard {
+  
+    .cardDetails {
+      width: 100%; /* Full width on mobile */
+      padding: 12px; /* Reduce padding for smaller screens */
+    }
+  }
+  
+  .titleDetail, .urlCard, .descriptionCard {
     margin: 0;
     margin-bottom: 10px; /* Adds spacing between elements */
     word-wrap: break-word; /* Prevents long text from overflowing */
-    overflow-wrap: break-word;
-}
-
+    overflow-wrap: break-word; /* Ensures proper text wrapping */
+  }
+  
