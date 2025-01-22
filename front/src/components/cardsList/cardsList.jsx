@@ -15,19 +15,14 @@ export default function CardList({ onCardSelect, onCreateNewCard, selectedCard }
 
   return (
     <div className="cardlist">
-      <div className="buttonContainer">
-        {/* Button to create a new card */}
-        <button onClick={onCreateNewCard} className="button-58">
-          +
-        </button>
-      </div>
+     
 
       {/* Render list of cards */}
       {ownCards.map((card) => (
         <div
           key={card._id}
           className={`card ${selectedCard && selectedCard._id === card._id ? 'active' : ''}`}
-          onClick={() => onCardSelect(card)}
+          onClick={() => onCardSelect(card)}  // Pass selected card on click
         >
           <h3>{card.title}</h3>
           <p>@{card.url}</p>

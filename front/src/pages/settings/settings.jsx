@@ -7,6 +7,7 @@ import axios from 'axios';
 export default function Settings() {
   const navigate = useNavigate();
   const handleLogout = async () => {
+    navigate('/');
     try {
       const response = await axios.get('/logout', {
         withCredentials: true, // Ensure cookies are included in the request
@@ -14,7 +15,7 @@ export default function Settings() {
   
       if (response.status === 200) {
       
-        navigate('/'); // Redirect to the homepage or login page
+         // Redirect to the homepage or login page
       } else {
         console.error('Logout failed:', response.statusText);
       }

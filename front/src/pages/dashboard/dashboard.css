@@ -1,58 +1,40 @@
-/* Maintain existing styles */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100vh;
-}
-
-.dashboard {
-  display: flex;
-  flex-direction: row; /* Default: desktop layout */
-  width: 100%;
-  height: 100vh;
-  overflow-x: auto;
-  transition: all 0.3s ease;
-}
-
-.noCardDiv {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* CardList and CardDetails general styles */
-.cardList {
-  flex: 1;
-  max-width: 300px; /* Adjustable for desktop */
-  border-right: 1px solid #ddd;
-  overflow-y: auto;
-}
-
-
-/* Add mobile-specific styles */
-@media screen and (max-width: 768px) {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100vh;
+  }
+  
   .dashboard {
-    flex-direction: column; /* Stack components vertically */
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    overflow-x: auto;
+    transition: all 0.3s ease;
   }
+  
+  /* .cardList {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    padding: 20px;
+    border-right: 1px solid #ddd;
+  }
+   */
+  
+  
 
-  .cardList {
-    max-width: 100%; /* Full width on mobile */
+  .noCardDiv {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
-
-  .cardDetails {
-    display: none; /* Hide card details initially */
-  }
-
-  .cardDetails.active {
-    display: block; /* Show card details when active */
-  }
-}
+  

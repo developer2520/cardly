@@ -7,7 +7,7 @@
   }
   
   .cardDetails {
-    width: 70%; /* Default width for card details on larger screens */
+    width: 100%; /* Default width for card details on larger screens */
     background-color: #fff; /* Keep the existing design */
     height: 100%;
     display: flex;
@@ -15,7 +15,15 @@
     word-break: break-word; /* Prevent long text overflow */
     overflow-y: auto; /* Enable vertical scrolling for content */
     flex-grow: 1; /* Take remaining space */
-   
+    
+    opacity: 0; /* Initially hidden */
+    transform: translateY(20px); /* Start from below */
+    transition: opacity 0.4s ease, transform 0.4s ease; /* Smooth transition */
+  }
+  
+  .cardDetails.show {
+    opacity: 1; /* Make the card details visible */
+    transform: translateY(0); /* Slide to original position */
   }
   
   @media (max-width: 800px) {
@@ -26,7 +34,6 @@
   
     .cardDetails {
       width: 100%; /* Full width on mobile */
-      padding: 12px; /* Reduce padding for smaller screens */
     }
   }
   

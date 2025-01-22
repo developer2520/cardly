@@ -1,38 +1,25 @@
-/* Container styling */
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+/* General styles for responsive design */
 .design-container {
   padding: 20px;
- width: 100%;
+  width: 100%;
   font-family: Arial, sans-serif;
   color: #333;
 }
 
-/* Template grid */
-.templates-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-}
-
+/* Responsive template grid */
+.templates-grid,
 .templates-grid-loader {
-  flex-grow: 1;
   display: grid;
-  grid-template-columns: repeat(3, 190px); /* 3 columns */
-  grid-template-rows: repeat(2, 1fr); /* 2 rows */
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
   gap: 20px;
+  justify-items: center;
   margin-top: 20px;
+  width: 100%;
 }
 
-/* Template card */
 /* Template card */
 .template-card {
-  width: 190px;
+  max-width: 100%; /* Adjust to take full available space */
   height: 250px;
   display: flex;
   flex-direction: column;
@@ -42,33 +29,19 @@
   border-radius: 10px;
   cursor: pointer;
   padding: 15px;
-  margin: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: 
-    transform 0.3s ease, 
-    box-shadow 0.3s ease, 
-    outline-offset 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, outline-offset 0.3s ease;
 }
 
-
 .template-card:hover {
-  transform: scale(1.01);
+  transform: scale(1.02);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .template-card.selected {
-  
-  outline: 2px solid #007bff; /* Create the visible border */
-  outline-offset: 6px; /* Add space between the border and the content */
-  transform: scale(1.01); /* Slight zoom effect for selected card */
-  box-shadow: 0 6px 12px rgba(0, 123, 255, 0.3); /* Subtle glow */
-}
-/* Template links container */
-.links-container {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 100%;
+  outline: 2px solid #007bff;
+  outline-offset: 6px;
+  box-shadow: 0 6px 12px rgba(0, 123, 255, 0.3);
 }
 
 /* Placeholder link */
@@ -79,42 +52,20 @@
   transition: transform 0.3s;
 }
 
-
-/* Selected template preview */
-.selected-template-preview {
-  margin-top: 30px;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-p.template-name {
-  text-align: center;
-  color: rgb(61, 60, 60);
-}
-
-.loading-spinner {
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  height: 200px;
-  font-size: 18px;
-  color: #555;
-}
-
-
+/* Skeleton loaders */
 .template-loader {
-  width: 190px;
   height: 250px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%; /* Allow loader to adapt to space */
 }
 
 .template-card-skeleton {
   width: 100%;
   height: 250px;
-  background-color: #e0e0e0; /* Light gray for skeleton */
+  background: linear-gradient(90deg, #e0e0e0 25%, #f4f4f4 50%, #e0e0e0 75%);
+  background-size: 200% 100%;
   border-radius: 10px;
   animation: shimmer 1.5s infinite linear;
 }
@@ -122,17 +73,63 @@ p.template-name {
 .template-name-skeleton {
   width: 60%;
   height: 15px;
-  background-color: #e0e0e0; /* Light gray for skeleton */
+  background: linear-gradient(90deg, #e0e0e0 25%, #f4f4f4 50%, #e0e0e0 75%);
+  background-size: 200% 100%;
   border-radius: 5px;
   margin-top: 10px;
   animation: shimmer 1.5s infinite linear;
 }
 
+/* Typography */
+p.template-name {
+  text-align: center;
+  color: #222;
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
+/* Adjust grid for different screen sizes */
+@media (max-width: 1024px) {
+  .templates-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Smaller columns on medium screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .design-container {
+    padding: 10px;
+  }
+  .templates-grid {
+    grid-template-columns: repeat(2, 1fr); /* Use 2 columns on small screens */
+    gap: 10px; /* Reduce gap for better space usage */
+  }
+  .template-card {
+    max-width: 90%;
+  }
+  p.template-name {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .templates-grid {
+    grid-template-columns: repeat(2, 1fr); /* Use a single column on very small screens */
+  }
+  .template-card {
+    max-width: 90%;
+    padding: 10px; /* Reduce padding for smaller screens */
+  }
+  p.template-name {
+    font-size: 0.75rem;
+  }
+}
+
+/* Keyframes for skeleton loaders */
 @keyframes shimmer {
   0% {
-    background-position: -200px 0;
+    background-position: -200% 0;
   }
   100% {
-    background-position: 200px 0;
+    background-position: 200% 0;
   }
 }

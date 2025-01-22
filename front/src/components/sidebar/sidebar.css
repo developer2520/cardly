@@ -3,11 +3,13 @@
     padding: 0;
     box-sizing: content-box;
 }
+
 body {
     display: flex;
     height: 100vh;
     overflow: auto;
 }
+
 .sidebar {
     width: 90px;
     height: 100vh;
@@ -17,41 +19,43 @@ body {
     top: 0;
     left: 0;
     padding-top: 20px;
- 
-    /* box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); */
     z-index: 1000;
     border-right: 0.011px solid rgba(0, 0, 0, 0.288);
     transition: all 0.3s;
     display: flex;
     flex-direction: column;
     align-items: center;
-     padding:  0 10px 0 10px;
-    
+    padding: 0 10px;
 }
 
 @media (max-width: 800px) {
     .sidebar {
         position: fixed;
         bottom: 0;
-        margin: 0;
         left: 0;
         top: unset;
         width: 100vw;
-        height: auto;
+        height: 80px;
         flex-direction: row;
         justify-content: space-around;
         align-items: center;
         padding: 0;
-        background-color: #ffffff; /* Adjust the background color as needed */
+        background-color: #ffffff;
         border-top: 0.011px solid rgba(0, 0, 0, 0.288);
         border-right: none;
     }
+
     .logo {
         display: none;
     }
+
     .icon {
         font-size: 11px;
     }
+}
+
+body {
+    margin-bottom: 60px;
 }
 
 .logo {
@@ -62,49 +66,53 @@ body {
     font-size: 24px;
     margin-bottom: 20px;
     text-align: center;
-    color: #2c3e50; /* Set title color to dark */
+    color: #2c3e50;
 }
 
 .sidebar-link {
     width: 100%;
     margin-bottom: 10px;
-    
 }
+
 span {
     font-size: 10px;
 }
+
 .sidebar-linkk {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 10px 0;
     width: 100%;
-    color: #2c3e50; /* Set link color to dark */
+    color: #2c3e50;
     text-decoration: none;
     transition: background-color 0.3s;
     border-radius: 6px;
 }
-
+button.sidebar-linkk {
+    border: none;
+    background-color: unset;
+}
 .sidebar-linkk:hover {
-    background-color: #f0f0f0; /* Set hover background color */
+    background-color: #f0f0f0;
 }
 
 .icon {
     font-size: 21px;
     margin-bottom: 5px;
-    color: #2c3e50; /* Set icon color to dark */
+    color: #2c3e50;
 }
 
 .sidebar-linkk span {
     font-size: 14px;
-    color: #2c3e50; /* Set text color to dark */
+    color: #2c3e50;
 }
 
 .last-link {
-    margin-top: auto; /* Push the last link to the bottom */
+    margin-top: auto;
 }
 
 .active {
-    background-color: #72777e3d; /* Set active background color */
-    color: #ffffff; /* Set active text color */
+    background-color: #72777e3d;
+    color: #ffffff;
 }

@@ -1,0 +1,102 @@
+/* Account Page Styles */
+.account-container {
+    background-color: #fff; /* White background */
+    padding: 20px;
+    width: 95%;
+    margin: 30px auto;
+    border-radius: 8px;
+    font-family: 'Roboto', sans-serif;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e1e1e1;
+    margin-left: 30px;
+}
+
+.account-title {
+    font-size: 22px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 16px;
+}
+
+.account-info {
+    font-size: 16px;
+    color: #555;
+    margin: 10px 0;
+}
+
+.account-info strong {
+    font-weight: 600;
+}
+
+.logout-button {
+    background-color: #ff1900; /* Red background */
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100px;
+    margin-top: 20px;
+}
+
+.logout-button:hover {
+    background-color: #c0392b; /* Darker red on hover */
+}
+
+.logout-button:focus {
+    outline: none;
+}
+
+/* Base body styles */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f7f7f7;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .account-container {
+        width: 90%; /* Reduce container width for smaller screens */
+        margin-left: 10px; /* Adjust left margin */
+        padding: 15px; /* Less padding for small screens */
+    }
+
+    .account-title {
+        font-size: 18px; /* Smaller title on mobile */
+    }
+
+    .account-info {
+        font-size: 14px; /* Smaller font size for mobile */
+    }
+
+    .logout-button {
+        font-size: 14px; /* Smaller button text */
+        padding: 10px 18px; /* Adjust padding for mobile */
+        width: 120px; /* Slightly wider button on mobile */
+    }
+}
+
+@media (max-width: 480px) {
+    .account-container {
+        width: 95%; /* Ensure full-width on very small screens */
+        margin-left: 5px;
+    }
+
+    .account-title {
+        font-size: 16px; /* Further reduce title size */
+    }
+
+    .account-info {
+        font-size: 12px; /* Further reduce font size */
+    }
+
+    .logout-button {
+        font-size: 12px; /* Smaller button text */
+        padding: 8px 15px; /* Adjust padding */
+        width: 100px; /* Slightly smaller button */
+    }
+}

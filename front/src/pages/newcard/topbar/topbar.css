@@ -1,20 +1,22 @@
 .tab-container {
   display: flex;
   position: sticky;
-  top: 0;
+  top: 0px;
   word-break: keep-all;
   overflow-x: auto;
   left: 0;
   width: 100%;
   z-index: 1000;
-  background-color: white;
+  background-color: rgb(255, 255, 255);
   border-bottom: 1px solid #e0e0e0;
 }
+
 
 .tab {
   padding: 15px 25px;
   cursor: pointer;
   color: #666;
+  background-color: white;
   position: relative;
   transition: color 0.3s ease;
 }

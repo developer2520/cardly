@@ -1,35 +1,43 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import Layout from '../../components/layout/layout';
 import CardList from '../../components/cardsList/cardsList';
 import CardDetails from '../../components/cardDetails/cardDetails';
-import NewCard from '../../pages/newcard/newcard'; // Import NewCard component
+import NewCard from '../../pages/newcard/newcard';
 
 import './dashboard.css';
 
 export default function Dashboard() {
   const [selectedCard, setSelectedCard] = useState(null);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768); // Check initial screen size
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [isCreatingNewCard, setIsCreatingNewCard] = useState(false);
+  const location = useLocation();
 
-  document.title = "Home";
+  document.title = 'Home';
 
-  // Update `isMobile` on window resize
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Check if navigation includes `createNewCard` state
+  useEffect(() => {
+    if (location.state?.createNewCard) {
+      setSelectedCard(null);
+      setIsCreatingNewCard(true);
+    }
+  }, [location.state]);
+
   const handleCreateNewCard = () => {
-    setSelectedCard(null); // Deselect any card
-    setIsCreatingNewCard(true); // Show the NewCard component
+    setSelectedCard(null);
+    setIsCreatingNewCard(true);
   };
 
   return (
-    <Layout>
+    <Layout handleCreateNewCard={handleCreateNewCard}>
       <div className={`dashboard ${isMobile ? 'mobile' : 'desktop'}`}>
-        {/* Chat list */}
-        {!selectedCard || !isMobile ? (
+        {(!selectedCard && !isCreatingNewCard) || !isMobile ? (
           <CardList
             className="cardList"
             onCardSelect={(card) => {
@@ -37,12 +45,16 @@ export default function Dashboard() {
               setIsCreatingNewCard(false);
             }}
             onCreateNewCard={handleCreateNewCard}
+            selectedCard={selectedCard}
           />
         ) : null}
 
-        {/* Chat details or New Card */}
-        {isCreatingNewCard ? (
-          <NewCard setSelectedCard={setSelectedCard} />
+        {isCreatingNewCard && !selectedCard ? (
+          <NewCard
+            className={`newCard ${isCreatingNewCard ? 'active' : ''}`}
+            setSelectedCard={setSelectedCard}
+            setIsCreatingNewCard={setIsCreatingNewCard}
+          />
         ) : selectedCard ? (
           <CardDetails
             className={`cardDetails ${selectedCard ? 'active' : ''}`}

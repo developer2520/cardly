@@ -80,7 +80,7 @@ export default function PhoneView() {
               );
             })
           ) : (
-            <p>No links available</p>
+            <p></p>
           )}
         </div>
       </div>

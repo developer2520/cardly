@@ -1,14 +1,86 @@
-body {
-    height: 100%;
-    overflow-y: auto;
-    position: relative;
-    
-    /* overflow-x: hidden; */
-}
-
-.detailsContainer {
+.newCardContainer {
     width: 100%;
-}
-.cardDetails {
-    width: 100%
-}
+    display: flex;
+    flex-direction: row; /* Default to row for desktop */
+    height: 100%; /* Ensure it fills the parent height */
+    overflow: hidden; /* Prevent overflow issues */
+  }
+  
+  .newCard {
+    width: 100%; /* Default width for card details on larger screens */
+    background-color: #fff; /* Keep the existing design */
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    word-break: break-word; /* Prevent long text overflow */
+    overflow-y: auto; /* Enable vertical scrolling for content */
+    flex-grow: 1; /* Take remaining space */
+    
+    opacity: 0; /* Initially hidden */
+    transform: translateY(20px); /* Start from below */
+    transition: opacity 0.4s ease, transform 0.4s ease; /* Smooth transition */
+  }
+  
+  .newCard.show {
+    opacity: 1; /* Make the card details visible */
+    transform: translateY(0); /* Slide to original position */
+  }
+  
+  @media (max-width: 800px) {
+    .newCardContainer {
+      flex-direction: column; /* Stack elements vertically on smaller screens */
+      height: auto; /* Adjust height for stacked layout */
+    }
+  
+    .newCard {
+      width: 100%; /* Full width on mobile */
+    }
+  }
+  
+  .titleDetail, .urlCard, .descriptionCard {
+    margin: 0;
+    margin-bottom: 10px; /* Adds spacing between elements */
+    word-wrap: break-word; /* Prevents long text from overflowing */
+    overflow-wrap: break-word; /* Ensures proper text wrapping */
+  }
+  
+  .back-to-cardlist {
+    display: flex;
+    display: none;
+    align-items: center;
+    gap: 1rem; /* Space between the button and the heading */
+    padding: 1rem; /* Add padding for spacing */
+    background-color: #f9f9f9; /* Light background for contrast */
+    border-bottom: 1px solid #ddd; /* Subtle separator */
+  }
+  
+  .back-to-cardlist button {
+    background-color: #007bff; /* Primary color for the button */
+    color: #fff; /* White text */
+    padding: 0.5rem 1rem; /* Add some padding for a better look */
+    font-size: 1rem; /* Slightly larger text for better readability */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor for better UX */
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+  }
+  
+  .back-to-cardlist button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+  }
+  
+  .back-to-cardlist h1 {
+    margin: 0; /* Remove default margin */
+    font-size: 1.5rem; /* Adjust font size */
+    color: #333; /* Darker text for contrast */
+    font-weight: 600; /* Slightly bolder heading */
+  }
+  
+  @media screen and (max-width: 800px) {
+    .back-to-cardlist {
+      display: flex; /* Show the back button on smaller screens */
+      position: sticky; /* Stick to the top */
+      top: 0; /* Align to the top */
+      z-index: 1; /* Ensure it's above other content */
+    }
+  }

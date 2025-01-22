@@ -1,3 +1,25 @@
 .topbar-container {
     width: 100%
 }
+
+.back-to-cardlist {
+    display: none;
+    height: 50px;
+
+  
+}
+
+@media (max-width: 800px) {
+    .back-to-cardlist {
+        display: block;
+        display: flex;
+        background-color: white;
+        position: sticky;
+        top: 0;
+        left: 0;
+        height: 50px;
+    }
+    .tab-container {
+        top: 50px;
+    }
+}
