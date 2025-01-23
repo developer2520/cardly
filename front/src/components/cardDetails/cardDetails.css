@@ -1,46 +1,82 @@
 .detailsContainer {
-    width: 100%;
-    display: flex;
-    flex-direction: row; /* Default to row for desktop */
-    height: 100%; /* Ensure it fills the parent height */
-    overflow: hidden; /* Prevent overflow issues */
-  }
+  width: 100%;
+  display: flex;
+  flex-direction: row; /* Default to row for desktop */
+  height: 100%; /* Ensure it fills the parent height */
+  overflow: hidden; /* Prevent overflow issues */
+}
+
+.cardDetails {
+  width: 100%; /* Default width for card details on larger screens */
+  background-color: #fff; /* Keep the existing design */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  word-break: break-word; /* Prevent long text overflow */
+  overflow-y: auto; /* Enable vertical scrolling for content */
+  flex-grow: 1; /* Take remaining space */
   
+  opacity: 0; /* Initially hidden */
+  transform: translateY(20px); /* Start from below */
+  transition: opacity 0.4s ease, transform 0.4s ease; /* Smooth transition */
+}
+
+.cardDetails.show {
+  opacity: 1; /* Make the card details visible */
+  transform: translateY(0); /* Slide to original position */
+}
+
+@media (max-width: 800px) {
+  .detailsContainer {
+    flex-direction: column; /* Stack elements vertically on smaller screens */
+    height: auto; /* Adjust height for stacked layout */
+  }
+
   .cardDetails {
-    width: 100%; /* Default width for card details on larger screens */
-    background-color: #fff; /* Keep the existing design */
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    word-break: break-word; /* Prevent long text overflow */
-    overflow-y: auto; /* Enable vertical scrolling for content */
-    flex-grow: 1; /* Take remaining space */
-    
-    opacity: 0; /* Initially hidden */
-    transform: translateY(20px); /* Start from below */
-    transition: opacity 0.4s ease, transform 0.4s ease; /* Smooth transition */
+    width: 100%; /* Full width on mobile */
   }
-  
-  .cardDetails.show {
-    opacity: 1; /* Make the card details visible */
-    transform: translateY(0); /* Slide to original position */
-  }
-  
-  @media (max-width: 800px) {
-    .detailsContainer {
-      flex-direction: column; /* Stack elements vertically on smaller screens */
-      height: auto; /* Adjust height for stacked layout */
-    }
-  
-    .cardDetails {
-      width: 100%; /* Full width on mobile */
-    }
-  }
-  
-  .titleDetail, .urlCard, .descriptionCard {
-    margin: 0;
-    margin-bottom: 10px; /* Adds spacing between elements */
-    word-wrap: break-word; /* Prevents long text from overflowing */
-    overflow-wrap: break-word; /* Ensures proper text wrapping */
-  }
-  
+}
+
+.phone-view-toggle {
+  position: relative;
+  z-index: 10; /* Ensure the button is above other elements */
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.phone-view-toggle.active {
+  z-index: 20; /* Higher z-index when the preview is open */
+}
+
+.mobile-phone-view-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+   /* Add a semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 15; /* Ensure it is above other content but below the button */
+
+}
+
+.close-phone-view {
+  position: absolute;
+  top: 10px;
+  width: 30px;
+  height: 30px;
+  background-color: white;
+  right: 10px;
+ display:flex;
+ justify-content: center;
+ border-radius: 50%;
+ align-items: center;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 20; /* Ensure it is above the preview */
+}

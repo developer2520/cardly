@@ -3,7 +3,7 @@ import './phoneView.css';
 import { useCard } from './../../../context/previewContext';
 import axios from 'axios';
 
-export default function PhoneView() {
+export default function PhoneView({ togglePhoneView }) {
   const { data } = useCard();
   const [templateStyles, setTemplateStyles] = useState(null);
 
@@ -20,7 +20,7 @@ export default function PhoneView() {
     };
 
     fetchTemplateDetails();
-  }, [data.template]); // Fetch styles whenever the template ID changes
+  }, [data.template]);
 
   const phoneStyles = templateStyles || {}; // Fallback to empty object
   const linkStyles = phoneStyles.linkStyles || {};
@@ -36,8 +36,13 @@ export default function PhoneView() {
         color: phoneStyles.textColor || '#000000', // Default to black
       }}
     >
+      {/* Close Button */}
+      
+
       <div className="content">
-        <h1>{data.title}</h1>
+        <h1 className="cardTitle" style={{ color: phoneStyles.textColor }}>
+          {data.title}
+        </h1>
         <p>{data.bio}</p>
 
         <div className="linksContainer">
@@ -80,7 +85,7 @@ export default function PhoneView() {
               );
             })
           ) : (
-            <p></p>
+            <p>No links available</p>
           )}
         </div>
       </div>

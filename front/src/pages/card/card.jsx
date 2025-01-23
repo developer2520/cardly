@@ -59,17 +59,23 @@ export default function Card() {
   const template = data.template;
   const templateStyles = template.styles || {};
   const linkStyles = templateStyles.linkStyles || {};
-
+console.log(template)
   return (
     <div
       className="cardPage"
       style={{
         background: templateStyles.backgroundColor || 'white', // Default background if none
         color: templateStyles.textColor || 'black', // Default text color
+        fontFamily: templateStyles.fontFamily || 'Roboto, sans-serif',
+        fontSize: templateStyles.fontSize || '16px',
       }}
     >
-      <h1 className="cardTitle">{card.title}</h1>
-      <p>{card.bio}</p>
+      <h1 className="cardTitle" style={{ color: templateStyles.textColor }}>
+        {card.title}
+      </h1>
+      <p style={{ color: templateStyles.bioColor || 'black' }}>
+        {card.bio}
+      </p>
 
       {/* Render the links */}
       <div className="linksContainer">
@@ -83,10 +89,10 @@ export default function Card() {
                 className="link"
                 style={{
                   backgroundColor: linkStyles.backgroundColor || 'transparent',
-                  borderRadius: linkStyles.borderRadius || '4px',
-                  border: linkStyles.border || '1px solid #ccc',
-                  color: templateStyles.textColor || 'black',
-                  transition: linkStyles.transition || 'all 0.3s ease',
+                  borderRadius: linkStyles.borderRadius || '50px', // Rounded corners
+                  border: linkStyles.border || '2px solid #ccc',
+                  color: templateStyles.textColor || 'white', // Default white text on links
+                  transition: linkStyles.transition || 'all 0.3s ease', // Smooth hover transition
                 }}
                 onMouseEnter={(e) => {
                   e.target.style.backgroundColor = linkStyles.hoverBackgroundColor || linkStyles.backgroundColor;
@@ -99,8 +105,8 @@ export default function Card() {
                 onMouseLeave={(e) => {
                   e.target.style.backgroundColor = linkStyles.backgroundColor || 'transparent';
                   e.target.style.color = templateStyles.textColor || 'black';
-                  e.target.style.border = linkStyles.border || '1px solid #ccc';
-                  e.target.style.transform = 'none';
+                  e.target.style.border = linkStyles.border || '2px solid #ccc';
+                  e.target.style.transform = 'none'; // Remove transform on hover out
                 }}
               >
                 {link.title}

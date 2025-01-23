@@ -1,0 +1,77 @@
+.phoneView {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 315px; /* Fixed width for larger screens */
+    height: 500px; /* Typical height for a phone view */
+    background-color: rgb(255, 255, 255);
+    border-radius: 30px;
+    border: 7px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    margin: auto;
+    margin-right: 20px;
+    margin-left: 20px;
+    
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow-y: scroll; /* Prevent content from overflowing */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    opacity: 1; /* Start hidden for animation */
+    transform: translateY(-20px); /* Start slightly above */
+    transition: opacity 0.5s ease, transform 0.5s ease; /* Animation for showing */
+  }
+  
+  @media (max-width: 800px) {
+    .phoneView {
+      position: absolute;
+      top: 0;
+      width: 100%; /* Full width for smaller screens */
+      height: 100vh; /* Adjust height for better fit */
+      max-height: 100vh; /* Ensure it doesn't exceed the viewport height */
+      border-radius: 20px; /* Slightly smaller radius for mobile */
+      opacity: 1; /* Fully visible */
+      transform: translateY(0); /* Reset position */
+      margin: 0;
+      border: unset;
+      border-radius: unset;
+      z-index: 1;
+    }
+  }
+  
+  .phoneView h1 {
+    word-break: break-word;
+    font-size: 1.3rem; /* Larger font size for title */
+    text-align: center;
+    margin-bottom: 0.5rem;
+    color: #333; /* Darker text for better readability */
+  }
+  
+  .phoneView p {
+    word-break: break-word;
+    font-size: 0.7rem; /* Slightly larger for readability */
+    color: #666; /* Softer gray for text */
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  .linkItem .link {
+    display: block;
+    text-align: center;
+    padding: 0.35rem; /* Increased padding for touch targets */
+    font-size: 1rem;
+    font-weight: 500; /* Slightly bolder for emphasis */
+    text-decoration: none;
+    color: #007bff; /* Bootstrap primary color for links */
+    border-radius: 5px; /* More rounded corners */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+  }
+  
+  .linkItem .link:hover {
+    background-color: rgba(0, 123, 255, 0.1); /* Light background on hover */
+    transform: scale(1.02); /* Slight scale effect on hover */
+  }
+  

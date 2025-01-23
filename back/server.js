@@ -100,9 +100,11 @@ app.get('/user', (req, res) => {
 
 // Create Card Route
 app.post('/cards', async (req, res) => {
-  const { title, bio, links, url, userId, template } = req.body;
+  let { title, bio, links, url, userId, template } = req.body;
 
   try {
+
+    url = url.toLowerCase()
     // Check if a card with the same normalized URL already exists
     const existingCard = await LinkPage.findOne({url});
     if (existingCard) {
@@ -130,10 +132,12 @@ app.post('/cards', async (req, res) => {
 
 app.put('/cards/:id', async (req, res) => {
   const { id } = req.params; // Get ID from the URL
-  const { title, bio, links, url, template } = req.body; // Get other data from the request body
+  let { title, bio, links, url, template } = req.body; // Get other data from the request body
 
   try {
     // Validate inputs
+
+    url = url.toLowerCase()
     if (!id || !title || !url) {
       return res.status(400).json({ message: 'ID, title, and URL are required.' });
     }
@@ -244,7 +248,8 @@ app.get('/cards', async (req, res) => {
 
 app.get("/cards/:url", async (req, res) => {
   try {
-    const { url } = req.params;
+    let url = req.params.url.toLowerCase();
+    
   
     
 

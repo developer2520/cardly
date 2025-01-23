@@ -11,7 +11,7 @@ const Topbar = ({ card, setSelectedCard }) => {
   const tabsRef = useRef([]);
 
   useEffect(() => {
-    const activeIndex = ["Main", "Design", "Settings", "Stats"].indexOf(activeTab);
+    const activeIndex = ["Main", "Design", "Settings"].indexOf(activeTab);
     if (tabsRef.current[activeIndex]) {
       const tab = tabsRef.current[activeIndex];
       setIndicatorStyle({
@@ -29,8 +29,8 @@ const Topbar = ({ card, setSelectedCard }) => {
         return <Design />;
       case "Settings":
         return <Settings card={card} setSelectedCard={setSelectedCard}/>;
-      case "Stats":
-          return <div>Your statistocs</div>
+      // case "Stats":
+      //     return <div>Your statistocs</div>
          
       default:
         return <div>Select a Tab</div>;
@@ -42,7 +42,7 @@ const Topbar = ({ card, setSelectedCard }) => {
       
       <div className="tab-container">
         
-        {["Main", "Design", "Settings", "Stats"].map((tab, index) => (
+        {["Main", "Design", "Settings"].map((tab, index) => (
           <div
             key={tab}
             ref={(el) => (tabsRef.current[index] = el)}

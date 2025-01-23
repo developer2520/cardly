@@ -32,13 +32,19 @@ export default function PhoneView() {
     <div
       className="phoneView"
       style={{
-        background: phoneStyles.backgroundColor || '#ffffff', // Default to white
-        color: phoneStyles.textColor || '#000000', // Default to black
+        background: phoneStyles.backgroundColor || '#ffffff', // Default to white background
+        color: phoneStyles.textColor || '#000000', // Default to black text
+        fontFamily: phoneStyles.fontFamily || 'Roboto, sans-serif',
+        fontSize: phoneStyles.fontSize || '16px', // Default to 16px font size
       }}
     >
       <div className="content">
-        <h1>{data.title}</h1>
-        <p>{data.bio}</p>
+        <h1 className="cardTitle" style={{ color: phoneStyles.textColor }}>
+          {data.title}
+        </h1>
+        <p style={{ color: phoneStyles.bioColor || '#000000' }}>
+          {data.bio}
+        </p>
 
         <div className="linksContainer">
           {data.links && data.links.length > 0 ? (
@@ -60,18 +66,18 @@ export default function PhoneView() {
                     style={{
                       backgroundColor: isHovered
                         ? linkStyles.hoverBackgroundColor || linkStyles.backgroundColor
-                        : linkStyles.backgroundColor || '#f0f0f0',
-                      borderRadius: linkStyles.borderRadius || '4px',
+                        : linkStyles.backgroundColor || '#000000', // Default black background for links
+                      borderRadius: linkStyles.borderRadius || '50px', // More rounded border radius
                       border: isHovered
                         ? linkStyles.hoverBorder || linkStyles.border
-                        : linkStyles.border || '1px solid #ccc',
+                        : linkStyles.border || '2px solid #ccc', // Default border style
                       color: isHovered
-                        ? linkStyles.hoverTextColor || phoneStyles.textColor
-                        : phoneStyles.textColor,
+                        ? linkStyles.hoverTextColor || '#ffffff'
+                        : linkStyles.textColor || '#ffffff', // White text color by default
                       transform: isHovered && linkStyles.transform
-                        ? linkStyles.transform // Apply the transform from the template if available
-                        : 'scale(1)', // Default to no transform if not specified
-                      transition: 'all 0.3s ease', // Smooth transition for transform
+                        ? linkStyles.transform
+                        : 'scale(1)', // Apply scale effect on hover if specified
+                      transition: 'all 0.3s ease', // Smooth transition for hover effects
                     }}
                   >
                     {link.title}
@@ -80,7 +86,7 @@ export default function PhoneView() {
               );
             })
           ) : (
-            <p></p>
+            <p>No links available</p> // Display if no links are available
           )}
         </div>
       </div>
