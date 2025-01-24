@@ -59,7 +59,7 @@ export default function Page({ setSelectedCard }) {
         bio: '',
         links: [{ title: '', url: '' }],
         url: '',
-        template: "6",
+        template: "1",
       });
     }
   };
@@ -135,7 +135,7 @@ export default function Page({ setSelectedCard }) {
               disabled={isLoading}
             >
               <Save className="iconn" />
-              {isLoading ? 'Saving...' : 'Save Page'}
+              {isLoading ? 'Saving...' : 'Save'}
             </button>
           </div>
         </div>

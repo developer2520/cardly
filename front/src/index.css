@@ -8,6 +8,7 @@ html, body {
     overflow-x: hidden; /* Prevent horizontal scrolling */
     max-width: 100%;
     margin: 0 auto;
+    background-color: white;
   }
   
   #root {

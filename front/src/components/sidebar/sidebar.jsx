@@ -2,12 +2,14 @@ import { React, useContext } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { GoHome } from 'react-icons/go';
 import { TbSettings2 } from 'react-icons/tb';
+import { RiSettingsLine } from "react-icons/ri";
 import { SlChart } from "react-icons/sl";
 import { TbUserCircle } from "react-icons/tb";
 import { UserContext } from '../../context/userContext';
 import './sidebar.css';
 import { PiPlusSquare } from "react-icons/pi";
-import TelegramLogo from './../../assets/telegram-logo.png'
+import Logo from './../../assets/logo-cardly.png'
+
 
 export default function Sidebar({onCreateNewCard}) {
   const { user, loading: userLoading, error: userError } = useContext(UserContext);
@@ -19,7 +21,7 @@ export default function Sidebar({onCreateNewCard}) {
 
   return (
     <div className="sidebar">
-      <img src={TelegramLogo} className="logo" alt="Logo" />
+      <img src={Logo} className="logo" alt="Logo" />
       <div className="sidebar-link">
         <NavLink to="/home" end className="sidebar-linkk">
           <GoHome className="icon" />
@@ -46,7 +48,7 @@ export default function Sidebar({onCreateNewCard}) {
       </div>
       <div className="sidebar-link last-link">
         <NavLink to="/home/account" className="sidebar-linkk">
-          <TbUserCircle className="icon" />
+        <RiSettingsLine className="icon" />
           <span>{userLoading ? "User" : userError ? "error" : user.name}</span>
         </NavLink>
       </div>

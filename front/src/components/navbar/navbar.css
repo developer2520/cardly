@@ -23,6 +23,7 @@ body {
   padding: 0.5rem 5%; /* Padding adds inner spacing */
   justify-content: space-between; /* Space out items */
   align-items: center; /* Center items vertically */
+  z-index: 100000;
    /* Prevent visual overflow */
 }
 

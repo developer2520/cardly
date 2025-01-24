@@ -179,5 +179,5 @@
 .link:hover {
   background-color: white;
   color: #1e90ff;
-  transform: scale(1.05); /* Slightly enlarge on hover */
+ 
 }

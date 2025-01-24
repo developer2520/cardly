@@ -40,7 +40,7 @@ export default function CardDetails({ card, setSelectedCard }) {
             className={`phone-view-toggle ${isPhoneViewOpen ? 'active' : ''}`} 
             onClick={togglePhoneView}
           >
-            <IoPhonePortraitOutline />
+           Preview
           </button>
         )}
       </div>

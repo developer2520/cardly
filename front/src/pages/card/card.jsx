@@ -82,35 +82,36 @@ console.log(template)
         {card.links && card.links.length > 0 ? (
           card.links.map((link) => (
             <div key={link._id} className="linkItem">
-              <a
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="link"
-                style={{
-                  backgroundColor: linkStyles.backgroundColor || 'transparent',
-                  borderRadius: linkStyles.borderRadius || '50px', // Rounded corners
-                  border: linkStyles.border || '2px solid #ccc',
-                  color: templateStyles.textColor || 'white', // Default white text on links
-                  transition: linkStyles.transition || 'all 0.3s ease', // Smooth hover transition
-                }}
-                onMouseEnter={(e) => {
-                  e.target.style.backgroundColor = linkStyles.hoverBackgroundColor || linkStyles.backgroundColor;
-                  e.target.style.color = linkStyles.hoverTextColor || templateStyles.textColor;
-                  e.target.style.border = linkStyles.hoverBorder || linkStyles.border;
-                  if (linkStyles.transform) {
-                    e.target.style.transform = linkStyles.transform;
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.backgroundColor = linkStyles.backgroundColor || 'transparent';
-                  e.target.style.color = templateStyles.textColor || 'black';
-                  e.target.style.border = linkStyles.border || '2px solid #ccc';
-                  e.target.style.transform = 'none'; // Remove transform on hover out
-                }}
-              >
-                {link.title}
-              </a>
+            <a
+  href={link.url}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="link"
+  style={{
+    backgroundColor: linkStyles.backgroundColor || 'transparent',
+    borderRadius: linkStyles.borderRadius || '50px',
+    border: linkStyles.border || '2px solid #ccc',
+    color: linkStyles.textColor || templateStyles.textColor || 'black', // Use linkStyles.textColor first
+    transition: linkStyles.transition || 'all 0.3s ease',
+  }}
+  onMouseEnter={(e) => {
+    e.target.style.backgroundColor = linkStyles.hoverBackgroundColor || linkStyles.backgroundColor;
+    e.target.style.color = linkStyles.hoverTextColor || templateStyles.textColor || 'black';
+    e.target.style.border = linkStyles.hoverBorder || linkStyles.border;
+    if (linkStyles.hoverTransform) {
+      e.target.style.transform = linkStyles.hoverTransform;
+    }
+  }}
+  onMouseLeave={(e) => {
+    e.target.style.backgroundColor = linkStyles.backgroundColor || 'transparent';
+    e.target.style.color = linkStyles.textColor || templateStyles.textColor || 'black';
+    e.target.style.border = linkStyles.border || '2px solid #ccc';
+    e.target.style.transform = 'none';
+  }}
+>
+  {link.title} 
+</a>
+
             </div>
           ))
         ) : (

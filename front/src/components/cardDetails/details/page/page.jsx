@@ -157,7 +157,7 @@ export default function Page({ card }) {
               disabled={isLoading}
             >
               <Save className="iconn" />
-              {isLoading ? 'Saving...' : 'Save Changes'}
+              {isLoading ? 'Saving...' : 'Save'}
             </button>
           </div>
         </div>

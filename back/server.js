@@ -136,10 +136,15 @@ app.put('/cards/:id', async (req, res) => {
 
   try {
     // Validate inputs
-
-    url = url.toLowerCase()
+    url = url.toLowerCase(); // Ensure URLs are lowercase
     if (!id || !title || !url) {
       return res.status(400).json({ message: 'ID, title, and URL are required.' });
+    }
+
+    // Check for existing card with the same URL, excluding the current card
+    const existingCard = await LinkPage.findOne({ url, _id: { $ne: id } });
+    if (existingCard) {
+      return res.status(400).json({ message: 'Card with this URL already exists.' });
     }
 
     // Update the card in the database
@@ -155,7 +160,7 @@ app.put('/cards/:id', async (req, res) => {
 
     res.status(200).json({ message: 'Card updated successfully!', card: updatedCard });
   } catch (error) {
-    console.error('Error updating card:', error);
+    console.error('Error updating card:', error.message);
     res.status(500).json({ message: 'Internal server error.' });
   }
 });

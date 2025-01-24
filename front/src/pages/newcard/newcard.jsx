@@ -34,14 +34,14 @@ export default function NewCard({ setSelectedCard, setIsCreatingNewCard }) {
     <div className="detailsContainer">
       <div className="back-to-cardlist">
         <button onClick={handleBack}><IoArrowBackOutline /></button>
-        <h1>Creating New Card</h1>
+        <h1>New Card</h1>
 
         {isMobile && (
           <button 
             className={`phone-view-toggle ${isPhoneViewOpen ? 'active' : ''}`} 
             onClick={togglePhoneView}
           >
-            <IoPhonePortraitOutline />
+            Preview
           </button>
         )}
       </div>
