@@ -7,9 +7,9 @@ export default function Navbar2() {
 
 
   const Login = () => {
-    window.location.href = 'http://localhost:4000/auth/google';
-
+    window.location.href = 'https://cardly-seven.vercel.app/auth/google';
   }
+  
   return (
     
        <div className='navbar'>
