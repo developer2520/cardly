@@ -33,21 +33,22 @@ app.use(cors(corsOptions));
 app.use(
   session({
     secret: process.env.SESSION_SECRET || 'my-secret-key',
-    resave: true,
-    saveUninitialized: true,
+    resave: false, // Prevent unnecessary session saves
+    saveUninitialized: false, // Only create sessions when necessary
     store: MongoStore.create({
       mongoUrl: process.env.MONGO_URI,
       ttl: 24 * 60 * 60, // 1 day
     }),
     cookie: {
       maxAge: 24 * 60 * 60 * 1000, // 1 day
-      sameSite: 'none',
-      secure: process.env.NODE_ENV === 'production', // Enable secure cookies in production
-      httpOnly: true,
+      sameSite: 'none', // Cross-origin cookie
+      secure: process.env.NODE_ENV === 'production', // HTTPS-only in production
+      httpOnly: true, // Prevent client-side access
     },
-    name: 'sessionId',
+    name: 'sessionId', // Custom cookie name
   })
 );
+
 
 // Passport Middleware
 app.use(passport.initialize());
