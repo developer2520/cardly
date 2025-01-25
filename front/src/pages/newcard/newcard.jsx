@@ -33,7 +33,7 @@ export default function NewCard({ setSelectedCard, setIsCreatingNewCard }) {
   return (
     <div className="detailsContainer">
       <div className="back-to-cardlist">
-        <button onClick={handleBack}><IoArrowBackOutline /></button>
+        <button onClick={handleBack}><IoArrowBackOutline className='iconn' /></button>
         <h1>New Card</h1>
 
         {isMobile && (

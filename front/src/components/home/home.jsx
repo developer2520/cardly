@@ -1,51 +1,46 @@
-import React from 'react'
-import { FaLink, FaShareAlt, FaUsers } from 'react-icons/fa';
+import React from 'react';
 import './home.css';
 
 export default function Home() {
-  return (
-    <div className="homeContainer">
-      <div className="heroSection">
-        {/* Main Content */}
-        <div className="textContent">
-          <h1 className="heroTitle">Your Links, One Card</h1>
-          <p className="heroDescription">
-            Cardly makes it easy to connect your audience to everything you do—beautifully, effortlessly, and in one place. Share your content with style, grow your brand, and make every link count.
-          </p>
-          <button className="ctaButton">Get Started for Free</button>
-        </div>
+  const Login = () => {
+    window.location.href = 'http://localhost:4000/auth/google';
 
-        {/* Hero Image */}
-        <div className="imageContent">
-          <img
-            src="https://via.placeholder.com/450x600?text=Preview+of+Your+Link+Card"
-            alt="Cardly Preview"
-            className="heroImage"
-          />
+  }
+  return (
+    <main className="homeContainer">
+      {/* Hero Section */}
+      <section className="heroSection">
+        <div className="textContent">
+          <h1 className="heroTitle">Managa all of your links</h1>
+          <p className="heroDescription">
+            Cardly helps you centralize your links in a single, shareable page. 
+            It's simple, stylish, and impactful—just like you.
+          </p>
+          <button className="ctaButton" onClick={Login}>Get Started for Free</button>
         </div>
-      </div>
+      </section>
 
       {/* Features Section */}
-      <div className="featuresSection">
-        <h2>Why Choose Cardly?</h2>
-        <div className="featuresGrid">
-          <div className="featureCard">
-            <FaLink className="featureIcon" />
-            <h3>Unlimited Links</h3>
-            <p>Connect all your important links in one easy-to-share place.</p>
-          </div>
-          <div className="featureCard">
-            <FaShareAlt className="featureIcon" />
-            <h3>Easy Sharing</h3>
-            <p>Share your Cardly page across all your platforms seamlessly.</p>
-          </div>
-          <div className="featureCard">
-            <FaUsers className="featureIcon" />
-            <h3>Audience Insights</h3>
-            <p>Get analytics to understand your audience and improve engagement.</p>
-          </div>
-        </div>
-      </div>
-    </div>
+      <section className="featuresSection">
+        <h2 className="featuresTitle">What Makes Cardly Different?</h2>
+        <ul className="featuresList">
+          <li className="featureItem">
+            <span className="featureIcon">🔗</span>
+            <h3>All-in-One Links</h3>
+            <p>Bring your most important links together in one place.</p>
+          </li>
+          <li className="featureItem">
+            <span className="featureIcon">📈</span>
+            <h3>Analytics That Matter</h3>
+            <p>Track clicks and insights to grow your audience.</p>
+          </li>
+          <li className="featureItem">
+            <span className="featureIcon">⚡</span>
+            <h3>Lightning Fast</h3>
+            <p>Quick to set up, easy to share—effortless for you and your audience.</p>
+          </li>
+        </ul>
+      </section>
+    </main>
   );
 }

@@ -82,6 +82,7 @@ app.get('/logout', (req, res, next) => {
         secure: false,
         httpOnly: true,
       });
+      console.log('Session destroyed and cookie cleared.');
       res.redirect('http://localhost:5173/'); // Adjust URL for production
     });
   });

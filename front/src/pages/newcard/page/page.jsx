@@ -15,10 +15,24 @@ export default function Page({ setSelectedCard }) {
   const { data, setData } = useCard();
   const [status, setStatus] = useState({ type: '', message: '' });
   const [isLoading, setIsLoading] = useState(false);
-  
+  const [urlError, setUrlError] = useState(false);
 
-  // Clear data when the component mounts
- 
+  // Updated regex for invalid characters
+  const invalidCharacters = /[^a-zA-Z0-9._]/;
+
+  // Validate URL input
+  const handleUrlChange = (e) => {
+    const value = e.target.value;
+
+    // Check for invalid characters
+    if (invalidCharacters.test(value)) {
+      setUrlError(true);
+    } else {
+      setUrlError(false);
+    }
+
+    setData((prev) => ({ ...prev, url: value }));
+  };
 
   const addLink = () => {
     const newLinks = [...(data.links || []), { title: '', url: '' }];
@@ -46,7 +60,7 @@ export default function Page({ setSelectedCard }) {
         links: (data.links || []).filter((link) => link.title && link.url),
         url: data.url,
         userId,
-        template: data.template
+        template: data.template,
       });
       setStatus({ type: 'success', message: 'Page saved successfully!' });
     } catch (error) {
@@ -92,9 +106,10 @@ export default function Page({ setSelectedCard }) {
             type="text"
             placeholder="URL"
             value={data.url || ''}
-            onChange={(e) => setData((prev) => ({ ...prev, url: e.target.value }))}
-            className="input"
+            onChange={handleUrlChange}
+            className={`input ${urlError ? 'input-error' : ''}`}
           />
+          {urlError && <p className="alert-error character-error">URL contains invalid characters.</p>}
           <textarea
             name="bio"
             id="bio"
@@ -132,7 +147,7 @@ export default function Page({ setSelectedCard }) {
             <button
               className="button button-primary"
               onClick={handleSave}
-              disabled={isLoading}
+              disabled={isLoading || urlError}
             >
               <Save className="iconn" />
               {isLoading ? 'Saving...' : 'Save'}

@@ -80,10 +80,14 @@
 }
 
 .back-to-cardlist button {
+  display: flex;
+  height: 40px;
   background-color: #007bff;
   /* Primary color for the button */
   color: #fff;
   /* White text */
+  align-items: center;
+justify-content: center;
   padding: 0.5rem 1rem;
   /* Add some padding for a better look */
   font-size: 1rem;
@@ -103,6 +107,9 @@
   /* Darker shade on hover */
 }
 
+.back-to-cardlist button .iconn {
+  font-size: 1rem;
+}
 .back-to-cardlist h1 {
   margin: 0;
   /* Remove default margin */

@@ -1,6 +1,7 @@
 import React from 'react'
 import './navbar2.css'
 import { Link } from 'react-router-dom'
+import Logo from './../../assets/logo-cardly.png'
 
 export default function Navbar2() {
 
@@ -12,9 +13,9 @@ export default function Navbar2() {
   return (
     
        <div className='navbar'>
-        <div className="logoNavbar">
-            <h1>Cardly</h1>
-        </div>
+        
+           <img className='logoo' src={Logo} alt="" />
+        
 
         <button className="loginButton" onClick={Login}>
   <svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid" viewBox="0 0 256 262">

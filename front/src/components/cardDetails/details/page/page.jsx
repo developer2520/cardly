@@ -10,6 +10,28 @@ export default function Page({ card }) {
   const [isLoading, setIsLoading] = useState(false);
   const { refetch } = useContext(OwnCardsContext);
   const { data, setData } = useCard();
+  const [urlError, setUrlError] = useState(false);
+
+  // Updated regex for invalid characters in the URL
+  const invalidCharacters = /[^a-zA-Z0-9._]/;
+
+  // Validate URL input
+  const handleUrlValidation = (url) => {
+    return invalidCharacters.test(url);
+  };
+
+  // Handle URL change with validation
+  const handleUrlChange = (e) => {
+    const value = e.target.value;
+
+    if (handleUrlValidation(value)) {
+      setUrlError(true);
+    } else {
+      setUrlError(false);
+    }
+
+    setData((prev) => ({ ...prev, url: value }));
+  };
 
   // Only initialize the context data when the card ID changes or component first mounts
   useEffect(() => {
@@ -19,40 +41,48 @@ export default function Page({ card }) {
         bio: card.bio || '',
         title: card.title || '',
         url: card.url || '',
-        template: card.template, // Ensure template is initialized
+        template: card.template,
         cardId: card._id,
       });
     }
   }, [card._id, setData]);
-  
+
+  // Revalidate the URL when the card is loaded or when URL is updated
+  useEffect(() => {
+    if (data.url && handleUrlValidation(data.url)) {
+      setUrlError(true);
+    } else {
+      setUrlError(false);
+    }
+  }, [data.url]);
 
   const addLink = () => {
-    setData(prev => ({
+    setData((prev) => ({
       ...prev,
-      links: [...prev.links, { title: '', url: '' }]
+      links: [...prev.links, { title: '', url: '' }],
     }));
   };
 
   const removeLink = (index) => {
-    setData(prev => ({
+    setData((prev) => ({
       ...prev,
-      links: prev.links.filter((_, i) => i !== index)
+      links: prev.links.filter((_, i) => i !== index),
     }));
   };
 
   const updateLink = (index, field, value) => {
-    setData(prev => ({
+    setData((prev) => ({
       ...prev,
       links: prev.links.map((link, i) =>
         i === index ? { ...link, [field]: value } : link
-      )
+      ),
     }));
   };
 
   const updateField = (field, value) => {
-    setData(prev => ({
+    setData((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 
@@ -93,7 +123,11 @@ export default function Page({ card }) {
         </div>
         <div className="card-content">
           {status.message && (
-            <div className={`alert ${status.type === 'error' ? 'alert-error' : 'alert-success'}`}>
+            <div
+              className={`alert ${
+                status.type === 'error' ? 'alert-error' : 'alert-success'
+              }`}
+            >
               {status.message}
             </div>
           )}
@@ -109,9 +143,12 @@ export default function Page({ card }) {
             type="text"
             placeholder="URL"
             value={data.url}
-            onChange={(e) => updateField('url', e.target.value)}
-            className="input"
+            onChange={handleUrlChange}
+            className={`input ${urlError ? 'input-error' : ''}`}
           />
+          {urlError && (
+            <p className="alert-error character-error">URL contains invalid characters.</p>
+          )}
           <textarea
             name="bio"
             id="bio"
@@ -154,7 +191,7 @@ export default function Page({ card }) {
             <button
               className="button button-primary"
               onClick={handleSave}
-              disabled={isLoading}
+              disabled={isLoading || urlError}
             >
               <Save className="iconn" />
               {isLoading ? 'Saving...' : 'Save'}

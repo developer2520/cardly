@@ -1,29 +1,25 @@
 .phoneView {
-    position: sticky;
-    top: 0;
-    left: 0;
-    width: 315px; /* Fixed width for larger screens */
-    height: 500px; /* Typical height for a phone view */
-    background-color: rgb(255, 255, 255);
-    border-radius: 30px;
-    border: 7px solid black;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
-    margin: auto;
-    margin-right: 20px;
-    margin-left: 20px;
-    
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow-y: scroll; /* Prevent content from overflowing */
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-    opacity: 1; /* Start hidden for animation */
-    transform: translateY(-20px); /* Start slightly above */
-    transition: opacity 0.5s ease, transform 0.5s ease; /* Animation for showing */
-  }
+  position: relative; /* Ensure normal layout behavior */
+  top: 0;
+  left: 0;
+  width: 315px; /* Fixed width for larger screens */
+  height: 500px; /* Typical height for a phone view */
+  background-color: rgb(255, 255, 255);
+  border-radius: 30px;
+  border: 7px solid black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* Align content to the top */
+  padding: 1rem;
+  margin: auto;
+  margin-right: 20px;
+  margin-left: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow-y: auto; /* Enable scrolling */
+  -ms-overflow-style: none; /* Hide scrollbar in IE */
+  scrollbar-width: none; /* Hide scrollbar in Firefox */
+}
   
   @media (max-width: 800px) {
     .phoneView {
