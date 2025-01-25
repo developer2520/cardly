@@ -17,18 +17,17 @@ app.use(express.json());
 // Trust proxy - required for environments like Render
 app.set('trust proxy', 1);
 
-// Middleware
-app.use(express.json());
-
 // CORS Middleware
 const corsOptions = {
-    origin: 'http://localhost:5173',
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
-  };
-  
-  app.use(cors(corsOptions));
+  origin: process.env.NODE_ENV === 'production' 
+    ? 'https://cardly-seven.vercel.app'  // Deployed URL
+    : 'http://localhost:5173',            // Local development URL
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
+};
+
+app.use(cors(corsOptions));
 
 // Session Middleware
 app.use(
@@ -42,9 +41,9 @@ app.use(
     }),
     cookie: {
       maxAge: 24 * 60 * 60 * 1000, // 1 day
-      sameSite: 'lax', // Allow cross-origin for localhost
-      secure: false, // Disable for local development (HTTP)
-      httpOnly: true, // Prevent client-side JavaScript access
+      sameSite: 'lax',
+      secure: process.env.NODE_ENV === 'production', // Enable secure cookies in production
+      httpOnly: true,
     },
     name: 'sessionId',
   })
@@ -61,7 +60,7 @@ app.get(
   '/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
-    res.redirect('http://localhost:5173/home'); // Adjust URL for production
+    res.redirect('https://cardly-seven.vercel.app/home'); // Adjust URL for production
   }
 );
 
@@ -79,14 +78,15 @@ app.get('/logout', (req, res, next) => {
       }
       res.clearCookie('sessionId', {
         sameSite: 'lax',
-        secure: false,
+        secure: process.env.NODE_ENV === 'production',  // Ensure secure cookies in production
         httpOnly: true,
       });
       console.log('Session destroyed and cookie cleared.');
-      res.redirect('http://localhost:5173/'); // Adjust URL for production
+      res.redirect('https://cardly-seven.vercel.app/'); // Adjust URL for production
     });
   });
 });
+
 
 // User Route
 app.get('/user', (req, res) => {
