@@ -7,9 +7,12 @@ export default function CardList({ onCardSelect, onCreateNewCard, selectedCard }
 
   if (loading) {
     return (
-      <div className="cardlist loaderContainer">
+      <div className="cardlist">
+<div className="loaderContainer">
         <div className="loader"></div>
       </div>
+      </div>
+      
     );
   }
 
