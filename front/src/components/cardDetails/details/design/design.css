@@ -12,16 +12,10 @@
   }
   
   /* Template grid */
-  .templates-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-  }
   
   /* Template card */
   /* Template card */
-  .template-card {
+  /* .template-card {
     width: 200px;
     height: 250px;
     display: flex;
@@ -38,7 +32,7 @@
       transform 0.3s ease, 
       box-shadow 0.3s ease, 
       outline-offset 0.3s ease;
-  }
+  } */
   
   
   .template-card:hover {
@@ -90,5 +84,4 @@
     font-size: 18px;
     color: #555;
   }
-  
   

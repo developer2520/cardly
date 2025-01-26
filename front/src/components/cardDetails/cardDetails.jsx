@@ -6,7 +6,7 @@ import { IoArrowBackOutline, IoPhonePortraitOutline, IoCloseOutline } from "reac
 
 export default function CardDetails({ card, setSelectedCard }) {
   const [isVisible, setIsVisible] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 1000);
   const [isPhoneViewOpen, setIsPhoneViewOpen] = useState(false);
 
   useEffect(() => {

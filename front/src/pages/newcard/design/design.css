@@ -19,7 +19,7 @@
 
 /* Template card */
 .template-card {
-  max-width: 100%; /* Adjust to take full available space */
+  width: 200px; /* Adjust to take full available space */
   height: 250px;
   display: flex;
   flex-direction: column;
@@ -111,16 +111,26 @@ p.template-name {
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 380px) {
   .templates-grid {
-    grid-template-columns: repeat(2, 1fr); /* Use a single column on very small screens */
+   
+    grid-template-columns: repeat(2, 170px); /* Flexible layout for very small screens */
+    gap: 5px;
+    justify-content: center;
   }
+
   .template-card {
-    max-width: 90%;
+    
+   
     padding: 10px; /* Reduce padding for smaller screens */
   }
+
+  .template-link {
+    height: 20px;
+  }
+
   p.template-name {
-    font-size: 0.75rem;
+    font-size: 0.75rem; /* Smaller font size for better fit */
   }
 }
 
