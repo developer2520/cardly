@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { OwnCardsContext } from "./../../../../context/ownCardsContext";
 import axios from "axios";
 import Swal from "sweetalert2"; // Import SweetAlert2
-
 import { Trash2 } from "lucide-react";
 import "./settings.css"; // Import your styles
 
@@ -48,8 +47,9 @@ const Settings = ({ card, setSelectedCard }) => {
   };
 
   return (
-    <div className="containerrr">
-        <h2>you can delete  your card here</h2>
+    <div className="settings-container">
+      <h2 className="settings-title">Manage Your Card</h2>
+      <p className="settings-description">You can delete your card here. Be careful, this action cannot be undone.</p>
       <div className="actions">
         <button className="delete-button" onClick={showConfirmDialog}>
           <Trash2 className="icon" />
