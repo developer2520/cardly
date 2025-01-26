@@ -41,10 +41,11 @@ app.use(
     }),
     cookie: {
       maxAge: 24 * 60 * 60 * 1000, // 1 day
-      sameSite: 'none', // Cross-origin cookie
-      secure: false, // HTTPS-only in production
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // 'none' for cross-origin
+      secure: process.env.NODE_ENV === 'production', // HTTPS-only in production
       httpOnly: true, // Prevent client-side access
     },
+    
     name: 'sessionId', // Custom cookie name
   })
 );
@@ -83,7 +84,7 @@ app.get('/logout', (req, res, next) => {
         httpOnly: true,
       });
       console.log('Session destroyed and cookie cleared.');
-      res.redirect('https://cardly-seven.vercel.app/'); // Adjust URL for production
+      res.redirect('http://localhost:5173/'); // Adjust URL for production
     });
   });
 });
@@ -92,13 +93,9 @@ app.get('/logout', (req, res, next) => {
 // User Route
 app.get('/user', (req, res) => {
   
-
-  if (req.isAuthenticated()) {
-    res.json(req.user);
-  } else {
-    res.status(401).json({ error: 'User not authenticated' });
-  }
+  res.json(req.isAuthenticated() ? req.user : { error: 'User not authenticated' });
 });
+
 
 // Create Card Route
 app.post('/cards', async (req, res) => {
