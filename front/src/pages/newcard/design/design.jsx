@@ -34,56 +34,53 @@ const Design = () => {
 
   return (
     <div className="design-container">
-      <h1>Select a Template</h1>
+    <h1>Select a Template</h1>
 
-      {loading ? (
-        <div className="templates-grid-loader">
-          {/* Loader cards */}
-          {[...Array(6)].map((_, index) => (
-            <div key={index} className="template-loader">
-              <div className="template-card-skeleton" />
-              <p className="template-name-skeleton"></p>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div className="templates-grid">
-          {templates.map((template) => (
-            <div key={template.id} className="template-container">
-              {/* Template card */}
-              <div
-                className={`template-card ${
-                  data.template === template.id ? 'selected' : ''
-                }`}
-                onClick={() => handleTemplate(template)} // Update template in context on click
-                style={{
-                  background: template.styles.backgroundColor,
-                  color: template.styles.textColor,
-                }}
-              >
-                <div className="links-container">
-                  {/* Placeholder links */}
-                  {[...Array(3)].map((_, index) => (
-                    <div
-                      key={index}
-                      className="template-link"
-                      style={{
-                        background:
-                          template.styles.linkStyles.backgroundColor,
-                        borderRadius: template.styles.linkStyles.borderRadius,
-                        border: template.styles.linkStyles.border,
-                      }}
-                    />
-                  ))}
-                </div>
+    {loading ? (
+      <div className="templates-grid-loader">
+        {[...Array(6)].map((_, index) => (
+          <div key={index} className="template-loader">
+            <div className="template-card-skeleton" />
+            <p className="template-name-skeleton"></p>
+          </div>
+        ))}
+      </div>
+    ) : (
+      <div className="templates-grid">
+        {templates.map((template) => (
+          <div key={template.id} className="template-container">
+            <div
+              className={`template-card ${
+                data.template === template.id ? 'selected' : ''
+              }`}
+              onClick={() => handleTemplate(template)}
+              style={{
+                background: template.styles?.backgroundColor || '#f0f0f0',
+                color: template.styles?.textColor || '#000',
+              }}
+            >
+              <div className="links-container">
+                {[...Array(3)].map((_, index) => (
+                  <div
+                    key={index}
+                    className="template-link"
+                    style={{
+                      background:
+                        template.styles?.linkStyles?.backgroundColor || '#ddd',
+                      borderRadius:
+                        template.styles?.linkStyles?.borderRadius || '4px',
+                      border: template.styles?.linkStyles?.border || 'none',
+                    }}
+                  />
+                ))}
               </div>
-              {/* Template name below the card */}
-              <p className="template-name">{template.name}</p>
             </div>
-          ))}
-        </div>
-      )}
-    </div>
+            <p className="template-name">{template.name}</p>
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
   );
 };
 

@@ -59,7 +59,7 @@ export default function Card() {
   const template = data.template;
   const templateStyles = template.styles || {};
   const linkStyles = templateStyles.linkStyles || {};
-console.log(template)
+
   return (
     <div
       className="cardPage"

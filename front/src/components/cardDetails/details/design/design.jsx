@@ -15,9 +15,9 @@ const Design = () => {
       try {
         const response = await axios.get('/templates');
         setTemplates(response.data);
-        console.log('Fetched templates:', response.data);
+        
       } catch (error) {
-        console.error('Error fetching templates:', error);
+        
       } finally {
         setLoading(false);
       }
@@ -27,13 +27,13 @@ const Design = () => {
   }, []);
 
   const handleTemplate = (template) => {
-    console.log('Selected template:', template);
+    
     setData((prevData) => ({
       ...prevData,
       template: template.id, // Update template ID in context
     }));
   };
-console.log(data.template)
+
   return (
     <div className="design-container">
       <h1>Select a Template</h1>
