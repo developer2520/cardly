@@ -42,7 +42,7 @@ app.use(
     cookie: {
       maxAge: 24 * 60 * 60 * 1000, // 1 day
       sameSite: 'none', // Cross-origin cookie
-      secure: process.env.NODE_ENV === 'production', // HTTPS-only in production
+      secure: false, // HTTPS-only in production
       httpOnly: true, // Prevent client-side access
     },
     name: 'sessionId', // Custom cookie name
