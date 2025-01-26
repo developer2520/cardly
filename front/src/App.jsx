@@ -20,7 +20,8 @@ import './App.css';
 function App() {
 
   // axios.defaults.baseURL = 'https://cardly-1.onrender.com/';
-  axios.defaults.baseURL = 'http://localhost:4000';
+  const API_URL = import.meta.env.VITE_API_URL 
+  axios.defaults.baseURL = `${API_URL}`;
   axios.defaults.withCredentials = true
  
 
