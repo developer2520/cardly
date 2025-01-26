@@ -7,7 +7,7 @@ export default function Navbar2() {
 
 
   const Login = () => {
-    window.location.href = 'http://localhost:4000/auth/google';
+    window.location.href = `${import.meta.env.VITE_API_URL}/auth/google`;
   }
   
   return (
