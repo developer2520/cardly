@@ -61,7 +61,7 @@ app.get(
   '/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
-    res.redirect('https://cardly-seven.vercel.app/home'); // Adjust URL for production
+    res.redirect('http://localhost:5173/home'); // Adjust URL for production
   }
 );
 
