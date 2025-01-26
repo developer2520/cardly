@@ -62,7 +62,9 @@ app.get(
   '/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
-    res.redirect('http://localhost:5173/home'); // Adjust URL for production
+    // Use environment variable for frontend URL
+    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173'; // Fallback to localhost if not set
+    res.redirect(`${frontendUrl}/home`);
   }
 );
 
@@ -84,11 +86,12 @@ app.get('/logout', (req, res, next) => {
         httpOnly: true,
       });
       console.log('Session destroyed and cookie cleared.');
-      res.redirect('http://localhost:5173/'); // Adjust URL for production
+      // Redirect using frontend URL
+      const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173'; // Fallback to localhost if not set
+      res.redirect(`${frontendUrl}/`);
     });
   });
 });
-
 
 // User Route
 app.get('/user', (req, res) => {
