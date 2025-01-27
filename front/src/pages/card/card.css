@@ -1,26 +1,36 @@
 /* General card page styles */
 
+.card-container-full {
+  width: 100vw; /* Full viewport width */
+  min-height: 100vh; /* Full viewport height */
+  margin: 0;
+  position: relative;
+  background-color: inherit; /* To inherit background from Card */
+}
 
 .cardPage {
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    background-color: #f5f5f5; /* Default background color */
-    color: #333; /* Default text color */
-    font-family: 'Arial', sans-serif;
-    padding: 20px;
-    box-sizing: border-box;
-  }
+  width: 100%; /* Full viewport width */
+  min-height: 100vh; /* Full viewport height */
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: flex-start; /* Start from the top (no vertical centering) */
+  flex-direction: column;
+  background-color: #f5f5f5; /* Default background color */
+  color: #333; /* Default text color */
+  font-family: 'Arial', sans-serif;
+  padding: 20px;
+  box-sizing: border-box;
+  margin: 0; /* Remove default margin */
+  
+}
+
   
   /* Centering the card content */
   .cardTitle {
     font-size: 2rem;
     font-weight: 600;
     margin-bottom: 15px;
-    text-align: center;
+    text-align: start;
   }
   
   /* Bio text styling */

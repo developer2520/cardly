@@ -61,9 +61,11 @@ export default function Card() {
   const linkStyles = templateStyles.linkStyles || {};
 
   return (
-    <div
+    <div className="card-container-full" >
+<div
       className="cardPage"
       style={{
+        
         background: templateStyles.backgroundColor || 'white', // Default background if none
         color: templateStyles.textColor || 'black', // Default text color
         fontFamily: templateStyles.fontFamily || 'Roboto, sans-serif',
@@ -119,5 +121,8 @@ export default function Card() {
         )}
       </div>
     </div>
+
+    </div>
+    
   );
 }

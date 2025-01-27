@@ -8,7 +8,7 @@
 
 .cardDetails {
   width: 100%; /* Default width for card details on larger screens */
-  background-color: #fff; /* Keep the existing design */
+  background-color: #ffffff; /* Keep the existing design */
   height: 100%;
   display: flex;
   flex-direction: column;
