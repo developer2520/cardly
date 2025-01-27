@@ -85,7 +85,7 @@ app.get('/logout', (req, res, next) => {
         secure: process.env.NODE_ENV === 'production',  // Ensure secure cookies in production
         httpOnly: true,
       });
-      console.log('Session destroyed and cookie cleared.');
+      
       // Redirect using frontend URL
       const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173'; // Fallback to localhost if not set
       res.redirect(`${frontendUrl}/`);
