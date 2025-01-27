@@ -2,19 +2,45 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './card.css';
 import { useParams, Link } from 'react-router-dom';
+import { FaYoutube, FaTwitter, FaInstagram, FaFacebook, FaLinkedin, FaTiktok, FaSpotify, FaGlobe } from 'react-icons/fa';
+
+// Platform icons mapping with React Icons
+const platformIcons = {
+  youtube: { domain: 'youtube.com', icon: <FaYoutube className="link-icon" /> },
+  twitter: { domain: 'twitter.com', icon: <FaTwitter className="link-icon" /> },
+  instagram: { domain: 'instagram.com', icon: <FaInstagram className="link-icon" /> },
+  facebook: { domain: 'facebook.com', icon: <FaFacebook className="link-icon" /> },
+  linkedin: { domain: 'linkedin.com', icon: <FaLinkedin className="link-icon" /> },
+  tiktok: { domain: 'tiktok.com', icon: <FaTiktok className="link-icon" /> },
+  spotify: { domain: 'spotify.com', icon: <FaSpotify className="link-icon" /> },
+};
+
+// Function to detect platform from URL
+const detectPlatform = (url) => {
+  try {
+    const domain = new URL(url).hostname.toLowerCase();
+    for (const [platform, { domain: platformDomain, icon }] of Object.entries(platformIcons)) {
+      if (domain.includes(platformDomain)) {
+        return { platform, icon };
+      }
+    }
+  } catch (error) {
+    console.error('Invalid URL:', url);
+  }
+  return { platform: 'unknown', icon: <FaGlobe className='link-icon' /> }; // Default for unsupported platforms
+};
 
 export default function Card() {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
-  const { url } = useParams(); // Destructure the URL parameter
+  const { url } = useParams();
 
   useEffect(() => {
-    // Fetch both card and template data in a single request
     axios
       .get(`/cards/${url}`, { withCredentials: true })
       .then((response) => {
-        setData(response.data); // Set card and template data
+        setData(response.data);
         setLoading(false);
       })
       .catch((err) => {
@@ -25,10 +51,9 @@ export default function Card() {
           setError('Something went wrong');
         }
       });
-  }, [url]); // Dependency: Run when URL changes
+  }, [url]);
 
   useEffect(() => {
-    // Update document title when `data.card` is available
     if (data && data.card) {
       document.title = data.card.title || 'Card';
     }
@@ -61,68 +86,101 @@ export default function Card() {
   const linkStyles = templateStyles.linkStyles || {};
 
   return (
-    <div className="card-container-full" >
-<div
-      className="cardPage"
-      style={{
-        
-        background: templateStyles.backgroundColor || 'white', // Default background if none
-        color: templateStyles.textColor || 'black', // Default text color
-        fontFamily: templateStyles.fontFamily || 'Roboto, sans-serif',
-        fontSize: templateStyles.fontSize || '16px',
-      }}
-    >
-      <h1 className="cardTitle" style={{ color: templateStyles.textColor }}>
-        {card.title}
-      </h1>
-      <p style={{ color: templateStyles.bioColor || 'black' }}>
-        {card.bio}
-      </p>
+    <div className="card-container-full">
+      <div
+        className="cardPage"
+        style={{
+          background: templateStyles.backgroundColor || 'white',
+          color: templateStyles.textColor || 'black',
+          fontFamily: templateStyles.fontFamily || 'Roboto, sans-serif',
+          fontSize: templateStyles.fontSize || '16px',
+        }}
+      >
+        <h1 className="cardTitle" style={{ color: templateStyles.textColor }}>
+          {card.title}
+        </h1>
+        <p style={{ color: templateStyles.bioColor || 'black' }}>
+          {card.bio}
+        </p>
 
-      {/* Render the links */}
-      <div className="linksContainer">
-        {card.links && card.links.length > 0 ? (
-          card.links.map((link) => (
-            <div key={link._id} className="linkItem">
-            <a
+        <div className="linksContainer">
+          {card.links && card.links.length > 0 ? (
+            card.links.map((link) => {
+              const { icon } = detectPlatform(link.url);
+              return (
+                <div key={link._id} className="linkItem">
+                 
+                  <a
   href={link.url}
   target="_blank"
   rel="noopener noreferrer"
   className="link"
   style={{
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
     backgroundColor: linkStyles.backgroundColor || 'transparent',
     borderRadius: linkStyles.borderRadius || '50px',
     border: linkStyles.border || '2px solid #ccc',
-    color: linkStyles.textColor || templateStyles.textColor || 'black', // Use linkStyles.textColor first
+    color: linkStyles.textColor || templateStyles.textColor || 'black',
     transition: linkStyles.transition || 'all 0.3s ease',
+    padding: '10px 15px',
   }}
   onMouseEnter={(e) => {
-    e.target.style.backgroundColor = linkStyles.hoverBackgroundColor || linkStyles.backgroundColor;
-    e.target.style.color = linkStyles.hoverTextColor || templateStyles.textColor || 'black';
-    e.target.style.border = linkStyles.hoverBorder || linkStyles.border;
-    if (linkStyles.hoverTransform) {
-      e.target.style.transform = linkStyles.hoverTransform;
+    const target = e.currentTarget; // Use currentTarget instead of target to ensure you refer to the <a>
+    target.style.backgroundColor =
+      link.onHoverBackgroundColor || linkStyles.hoverBackgroundColor || linkStyles.backgroundColor;
+    target.style.color =
+      link.onHoverTextColor || linkStyles.hoverTextColor || templateStyles.textColor || 'black';
+    target.style.border =
+      link.onHoverBorder || linkStyles.hoverBorder || linkStyles.border;
+    if (link.onHoverTransform || linkStyles.hoverTransform) {
+      target.style.transform = link.onHoverTransform || linkStyles.hoverTransform;
     }
   }}
   onMouseLeave={(e) => {
-    e.target.style.backgroundColor = linkStyles.backgroundColor || 'transparent';
-    e.target.style.color = linkStyles.textColor || templateStyles.textColor || 'black';
-    e.target.style.border = linkStyles.border || '2px solid #ccc';
-    e.target.style.transform = 'none';
+    const target = e.currentTarget;
+    target.style.backgroundColor = linkStyles.backgroundColor || 'transparent';
+    target.style.color = linkStyles.textColor || templateStyles.textColor || 'black';
+    target.style.border = linkStyles.border || '2px solid #ccc';
+    target.style.transform = 'none';
   }}
 >
-  {link.title} 
+  <div
+    style={{
+      display: 'flex',
+      alignItems: 'center',
+      gap: '4px', // Optional adjustment for spacing
+      pointerEvents: 'none', // Prevent hover styles on the div itself
+    }}
+
+    className='linkContainerWithIcon'
+  >
+    {icon}
+    <span
+      style={{
+        
+        color: 'inherit', // Ensure text inherits color
+        fontSize: '1.1rem',
+      
+        flexGrow: '1',
+      }}
+
+      className='l'
+    >
+      {link.title}
+    </span>
+  </div>
 </a>
 
-            </div>
-          ))
-        ) : (
-          <p>No links available</p>
-        )}
+                </div>
+              );
+            })
+          ) : (
+            <p>No links available</p>
+          )}
+        </div>
       </div>
     </div>
-
-    </div>
-    
   );
 }

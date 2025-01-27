@@ -2,10 +2,36 @@ import React, { useEffect, useState } from 'react';
 import './phoneView.css';
 import { useCard } from './../../../context/previewContext';
 import axios from 'axios';
+import { FaYoutube, FaTwitter, FaInstagram, FaFacebook, FaLinkedin, FaTiktok, FaSpotify, FaGlobe } from 'react-icons/fa';
 
 export default function PhoneView({ togglePhoneView }) {
   const { data } = useCard();
   const [templateStyles, setTemplateStyles] = useState(null);
+
+  const platformIcons = {
+    youtube: { domain: 'youtube.com', icon: <FaYoutube className="link-icon-new-card" /> },
+    twitter: { domain: 'twitter.com', icon: <FaTwitter className="link-icon-new-card" /> },
+    instagram: { domain: 'instagram.com', icon: <FaInstagram className="link-icon-new-card" /> },
+    facebook: { domain: 'facebook.com', icon: <FaFacebook className="link-icon-new-card" /> },
+    linkedin: { domain: 'linkedin.com', icon: <FaLinkedin className="link-icon-new-card" /> },
+    tiktok: { domain: 'tiktok.com', icon: <FaTiktok className="link-icon-new-card" /> },
+    spotify: { domain: 'spotify.com', icon: <FaSpotify className="link-icon-new-card" /> },
+  };
+
+  // Function to detect platform from URL
+  const detectPlatform = (url) => {
+    try {
+      const domain = new URL(url).hostname.toLowerCase();
+      for (const [platform, { domain: platformDomain, icon }] of Object.entries(platformIcons)) {
+        if (domain.includes(platformDomain)) {
+          return { platform, icon };
+        }
+      }
+    } catch (error) {
+      console.error('Invalid URL:', url);
+    }
+    return { platform: 'unknown', icon: <FaGlobe className="link-icon-new-card" /> }; // Default for unsupported platforms
+  };
 
   useEffect(() => {
     const fetchTemplateDetails = async () => {
@@ -36,9 +62,6 @@ export default function PhoneView({ togglePhoneView }) {
         color: phoneStyles.textColor || '#000000', // Default to black
       }}
     >
-      {/* Close Button */}
-      
-
       <div className="content">
         <h1 className="cardTitle" style={{ color: phoneStyles.textColor }}>
           {data.title}
@@ -49,6 +72,7 @@ export default function PhoneView({ togglePhoneView }) {
           {data.links && data.links.length > 0 ? (
             data.links.map((link, index) => {
               const isHovered = hoveredLinkIndex === index;
+              const { icon } = detectPlatform(link.url); // Detect icon based on URL
 
               return (
                 <div
@@ -58,30 +82,49 @@ export default function PhoneView({ togglePhoneView }) {
                   onMouseLeave={() => setHoveredLinkIndex(null)}
                 >
                   <a
-  href={link.url}
-  target="_blank"
-  rel="noopener noreferrer"
-  className="link"
-  style={{
-    backgroundColor: isHovered
-      ? linkStyles.hoverBackgroundColor || linkStyles.backgroundColor
-      : linkStyles.backgroundColor || '#f0f0f0',
-    borderRadius: linkStyles.borderRadius || '4px',
-    border: isHovered
-      ? linkStyles.hoverBorder || linkStyles.border
-      : linkStyles.border || '1px solid #ccc',
-    color: isHovered
-      ? linkStyles.hoverTextColor || phoneStyles.textColor || '#000000' // Use hoverTextColor or fallback to textColor
-      : linkStyles.textColor || phoneStyles.textColor || '#000000', // Use textColor with a safe default
-    transform: isHovered && linkStyles.transform
-      ? linkStyles.transform
-      : 'scale(1)', // Default to no transform if not specified
-    transition: 'all 0.3s ease', // Smooth transition for transform
-  }}
->
-  {link.title}
-</a>
-
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="link"
+                    style={{
+                      backgroundColor: isHovered
+                        ? linkStyles.hoverBackgroundColor || linkStyles.backgroundColor
+                        : linkStyles.backgroundColor || '#f0f0f0',
+                      borderRadius: linkStyles.borderRadius || '4px',
+                      border: isHovered
+                        ? linkStyles.hoverBorder || linkStyles.border
+                        : linkStyles.border || '1px solid #ccc',
+                      color: isHovered
+                        ? linkStyles.hoverTextColor || phoneStyles.textColor || '#000000'
+                        : linkStyles.textColor || phoneStyles.textColor || '#000000',
+                      transform: isHovered && linkStyles.transform
+                        ? linkStyles.transform
+                        : 'scale(1)',
+                      transition: 'all 0.3s ease',
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px', // Adjust spacing between icon and text
+                        pointerEvents: 'none',
+                      }}
+                      className="linkContainerWithIcon"
+                    >
+                      {icon}
+                      <span
+                        style={{
+                          color: 'inherit',
+                          fontSize: '0.8rem',
+                          flexGrow: '1',
+                        }}
+                        className="linkText"
+                      >
+                        {link.title}
+                      </span>
+                    </div>
+                  </a>
                 </div>
               );
             })
