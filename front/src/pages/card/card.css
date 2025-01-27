@@ -6,6 +6,7 @@
   margin: 0;
   position: relative;
   background-color: inherit; /* To inherit background from Card */
+  overflow-x: hidden;
 }
 
 .cardPage {

@@ -1,5 +1,5 @@
 .navbar {
-  width: 100%;
+  width: 100vw;
   background-color: rgb(255, 255, 255);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   height: 60px;
@@ -72,6 +72,7 @@ span.loginBUtton {
 
   .logoo {
     margin-bottom: 10px;
+    margin-top: 10px;
   }
 
   .loginButton {

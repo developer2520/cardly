@@ -5,9 +5,9 @@ import Logo from './../../assets/logo-cardly.png'
 
 export default function Navbar2() {
 
-
+  const API_URL = import.meta.env.VITE_API_URL 
   const Login = () => {
-    window.location.href = 'http://localhost:4000/auth/google';
+    window.location.href = `http://${API_URL}/auth/google`;
   }
   
   return (

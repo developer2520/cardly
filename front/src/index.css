@@ -10,11 +10,16 @@ html, body {
 }
 
 #root {
-  height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  max-width: 1600px; /* Constrain the rest of the site */
   margin: 0 auto;
   padding: 0;
+  max-width: 1600px;
+  align-items: center; /* Keep for desktop */
+}
+
+@media (max-width: 768px) {
+  #root {
+    align-items: stretch; /* Allow full-width alignment on smaller screens */
+  }
 }
