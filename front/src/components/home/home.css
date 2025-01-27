@@ -23,10 +23,12 @@ main {
 /* Hero Section */
 .heroSection {
   background: linear-gradient(135deg, #4e5aff, #709dff); /* Blue gradient */
+  width: 90%;
+  margin: 0 auto;
   border-radius: 12px;
-  margin-top: 350px;
+ margin-top: 20px;
   text-align: center;
-  min-height: 100vh;
+  min-height: 80vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
