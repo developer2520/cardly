@@ -29,7 +29,7 @@ body {
   height: 100vh; /* Full height */
   overflow-y: auto; /* Allow scrolling inside the card list */
   border-right: 1px solid rgba(0, 0, 0, 0.13);
-  
+  background-color: white;
   flex-shrink: 0; /* Prevent shrinking */
 }
 
@@ -58,6 +58,7 @@ body {
 }
 
 .card h3 {
+  color: black;
   font-size: 17px;
   font-weight: 500
 }
