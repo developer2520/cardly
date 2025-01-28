@@ -4,7 +4,7 @@ import './topbar.css'
 import Page from './../page/page'
 import Design from './../design/design'
 
-const Topbar = ({ card, isNewCard, setSelectedCard }) => {
+const Topbar = ({ card, isNewCard, setSelectedCard, setIsCreatingNewCard }) => {
   const [activeTab, setActiveTab] = useState("Main");
   const [indicatorStyle, setIndicatorStyle] = useState({});
   const tabsRef = useRef([]);
@@ -23,7 +23,7 @@ const Topbar = ({ card, isNewCard, setSelectedCard }) => {
   const renderComponent = () => {
     switch (activeTab) {
       case "Main":
-        return <Page setSelectedCard={setSelectedCard}/>
+        return <Page setSelectedCard={setSelectedCard} setIsCreatingNewCard={setIsCreatingNewCard}/>
       case "Design":
         return <Design />;
       case "Settings":

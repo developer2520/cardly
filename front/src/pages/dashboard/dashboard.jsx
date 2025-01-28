@@ -21,7 +21,6 @@ export default function Dashboard() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Check if navigation includes `createNewCard` state
   useEffect(() => {
     if (location.state?.createNewCard) {
       setSelectedCard(null);

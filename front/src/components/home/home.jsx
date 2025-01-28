@@ -2,9 +2,9 @@ import React from 'react';
 import './home.css';
 
 export default function Home() {
+  const API_URL = import.meta.env.VITE_API_URL 
   const Login = () => {
-    window.location.href = 'https://cardly-1.onrender.com/auth/google';
-
+    window.location.href = `http://${API_URL}/auth/google`;
   }
   return (
     <main className="homeContainer">

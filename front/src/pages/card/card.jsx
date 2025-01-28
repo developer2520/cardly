@@ -1,40 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import './card.css';
 import { useParams, Link } from 'react-router-dom';
-import { FaYoutube, FaTwitter, FaInstagram, FaFacebook, FaLinkedin, FaTiktok, FaSpotify, FaGlobe } from 'react-icons/fa';
+import {IconContext} from './../../context/icons'
+import { FaGlobe } from 'react-icons/fa';
 
 // Platform icons mapping with React Icons
-const platformIcons = {
-  youtube: { domain: 'youtube.com', icon: <FaYoutube className="link-icon" /> },
-  twitter: { domain: 'twitter.com', icon: <FaTwitter className="link-icon" /> },
-  instagram: { domain: 'instagram.com', icon: <FaInstagram className="link-icon" /> },
-  facebook: { domain: 'facebook.com', icon: <FaFacebook className="link-icon" /> },
-  linkedin: { domain: 'linkedin.com', icon: <FaLinkedin className="link-icon" /> },
-  tiktok: { domain: 'tiktok.com', icon: <FaTiktok className="link-icon" /> },
-  spotify: { domain: 'spotify.com', icon: <FaSpotify className="link-icon" /> },
-};
+
 
 // Function to detect platform from URL
-const detectPlatform = (url) => {
-  try {
-    const domain = new URL(url).hostname.toLowerCase();
-    for (const [platform, { domain: platformDomain, icon }] of Object.entries(platformIcons)) {
-      if (domain.includes(platformDomain)) {
-        return { platform, icon };
-      }
-    }
-  } catch (error) {
-    console.error('Invalid URL:', url);
-  }
-  return { platform: 'unknown', icon: <FaGlobe className='link-icon' /> }; // Default for unsupported platforms
-};
+
 
 export default function Card() {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const { url } = useParams();
+  const platformIcons = useContext(IconContext)
 
   useEffect(() => {
     axios
@@ -66,7 +48,20 @@ export default function Card() {
       </div>
     );
   }
-
+  const detectPlatform = (url) => {
+    try {
+      const domain = new URL(url).hostname.toLowerCase();
+      for (const [platform, { domain: platformDomain, icon }] of Object.entries(platformIcons)) {
+        if (domain.includes(platformDomain)) {
+          return { platform, icon: React.cloneElement(icon, { className: 'link-icon' }) };
+        }
+      }
+    } catch (error) {
+      console.error('Invalid URL:', url);
+    }
+    return { platform: 'unknown', icon: <FaGlobe className="link-icon" /> }; // Default for unsupported platforms
+  };
+  
   if (error || !data || !data.card || !data.template) {
     document.title = '404';
     return (
@@ -162,7 +157,7 @@ export default function Card() {
         
         color: 'inherit', // Ensure text inherits color
         fontSize: '1.1rem',
-      
+      marginLeft: '-3%',
         flexGrow: '1',
       }}
 

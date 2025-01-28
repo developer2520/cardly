@@ -1,22 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import './phoneView.css';
 import { useCard } from './../../../context/previewContext';
 import axios from 'axios';
-import { FaYoutube, FaTwitter, FaInstagram, FaFacebook, FaLinkedin, FaTiktok, FaSpotify, FaGlobe } from 'react-icons/fa';
+import {  FaGlobe } from 'react-icons/fa';
+import {IconContext} from './../../../context/icons'
 
 export default function PhoneView({ togglePhoneView }) {
   const { data } = useCard();
   const [templateStyles, setTemplateStyles] = useState(null);
+  const platformIcons = useContext(IconContext)
 
-  const platformIcons = {
-    youtube: { domain: 'youtube.com', icon: <FaYoutube className="link-icon-new-card" /> },
-    twitter: { domain: 'twitter.com', icon: <FaTwitter className="link-icon-new-card" /> },
-    instagram: { domain: 'instagram.com', icon: <FaInstagram className="link-icon-new-card" /> },
-    facebook: { domain: 'facebook.com', icon: <FaFacebook className="link-icon-new-card" /> },
-    linkedin: { domain: 'linkedin.com', icon: <FaLinkedin className="link-icon-new-card" /> },
-    tiktok: { domain: 'tiktok.com', icon: <FaTiktok className="link-icon-new-card" /> },
-    spotify: { domain: 'spotify.com', icon: <FaSpotify className="link-icon-new-card" /> },
-  };
+  
 
   // Function to detect platform from URL
   const detectPlatform = (url) => {
@@ -118,6 +112,8 @@ export default function PhoneView({ togglePhoneView }) {
                           color: 'inherit',
                           fontSize: '0.8rem',
                           flexGrow: '1',
+                          textAlign: 'center',
+                          marginLeft: '-10%'
                         }}
                         className="linkText"
                       >

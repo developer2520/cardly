@@ -165,6 +165,7 @@
 /* Parent div styling */
 .link {
   width: 700px;
+ 
 }
 
 .linkContainerWithIcon {
@@ -176,4 +177,9 @@
 
 .link-icon {
   font-size: 2rem;
+}
+.l {
+  font-size: 3rem;
+  font-weight: 400;
+  line-height: 20px;
 }

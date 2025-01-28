@@ -7,7 +7,7 @@ export default function Navbar2() {
 
   const API_URL = import.meta.env.VITE_API_URL 
   const Login = () => {
-    window.location.href = `http://${API_URL}/auth/google`;
+    window.location.href = `${API_URL}/auth/google`;
   }
   
   return (

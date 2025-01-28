@@ -12,6 +12,7 @@ import UserProvider from './context/userContext';
 import OwnCardsProvider from './context/ownCardsContext';
 import { CardProvider } from './context/previewContext';
 import { EditCardProvider } from './context/editPreviewContext';
+import  IconProvider  from './context/icons'
 import Navbar2 from './components/navbar/navbar2';
 
 
@@ -31,6 +32,7 @@ function App() {
       <OwnCardsProvider>
         <CardProvider >
           <EditCardProvider>
+            <IconProvider>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LandingPage />} />
@@ -45,6 +47,7 @@ function App() {
 
         </Routes>
       </BrowserRouter>
+      </IconProvider>
       </EditCardProvider>
       </CardProvider>
       </OwnCardsProvider>

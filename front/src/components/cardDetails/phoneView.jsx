@@ -1,25 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import './phoneView.css';
 import { useCard } from './../../context/editPreviewContext';
+import {IconContext} from './../../context/icons'
 import axios from 'axios';
-import { FaTelegram } from "react-icons/fa6";
-import { FaYoutube, FaGithub, FaTwitter, FaInstagram, FaFacebook, FaLinkedin, FaTiktok, FaSpotify, FaGlobe } from 'react-icons/fa';
+import {FaGlobe} from 'react-icons/fa';
+
+
 
 export default function PhoneView() {
   const { data } = useCard();
   const [templateStyles, setTemplateStyles] = useState(null);
+  const platformIcons = useContext(IconContext)
 
-  const platformIcons = {
-    youtube: { domain: 'youtube.com', icon: <FaYoutube className="link-icon-new-card" /> },
-    twitter: { domain: 'twitter.com', icon: <FaTwitter className="link-icon-new-card" /> },
-    instagram: { domain: 'instagram.com', icon: <FaInstagram className="link-icon-new-card" /> },
-    facebook: { domain: 'facebook.com', icon: <FaFacebook className="link-icon-new-card" /> },
-    linkedin: { domain: 'linkedin.com', icon: <FaLinkedin className="link-icon-new-card" /> },
-    tiktok: { domain: 'tiktok.com', icon: <FaTiktok className="link-icon-new-card" /> },
-    spotify: { domain: 'spotify.com', icon: <FaSpotify className="link-icon-new-card" /> },
-    github: { domain: 'github.com', icon: <FaGithub className="link-icon-new-card" /> },
-    telegram: { domain: 't.me', icon: <FaTelegram className="link-icon-new-card" /> },
-  };
+  
 
   // Function to detect platform from URL
   // Function to detect platform from URL

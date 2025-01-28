@@ -8,7 +8,7 @@ import { OwnCardsContext } from './../../../context/ownCardsContext';
 
 import './page.css';
 
-export default function Page({ setSelectedCard }) {
+export default function Page({ setSelectedCard, setIsCreatingNewCard }) {
   const { user } = useContext(UserContext);
   const { refetch } = useContext(OwnCardsContext);
   const userId = user?.googleId;
@@ -68,15 +68,18 @@ export default function Page({ setSelectedCard }) {
     } finally {
       setIsLoading(false);
       refetch();
+      setSelectedCard(null);
       setData({
         title: '',
         bio: '',
-        links: [{ title: '', url: '' }],
         url: '',
-        template: "1",
-      });
+        template: '1',
+        links: [{ title: '', url: '' }],
+      })
+      setIsCreatingNewCard(false); // Make sure this line is added to stop showing the NewCard component
     }
   };
+  
 
   return (
     <div className="container">
