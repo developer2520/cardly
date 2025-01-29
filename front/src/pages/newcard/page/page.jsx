@@ -5,6 +5,9 @@ import Layout from './../../../components/layout/layout';
 import { UserContext } from './../../../context/userContext';
 import { useCard } from "./../../../context/previewContext";
 import { OwnCardsContext } from './../../../context/ownCardsContext';
+import { toast } from 'sonner';
+
+
 
 import './page.css';
 
@@ -50,11 +53,10 @@ export default function Page({ setSelectedCard, setIsCreatingNewCard }) {
     );
     setData((prev) => ({ ...prev, links: newLinks }));
   };
-
   const handleSave = async () => {
     setIsLoading(true);
     try {
-      await axios.post('/cards', {
+      const response = await axios.post('/cards', {
         title: data.title,
         bio: data.bio,
         links: (data.links || []).filter((link) => link.title && link.url),
@@ -62,23 +64,31 @@ export default function Page({ setSelectedCard, setIsCreatingNewCard }) {
         userId,
         template: data.template,
       });
-      setStatus({ type: 'success', message: 'Page saved successfully!' });
-    } catch (error) {
-      setStatus({ type: 'error', message: error.response?.data?.message || 'Failed to save' });
-    } finally {
-      setIsLoading(false);
-      refetch();
-      setSelectedCard(null);
+  
+      console.log("Response:", response.data);  // Log response
+  
+      toast.success('New card created successfully! 🎉');
       setData({
         title: '',
         bio: '',
         url: '',
         template: '1',
         links: [{ title: '', url: '' }],
-      })
-      setIsCreatingNewCard(false); // Make sure this line is added to stop showing the NewCard component
+      });
+      refetch();
+    } catch (error) {
+      console.error("Error:", error.response?.data || error.message);  // Log error
+      
+      const errorMessage = error.response?.data?.message || error.message || 'Unknown error occurred';
+  
+      toast.error(` ${errorMessage}`);
+    } finally {
+      setIsLoading(false);
+      setSelectedCard(null);
+      setIsCreatingNewCard(false)
     }
   };
+  
   
 
   return (

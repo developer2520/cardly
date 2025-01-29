@@ -3,6 +3,7 @@ import { OwnCardsContext } from "./../../../../context/ownCardsContext";
 import axios from "axios";
 import Swal from "sweetalert2"; // Import SweetAlert2
 import { Trash2 } from "lucide-react";
+import { toast } from "sonner"; // Import Sonner
 import "./settings.css"; // Import your styles
 
 const Settings = ({ card, setSelectedCard }) => {
@@ -11,34 +12,25 @@ const Settings = ({ card, setSelectedCard }) => {
   const handleDelete = async () => {
     try {
       await axios.delete(`/cards/${card._id}`);
-      Swal.fire({
-        icon: 'success',
-        title: 'Card deleted successfully!',
-        showConfirmButton: false,
-        timer: 1500, // Auto-close the alert after 1.5 seconds
-      });
+      toast.success("Card deleted successfully! 🎉"); // Sonner toast for success
       setSelectedCard(null);
       refetch();
     } catch (err) {
       console.error("Error deleting card:", err.message);
-      Swal.fire({
-        icon: 'error',
-        title: 'Failed to delete card',
-        text: 'Please try again.',
-        confirmButtonText: 'Okay',
-      });
+      const errorMessage = err.response?.data?.message || err.message || "Something went wrong!";
+      toast.error(`Failed to delete card ❌ ${errorMessage}`); // Sonner toast for error
     }
   };
 
   const showConfirmDialog = () => {
     Swal.fire({
-      title: 'Are you sure?',
+      title: "Are you sure?",
       text: "This action cannot be undone.",
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: 'Yes, delete it!',
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3086d6",
+      confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
         handleDelete(); // Proceed with deletion if confirmed

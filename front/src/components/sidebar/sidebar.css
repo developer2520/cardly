@@ -87,9 +87,10 @@
     transition: background-color 0.3s;
     border-radius: 6px;
     color: #2c3e50;
+    transition: 0.01s ease;
   }
   .sidebar-link:active {
-    transform: scale(0.95);
+    transform: scale(0.9);
   }
   button.sidebar-link {
     border: none;

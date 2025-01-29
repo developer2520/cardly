@@ -160,11 +160,18 @@
   margin: 10px 0;
   
   
+  
 }
+
+/* @media screen and (max-width: 800px) {
+  .linkItem{
+    height: 60px;
+  }
+} */
 
 /* Parent div styling */
 .link {
-  width: 700px;
+  width: 600px;
  
 }
 

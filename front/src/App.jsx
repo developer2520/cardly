@@ -14,6 +14,7 @@ import { CardProvider } from './context/previewContext';
 import { EditCardProvider } from './context/editPreviewContext';
 import  IconProvider  from './context/icons'
 import Navbar2 from './components/navbar/navbar2';
+import {Toaster } from 'sonner'
 
 
 import './App.css';
@@ -29,6 +30,7 @@ function App() {
 
   return (
     <UserProvider>
+      <Toaster position="top-right" richColors />
       <OwnCardsProvider>
         <CardProvider >
           <EditCardProvider>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import { PlusCircle, Trash2, Save } from 'lucide-react';
+import { PlusCircle, Trash2, Save, CheckCircle, XCircle, Loader } from 'lucide-react';
 import './page.css';
 import { OwnCardsContext } from './../../../../context/ownCardsContext';
 import { useCard } from './../../../../context/editPreviewContext';
@@ -11,29 +11,12 @@ export default function Page({ card }) {
   const { refetch } = useContext(OwnCardsContext);
   const { data, setData } = useCard();
   const [urlError, setUrlError] = useState(false);
+  const [urlAvailability, setUrlAvailability] = useState(null);
+  const [checkingUrl, setCheckingUrl] = useState(false);
+  const [urlStatus, setUrlStatus] = useState('');
 
-  // Updated regex for invalid characters in the URL
   const invalidCharacters = /[^a-zA-Z0-9._]/;
 
-  // Validate URL input
-  const handleUrlValidation = (url) => {
-    return invalidCharacters.test(url);
-  };
-
-  // Handle URL change with validation
-  const handleUrlChange = (e) => {
-    const value = e.target.value;
-
-    if (handleUrlValidation(value)) {
-      setUrlError(true);
-    } else {
-      setUrlError(false);
-    }
-
-    setData((prev) => ({ ...prev, url: value }));
-  };
-
-  // Only initialize the context data when the card ID changes or component first mounts
   useEffect(() => {
     if (data.cardId !== card._id) {
       setData({
@@ -47,14 +30,40 @@ export default function Page({ card }) {
     }
   }, [card._id, setData]);
 
-  // Revalidate the URL when the card is loaded or when URL is updated
-  useEffect(() => {
-    if (data.url && handleUrlValidation(data.url)) {
-      setUrlError(true);
-    } else {
-      setUrlError(false);
+  const handleUrlValidation = (url) => invalidCharacters.test(url);
+
+  const handleUrlChange = (e) => {
+    const value = e.target.value;
+    setData((prev) => ({ ...prev, url: value }));
+  
+    if (!value.trim()) {
+      setUrlStatus('empty');
+      return;
     }
-  }, [data.url]);
+  
+    if (handleUrlValidation(value)) {
+      setUrlStatus('invalid');
+      return;
+    }
+  
+    checkUrlAvailability(value);
+  };
+
+  const checkUrlAvailability = async (url) => {
+    if (!url) {
+      setUrlAvailability(null);
+      return;
+    }
+
+    setCheckingUrl(true);
+    try {
+      const response = await axios.get(`/check-url-availability?url=${url}`);
+      setUrlAvailability(response.data.available);
+    } catch (error) {
+      setUrlAvailability(false);
+    }
+    setCheckingUrl(false);
+  };
 
   const addLink = () => {
     setData((prev) => ({
@@ -70,23 +79,13 @@ export default function Page({ card }) {
     }));
   };
 
-  const updateLink = (index, field, value) => {
-    setData((prev) => ({
-      ...prev,
-      links: prev.links.map((link, i) =>
-        i === index ? { ...link, [field]: value } : link
-      ),
-    }));
-  };
-
   const updateField = (field, value) => {
-    setData((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
+    setData((prev) => ({ ...prev, [field]: value }));
   };
 
   const handleSave = async () => {
+    if (checkingUrl) return;
+
     setIsLoading(true);
     try {
       await axios.put(`/cards/${card._id}`, {
@@ -123,11 +122,7 @@ export default function Page({ card }) {
         </div>
         <div className="card-content">
           {status.message && (
-            <div
-              className={`alert ${
-                status.type === 'error' ? 'alert-error' : 'alert-success'
-              }`}
-            >
+            <div className={`alert ${status.type === 'error' ? 'alert-error' : 'alert-success'}`}>
               {status.message}
             </div>
           )}
@@ -139,16 +134,42 @@ export default function Page({ card }) {
             onChange={(e) => updateField('title', e.target.value)}
             className="input profile-input"
           />
-          <input
-            type="text"
-            placeholder="URL"
-            value={data.url}
-            onChange={handleUrlChange}
-            className={`input ${urlError ? 'input-error' : ''}`}
-          />
-          {urlError && (
-            <p className="alert-error character-error">URL contains invalid characters.</p>
-          )}
+
+          <div className="url-input-container">
+            <input
+              type="text"
+              placeholder="URL"
+              value={data.url}
+              onChange={handleUrlChange}
+              className={`input ${urlError ? 'input-error' : ''}`}
+            />
+            <div className="url-status">
+              {checkingUrl && (
+                <span className="loading-text">
+                  <Loader className="icon spinning" /> Checking...
+                </span>
+              )}
+              {!checkingUrl && urlAvailability === true && (
+                <span className="success-text">
+                  <CheckCircle className="icon success" /> Available
+                </span>
+              )}
+              {!checkingUrl && urlAvailability === false && (
+                <span className="error-text">
+                  <XCircle className="icon error" /> Not Available
+                </span>
+              )}
+            </div>
+          </div>
+
+          {urlError && <p className="alert-error">URL contains invalid characters.</p>}
+          {urlStatus === 'empty' && <p className="error-text">URL can't be empty.</p>}
+{urlStatus === 'invalid' && <p className="error-text">URL contains invalid characters.</p>}
+{urlStatus === 'available' && <p className="success-text">✅ URL is available!</p>}
+{urlStatus === 'taken' && <p className="error-text">❌ URL is already taken.</p>}
+{urlStatus === 'checking' && <p className="loading-text">⏳ Checking availability...</p>}
+
+
           <textarea
             name="bio"
             id="bio"
@@ -164,20 +185,17 @@ export default function Page({ card }) {
                 type="text"
                 placeholder="Link Title"
                 value={link.title}
-                onChange={(e) => updateLink(index, 'title', e.target.value)}
+                onChange={(e) => updateField('title', e.target.value)}
                 className="input"
               />
               <input
                 type="text"
                 placeholder="URL"
                 value={link.url}
-                onChange={(e) => updateLink(index, 'url', e.target.value)}
+                onChange={(e) => updateField('url', e.target.value)}
                 className="input"
               />
-              <button
-                className="button button-ghost"
-                onClick={() => removeLink(index)}
-              >
+              <button className="button button-ghost" onClick={() => removeLink(index)}>
                 <Trash2 className="icon" />
               </button>
             </div>
@@ -185,15 +203,15 @@ export default function Page({ card }) {
 
           <div className="button-row">
             <button className="button button-outline" onClick={addLink}>
-              <PlusCircle className="iconn white-plus" />
+              <PlusCircle className="icon white-plus" />
               Add Link
             </button>
             <button
               className="button button-primary"
               onClick={handleSave}
-              disabled={isLoading || urlError}
+              disabled={isLoading || urlError || urlAvailability === false || checkingUrl}
             >
-              <Save className="iconn" />
+              <Save className="icon" />
               {isLoading ? 'Saving...' : 'Save'}
             </button>
           </div>

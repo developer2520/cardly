@@ -63,7 +63,8 @@
     text-decoration: none;
     color: #007bff; /* Bootstrap primary color for links */
     border-radius: 5px; /* More rounded corners */
-    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+   overflow:hidden;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions  */
   }
   
   .linkItem .link:hover {

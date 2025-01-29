@@ -1,0 +1,53 @@
+.url-input-container {
+    position: relative;
+    margin-bottom: 10px;
+  }
+  
+  .url-status {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+  
+  .success-text {
+    color: green;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+  }
+  
+  .error-text {
+    color: red;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+  }
+  
+  .loading-text {
+    color: #555;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+  }
+  
+  .input-error {
+    border-color: red !important;
+  }
+  
+  .icon {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .spinning {
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
