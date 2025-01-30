@@ -19,7 +19,7 @@ body {
 main {
   width: 100%;
   margin: 0 auto;
-  overflow-x: hidden;
+  overflow-x:  hidden;
   
 }
 
@@ -209,24 +209,26 @@ main {
 .customInputContainer {
   display: flex;
   align-items: center;
-  width: 360px; /* Shorter width */
+  width: 100%; /* Full width by default */
+  max-width: 360px; /* Maximum width of 360px */
   background: #fff;
   border-radius: 8px;
   border: 2px solid #007bff;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
   overflow: hidden;
+  margin: 0 auto; /* Center the container */
+  padding: 0 0px;
 }
 
 .inputContainerInput {
   display: flex;
   align-items: center;
   background: #f1f5f9;
-  
   border-radius: 6px 0 0 6px;
   padding: 8px 10px;
   flex-grow: 1;
-  max-width: 300px;
+  max-width: 100%;
 }
 
 .baseUrl {
@@ -241,7 +243,6 @@ main {
   outline: none;
   background: transparent;
   font-size: 14px;
- 
   flex-grow: 1;
   width: 100%;
 }
@@ -261,6 +262,37 @@ main {
 
 .ctaButton:hover {
   background: #0056b3;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .customInputContainer {
+    width: 90%; /* Adjust the width on smaller screens */
+    max-width: 100%; /* Remove max-width restriction */
+    padding: 0 0px; /* Reduce padding */
+  }
+
+  .inputContainerInput {
+    padding: 6px 8px; /* Adjust input padding */
+  }
+
+  .ctaButton {
+    padding: 8px 12px; /* Adjust button padding for smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .baseUrl {
+    font-size: 12px; /* Smaller font size on very small screens */
+  }
+
+  .usernameInput {
+    font-size: 12px; /* Adjust font size of input */
+  }
+
+  .ctaButton {
+    font-size: 12px; /* Adjust font size of button */
+  }
 }
 
 .rec {

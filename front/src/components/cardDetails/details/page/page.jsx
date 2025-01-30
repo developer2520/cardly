@@ -292,7 +292,7 @@ export default function Page({ card }) {
                 onClick={() => removeLink(index)}
                 aria-label="Remove link"
               >
-                <Trash2 className="icon" />
+                <Trash2 className="icon1" />
               </button>
             </div>
           ))}

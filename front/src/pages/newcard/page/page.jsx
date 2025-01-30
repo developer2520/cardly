@@ -323,7 +323,7 @@ export default function Page({ setSelectedCard, setIsCreatingNewCard }) {
                 className="input"
               />
               <button className="button button-ghost" onClick={() => removeLink(index)}>
-                <Trash2 className="icon" />
+                <Trash2 className="icon1" />
               </button>
             </div>
           ))}
