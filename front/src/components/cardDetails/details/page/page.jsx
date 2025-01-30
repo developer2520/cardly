@@ -6,7 +6,7 @@ import { OwnCardsContext } from './../../../../context/ownCardsContext';
 import { useCard } from './../../../../context/editPreviewContext';
 import { toast } from 'sonner';
 
-export default function NewCardPage({ card }) {
+export default function Page({ card }) {
   const [status, setStatus] = useState({ type: '', message: '' });
   const [isLoading, setIsLoading] = useState(false);
   const { refetch } = useContext(OwnCardsContext);
@@ -203,26 +203,25 @@ export default function NewCardPage({ card }) {
   };
 
   const handleSave = async () => {
-    if (checkingUrl || !isUrlValid()) return;
-
+    if (checkingUrl) return;
+    
     setIsLoading(true);
     try {
-      await axios.post(`/cards`, {
+      await axios.put(`/cards/${card._id}`, {
         title: data.title,
         bio: data.bio,
         links: data.links.filter((link) => link.title && link.url),
         url: data.url,
         template: data.template,
       });
-      setStatus({ type: 'success', message: 'Card created successfully!' });
+      
+      setStatus({ type: 'success', message: 'Card updated successfully!' });
+      toast.success('Card updated successfully! 🎉');
       refetch();
-      toast.success('Card created successfully! 🎉');
     } catch (error) {
-      setStatus({
-        type: 'error',
-        message: error.response?.data?.message || 'Failed to create card',
-      });
-      toast.error('Failed to create card');
+      const errorMessage = error.response?.data?.message || 'Failed to update card';
+      setStatus({ type: 'error', message: errorMessage });
+      toast.error(errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -239,7 +238,7 @@ export default function NewCardPage({ card }) {
     <div className="container">
       <div className="cardd">
         <div className="card-header">
-          <h2>Create New Card</h2>
+          <h2>Edit your card</h2>
         </div>
         <div className="card-content">
           <input

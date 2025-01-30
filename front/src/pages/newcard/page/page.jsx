@@ -35,24 +35,33 @@ export default function Page({ setSelectedCard, setIsCreatingNewCard }) {
     noConsecutiveSpecials: /[._]{2,}/
   };
 
-  // Reset states when component unmounts or tab changes
+  // Effect to handle URL validation when switching tabs
   useEffect(() => {
     if (data.url && urlState.value !== data.url) {
+      const validation = validateUrl(data.url);
+      
       setUrlState(prev => ({
         ...prev,
         value: data.url,
-        status: 'checking',
-        errorMessage: ''
+        status: validation.isValid ? 'checking' : 'invalid',
+        errorMessage: validation.message
       }));
-    }
 
-    // Clear any existing validation timeout
+      // If URL is valid, check its availability
+      if (validation.isValid) {
+        checkUrlAvailability(data.url);
+      }
+    }
+  }, [data.url]); // Run when data.url changes
+
+  // Cleanup effect
+  useEffect(() => {
     return () => {
       if (urlState.validationTimeout) {
         clearTimeout(urlState.validationTimeout);
       }
     };
-  }, [data.url]);
+  }, []);
 
   // Validate URL
   const validateUrl = (url) => {
@@ -275,13 +284,14 @@ export default function Page({ setSelectedCard, setIsCreatingNewCard }) {
           />
 
           <div className="url-input-container">
-            <input
-              type="text"
-              placeholder="Choose your URL"
-              value={urlState.value}
-              onChange={handleUrlChange}
-              className={`input ${urlState.status !== 'available' && urlState.value ? 'input-error' : ''}`}
-            />
+          
+<input
+  type="text"
+  placeholder="Choose your URL"
+  value={urlState.value}
+  onChange={handleUrlChange}
+  className={`input ${urlState.status !== 'available' && urlState.status !== 'checking' && urlState.value ? 'input-error' : ''}`}
+/>
             <div className="url-status">
               {getUrlStatusDisplay()}
             </div>
