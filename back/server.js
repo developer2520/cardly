@@ -20,7 +20,7 @@ app.set('trust proxy', 1);
 // CORS Middleware
 const corsOptions = {
   origin: process.env.NODE_ENV === 'production' 
-    ? 'https://cardly.uz'  // Deployed URL
+    ? 'https://www.cardly.uz'  // Deployed URL
     : 'http://localhost:5173',            // Local development URL
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
