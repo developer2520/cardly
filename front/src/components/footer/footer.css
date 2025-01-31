@@ -1,0 +1,134 @@
+/* footer.css */
+.footer {
+    background: #ffffff;
+    border-top: 1px solid #f1f1f1;
+    padding: 4rem 0 2rem;
+  }
+  
+  .footer__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+  
+  .footer__main {
+    display: flex;
+    justify-content: space-between;
+    gap: 4rem;
+    margin-bottom: 3rem;
+  }
+  
+  .footer__left {
+    flex-shrink: 0;
+  }
+  
+  .footer__logo {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #111;
+    margin: 0;
+    margin-bottom: 0.5rem;
+  }
+  
+  .footer__tagline {
+    color: #666;
+    font-size: 0.875rem;
+    margin: 0;
+  }
+  
+  .footer__right {
+    flex-grow: 1;
+  }
+  
+  .footer__links {
+    display: flex;
+    gap: 4rem;
+    justify-content: flex-end;
+  }
+  
+  .footer__links-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .footer__group-title {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #999;
+    margin: 0;
+    margin-bottom: 0.5rem;
+  }
+  
+  .footer__links-group a {
+    color: #333;
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: color 0.2s ease;
+  }
+  
+  .footer__links-group a:hover {
+    color: #000;
+  }
+  
+  .footer__bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid #f1f1f1;
+  }
+  
+  .footer__social {
+    display: flex;
+    gap: 1.5rem;
+  }
+  
+  .footer__social a {
+    color: #666;
+    font-size: 1.25rem;
+    transition: all 0.2s ease;
+  }
+  
+  .footer__social a:hover {
+    color: #111;
+    /* transform: translateY(-2px); */
+  }
+  
+  .footer__copyright {
+    color: #999;
+    font-size: 0.75rem;
+    text-align: center;
+    margin: 0;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .footer {
+      padding: 3rem 0 1.5rem;
+    }
+  
+    .footer__main {
+      flex-direction: column;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+  
+    .footer__links {
+      justify-content: flex-start;
+      gap: 3rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .footer__container {
+      padding: 0 1.5rem;
+    }
+  
+    .footer__links {
+      flex-direction: column;
+      gap: 2rem;
+    }
+  }
