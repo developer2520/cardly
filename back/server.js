@@ -253,6 +253,18 @@ app.get('/cards', async (req, res) => {
   }
 });
 
+app.get('/check-url-availability', async (req, res) => {
+  const { url } = req.query;
+  
+  if (!url) {
+    return res.status(400).json({ available: false, message: 'URL is required' });
+  }
+
+  const existingCard = await LinkPage.findOne({ url });
+  res.json({ available: !existingCard });
+});
+
+
 app.get("/cards/:url", async (req, res) => {
   try {
     let url = req.params.url.toLowerCase();

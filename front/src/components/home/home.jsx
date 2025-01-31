@@ -1,22 +1,54 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './home.css';
 
 export default function Home() {
-  const Login = () => {
-    window.location.href = 'https://cardly-1.onrender.com/auth/google';
+  const API_URL = import.meta.env.VITE_API_URL;
+  const [username, setUsername] = useState('');
 
-  }
+  const handleInputChange = (e) => {
+    setUsername(e.target.value);
+  };
+
+  const Login = () => {
+    window.location.href = `${API_URL}/auth/google`;
+  };
+
   return (
     <main className="homeContainer">
       {/* Hero Section */}
       <section className="heroSection">
         <div className="textContent">
-          <h1 className="heroTitle">Managa all of your links</h1>
-          <p className="heroDescription">
-            Cardly helps you centralize your links in a single, shareable page. 
-            It's simple, stylish, and impactful—just like you.
-          </p>
-          <button className="ctaButton" onClick={Login}>Get Started for Free</button>
+        <h1 className="heroTitle">
+  {"Launch Your Site In Seconds".split("").map((char, index) => (
+    <span key={index}>{char}</span>
+  ))}
+</h1>
+
+          
+          
+          {/* Custom Input Field */}
+          <div className="customInputContainer">
+            <div className="inputContainerInput">
+            <span className="baseUrl">cardly.uz/</span>
+  <input
+    type="text"
+    className="usernameInput"
+    placeholder="yourname"
+    value={username}
+    onChange={handleInputChange}
+    autoComplete="off"
+  />
+
+            </div>
+
+            <button className="ctaButton" onClick={Login}>Secure Your Link</button>
+  
+</div>
+
+          
+          {/* Call to Action Button */}
+          
+          <p className='rec'>It’s free, and takes less than a minute</p>
         </div>
       </section>
 

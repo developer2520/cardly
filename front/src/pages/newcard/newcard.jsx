@@ -47,7 +47,7 @@ export default function NewCard({ setSelectedCard, setIsCreatingNewCard }) {
       </div>
 
       <div className={`cardDetails ${isVisible ? 'show' : ''}`}>
-        <TopBar setSelectedCard={setSelectedCard} />
+        <TopBar setSelectedCard={setSelectedCard} setIsCreatingNewCard={setIsCreatingNewCard}/>
         {/* Add content specific to creating a new card */}
       </div>
 

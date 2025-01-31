@@ -1,11 +1,39 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import './phoneView.css';
 import { useCard } from './../../context/editPreviewContext';
+import {IconContext} from './../../context/icons'
 import axios from 'axios';
+import {FaGlobe} from 'react-icons/fa';
+
+
 
 export default function PhoneView() {
   const { data } = useCard();
   const [templateStyles, setTemplateStyles] = useState(null);
+  const platformIcons = useContext(IconContext)
+
+  
+
+  // Function to detect platform from URL
+  // Function to detect platform from URL
+const detectPlatform = (url) => {
+  try {
+    const domain = new URL(url).hostname.toLowerCase(); // Get the full hostname
+    
+    // Loop through platform icons and compare the full domain
+    for (const [platform, { domain: platformDomain, icon }] of Object.entries(platformIcons)) {
+      // Check if the domain exactly matches the platform domain
+      if (domain === platformDomain || domain.endsWith(`.${platformDomain}`)) {
+        return { platform, icon }; // Return correct platform icon
+      }
+    }
+  } catch (error) {
+    console.error('Invalid URL:', url);
+  }
+  
+  return { platform: 'unknown', icon: <FaGlobe className="link-icon-new-card" /> }; // Default for unsupported platforms
+};
+
 
   useEffect(() => {
     const fetchTemplateDetails = async () => {
@@ -50,6 +78,7 @@ export default function PhoneView() {
           {data.links && data.links.length > 0 ? (
             data.links.map((link, index) => {
               const isHovered = hoveredLinkIndex === index;
+              const { icon } = detectPlatform(link.url); // Detect the platform for the link
 
               return (
                 <div
@@ -80,7 +109,27 @@ export default function PhoneView() {
                       transition: 'all 0.3s ease', // Smooth transition for hover effects
                     }}
                   >
-                    {link.title}
+                    <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px', // Adjust spacing if necessary
+                        pointerEvents: 'none', // Prevent hover styles on the div itself
+                      }}
+                      className="linkContainerWithIcon"
+                    >
+                      {icon}
+                      <span
+                        style={{
+                          color: 'inherit', // Ensure text inherits color
+                          fontSize: '0.8rem',
+                          flexGrow: '1',
+                        }}
+                        className="linkTitle"
+                      >
+                        {link.title}
+                      </span>
+                    </div>
                   </a>
                 </div>
               );

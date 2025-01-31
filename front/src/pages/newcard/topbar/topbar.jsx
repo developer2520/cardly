@@ -4,13 +4,13 @@ import './topbar.css'
 import Page from './../page/page'
 import Design from './../design/design'
 
-const Topbar = ({ card, isNewCard, setSelectedCard }) => {
+const Topbar = ({ card, isNewCard, setSelectedCard, setIsCreatingNewCard }) => {
   const [activeTab, setActiveTab] = useState("Main");
   const [indicatorStyle, setIndicatorStyle] = useState({});
   const tabsRef = useRef([]);
 
   useEffect(() => {
-    const activeIndex = ["Main", "Design", "Settings"].indexOf(activeTab);
+    const activeIndex = ["Main", "Design", ].indexOf(activeTab);
     if (tabsRef.current[activeIndex]) {
       const tab = tabsRef.current[activeIndex];
       setIndicatorStyle({
@@ -23,11 +23,11 @@ const Topbar = ({ card, isNewCard, setSelectedCard }) => {
   const renderComponent = () => {
     switch (activeTab) {
       case "Main":
-        return <Page setSelectedCard={setSelectedCard}/>
+        return <Page setSelectedCard={setSelectedCard} setIsCreatingNewCard={setIsCreatingNewCard}/>
       case "Design":
         return <Design />;
-      case "Settings":
-        return <div>Settings Content</div>;
+      // case "Settings":
+      //   return <div>Settings Content</div>;
       default:
         return <div>Select a Tab</div>;
     }
@@ -37,7 +37,7 @@ const Topbar = ({ card, isNewCard, setSelectedCard }) => {
     <div className="topbar-container">
        
       <div className="tab-container">
-        {["Main", "Design", "Settings"].map((tab, index) => (
+        {["Main", "Design", ].map((tab, index) => (
           <div
             key={tab}
             ref={(el) => (tabsRef.current[index] = el)}

@@ -3,30 +3,34 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  
   color: #333;
   line-height: 1.6;
-  
+  overflow-x: hidden;
   height: 100%;
   padding: 0 10px;
+  
 }
 
 main {
   width: 100%;
   margin: 0 auto;
+  overflow-x:  hidden;
   
 }
 
 /* Hero Section */
 .heroSection {
-  background: linear-gradient(135deg, #4e5aff, #709dff); /* Blue gradient */
+  background: linear-gradient(135deg, #0850d6, #809bd4); /* Initial Blue Gradient */
+  background-size: 400% 400%;
   width: 90%;
   margin: 0 auto;
   border-radius: 12px;
- margin-top: 20px;
+  margin-top: 20px;
   text-align: center;
   min-height: 80vh;
   display: flex;
@@ -36,10 +40,48 @@ main {
   padding: 40px 20px;
   color: #ffffff;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  background-size: 300% 300%;
+  background-image: linear-gradient(-45deg, rgb(85, 163, 241) 0%, rgb(34, 112, 190) 25%, dodgerblurgb(19, 66, 110)rgb(56, 17, 233) 100%);
+  -webkit-animation: AnimateBG 20s ease infinite;
+          animation: AnimateBG 20s ease infinite;
 }
 
+/* Smooth Gradient Animation */
+@-webkit-keyframes AnimateBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes AnimateBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.textContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
 .heroTitle {
-  font-size: 3rem;
+  font-size: 4.5rem;
+  margin-top: 100px;
   font-weight: 700;
   margin-bottom: 1rem;
   max-width: 800px;
@@ -52,23 +94,7 @@ main {
   color: #e0e7ff; /* Slightly muted white */
 }
 
-.ctaButton {
-  padding: 14px 28px;
-  background-color: #ffffff;
-  color: #4e5aff;
-  font-size: 1.1rem;
-  font-weight: 700;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
 
-.ctaButton:hover {
-  background-color: #f3f8ff;
-  transform: translateY(-3px);
-}
 
 /* Features Section */
 .featuresSection {
@@ -97,13 +123,14 @@ main {
   border-radius: 12px;
   padding: 20px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: 0.3s ease;
   text-align: left;
 }
 
 .featureItem:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  
 }
 
 .featureIcon {
@@ -183,4 +210,99 @@ main {
   .featureItem p {
     font-size: 0.9rem;
   }
+}
+
+
+.customInputContainer {
+  display: flex;
+  align-items: center;
+  width: 100%; /* Full width by default */
+  max-width: 360px; /* Maximum width of 360px */
+  background: #fff;
+  border-radius: 8px;
+  border: 2px solid #007bff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  overflow: hidden;
+  margin: 0 auto; /* Center the container */
+  padding: 0 0px;
+}
+
+.inputContainerInput {
+  display: flex;
+  align-items: center;
+  background: #f1f5f9;
+  border-radius: 6px 0 0 6px;
+  padding: 8px 10px;
+  flex-grow: 1;
+  max-width: 100%;
+}
+
+.baseUrl {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  white-space: nowrap;
+}
+
+.usernameInput {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  flex-grow: 1;
+  width: 100%;
+}
+
+.ctaButton {
+  background: #007bff;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 0 0px 0px 0;
+  cursor: pointer;
+  transition: 0.3s;
+  white-space: nowrap;
+}
+
+.ctaButton:hover {
+  background: #0056b3;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .customInputContainer {
+    width: 90%; /* Adjust the width on smaller screens */
+    max-width: 100%; /* Remove max-width restriction */
+    padding: 0 0px; /* Reduce padding */
+  }
+
+  .inputContainerInput {
+    padding: 6px 8px; /* Adjust input padding */
+  }
+
+  .ctaButton {
+    padding: 8px 12px; /* Adjust button padding for smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .baseUrl {
+    font-size: 12px; /* Smaller font size on very small screens */
+  }
+
+  .usernameInput {
+    font-size: 12px; /* Adjust font size of input */
+  }
+
+  .ctaButton {
+    font-size: 12px; /* Adjust font size of button */
+  }
+}
+
+.rec {
+  margin-top: 10px;
+  font-weight: 500;
 }
