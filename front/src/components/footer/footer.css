@@ -70,6 +70,7 @@
   
   .footer__links-group a:hover {
     color: #000;
+    text-decoration: underline;     
   }
   
   .footer__bottom {
@@ -88,7 +89,7 @@
   
   .footer__social a {
     color: #666;
-    font-size: 1.25rem;
+    font-size: 1.55rem;
     transition: all 0.2s ease;
   }
   
@@ -131,4 +132,19 @@
       flex-direction: column;
       gap: 2rem;
     }
+  }
+.footer__logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+  img.logo {
+    width: 35px;
+    height: auto;
+    border-radius: 5px
+  }
+
+  .footerLogoText {
+    font-size: 2rem;
   }

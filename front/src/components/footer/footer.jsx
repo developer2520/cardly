@@ -1,5 +1,6 @@
 import { FaGithub, FaTelegram, FaGlobe } from "react-icons/fa";
 import "./footer.css";
+import Logo from './../../assets/logo-cardly.png'
 
 const Footer = () => {
   return (
@@ -7,8 +8,11 @@ const Footer = () => {
       <div className="footer__container">
         <div className="footer__main">
           <div className="footer__left">
-            <h2 className="footer__logo">Cardly</h2>
-            <p className="footer__tagline">Simplify your card management</p>
+           <div className="footer__logo">
+<img className="logo" src={Logo} alt="" />
+<h1 className="footerLogoText">Cardly</h1>
+           </div>
+            <p className="footer__tagline">Create your profile card </p>
           </div>
           
           <div className="footer__right">
@@ -29,13 +33,13 @@ const Footer = () => {
 
         <div className="footer__bottom">
           <div className="footer__social">
-            <a href="https://cardly.uz" aria-label="Website">
+            <a target="blank" href="https://cardly.uz" aria-label="Website">
               <FaGlobe />
             </a>
-            <a href="https://t.me/cardlyuz" aria-label="Telegram">
+            <a target="blank" href="https://t.me/cardlyuz" aria-label="Telegram">
               <FaTelegram />
             </a>
-            <a href="https://github.com/developer2520/cardly" aria-label="GitHub">
+            <a target="blank" href="https://github.com/developer2520/cardly" aria-label="GitHub">
               <FaGithub />
             </a>
           </div>

@@ -40,28 +40,36 @@ main {
   padding: 40px 20px;
   color: #ffffff;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  animation: gradientChange 15s ease-in-out infinite; /* Smooth transition with ease-in-out */
+  background-size: 300% 300%;
+  background-image: linear-gradient(-45deg, rgb(85, 163, 241) 0%, rgb(34, 112, 190) 25%, dodgerblurgb(19, 66, 110)rgb(56, 17, 233) 100%);
+  -webkit-animation: AnimateBG 20s ease infinite;
+          animation: AnimateBG 20s ease infinite;
 }
 
 /* Smooth Gradient Animation */
-@keyframes gradientChange {
+@-webkit-keyframes AnimateBG {
   0% {
-    background: linear-gradient(135deg, #0850d6, #809bd4); /* Initial blue gradient */
-  }
-  25% {
-    background: linear-gradient(135deg, #3e65a4, #6b85b0); /* Slightly lighter blue */
+    background-position: 0% 50%;
   }
   50% {
-    background: linear-gradient(135deg, #1e3c72, #2a5298); /* Darker blue with a smooth flow */
-  }
-  75% {
-    background: linear-gradient(135deg, #3e65a4, #6b85b0); /* Smooth return to lighter blue */
+    background-position: 100% 50%;
   }
   100% {
-    background: linear-gradient(135deg, #0850d6, #809bd4); /* Back to the initial blue gradient */
+    background-position: 0% 50%;
   }
 }
 
+@keyframes AnimateBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
 
 .textContent {
   display: flex;
