@@ -4,6 +4,8 @@ import './card.css';
 import { useParams, Link } from 'react-router-dom';
 import {IconContext} from './../../context/icons'
 import { FaGlobe } from 'react-icons/fa';
+import Logo from './../../assets/logo-cardly.png'
+
 
 // Platform icons mapping with React Icons
 
@@ -175,7 +177,16 @@ export default function Card() {
             <p>No links available</p>
           )}
         </div>
+        <div className="footer-container">
+  <span className="footer-text">Powered by</span>
+  <Link to="/" className="footer-link">
+    <img className='cardly-link-logo' src={Logo} alt="Cardly Logo" />
+  </Link>
+</div>
+
+
       </div>
+      
     </div>
   );
 }

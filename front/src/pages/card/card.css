@@ -4,6 +4,7 @@
   width: 100vw; /* Full viewport width */
   min-height: 100vh; /* Full viewport height */
   margin: 0;
+  align-items:normal;
   position: relative;
   background-color: inherit; /* To inherit background from Card */
   overflow-x: hidden;
@@ -19,7 +20,7 @@
   background-color: #f5f5f5; /* Default background color */
   color: #333; /* Default text color */
   font-family: 'Arial', sans-serif;
-  padding: 20px;
+
   box-sizing: border-box;
   margin: 0; /* Remove default margin */
   
@@ -139,7 +140,8 @@
   justify-content: center;
   align-items: center;
   padding: 2rem;
- 
+  padding-bottom: 2rem;
+  position: relative;
   background-color: #fff;
   color: #333;
 }
@@ -189,4 +191,46 @@
   font-size: 3rem;
   font-weight: 400;
   line-height: 20px;
+}
+
+/* Footer container for alignment */
+/* Footer container for alignment */
+.footer-container {
+  display: flex;
+  align-items: safe;
+  justify-content: center;
+  
+  gap: 5px; /* Minimal gap between text and logo */
+  position: absolute;
+  bottom: 20px; /* Positioning from the bottom of the page */
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Roboto', sans-serif;
+  color: #888; /* Light gray text */
+  font-size: 12px; /* Small text size */
+  padding: 5px;
+  background: transparent; /* No background */
+}
+
+/* Footer text styling */
+.footer-text {
+  color: #888; /* Soft gray text color */
+}
+
+/* Cardly logo inside the footer */
+.cardly-link-logo {
+  width: 20px; /* Small size logo */
+  filter: grayscale(100%); /* Grayscale by default */
+  transition: filter 0.3s ease;
+  border-radius: 2px;
+}
+
+/* Logo hover effect */
+.cardly-link-logo:hover {
+  filter: grayscale(0%); /* Full color on hover */
+}
+
+.footer-link {
+  display: inline-block;
+  text-decoration: none; /* Remove link underline */
 }
