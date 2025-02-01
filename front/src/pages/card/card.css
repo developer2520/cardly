@@ -187,6 +187,14 @@
 .link-icon {
   font-size: 2rem;
 }
+
+.link-icon-favicon {
+  width: 2rempx;
+  height: 2rem;
+  object-fit: contain; /* Ensures image fits well */
+  vertical-align: middle; /* Aligns it properly with text */
+  border-radius: 4px; /* Makes it rounded like other icons */
+}
 .l {
   font-size: 3rem;
   font-weight: 400;
@@ -221,16 +229,20 @@
 .cardly-link-logo {
   width: 20px; /* Small size logo */
   filter: grayscale(100%); /* Grayscale by default */
-  transition: filter 0.3s ease;
+  transition: filter ;
   border-radius: 2px;
 }
 
 /* Logo hover effect */
-.cardly-link-logo:hover {
-  filter: grayscale(0%); /* Full color on hover */
-}
 
 .footer-link {
   display: inline-block;
   text-decoration: none; /* Remove link underline */
+}
+.footer-container:hover .footer-text {
+  color: white;
+}
+
+.footer-container:hover .cardly-link-logo {
+  filter: grayscale(0%);
 }

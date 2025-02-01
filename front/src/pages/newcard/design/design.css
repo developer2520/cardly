@@ -104,7 +104,9 @@ p.template-name {
     gap: 10px; /* Reduce gap for better space usage */
   }
   .template-card {
-    max-width: 90%;
+    max-width: 170px;
+    
+    
   }
   p.template-name {
     font-size: 0.8rem;
@@ -125,9 +127,9 @@ p.template-name {
     padding: 10px; /* Reduce padding for smaller screens */
   }
 
-  .template-link {
-    height: 20px;
-  }
+  /* .template-link {
+   
+  } */
 
   p.template-name {
     font-size: 0.75rem; /* Smaller font size for better fit */

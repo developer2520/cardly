@@ -53,16 +53,26 @@ export default function Card() {
   const detectPlatform = (url) => {
     try {
       const domain = new URL(url).hostname.toLowerCase();
+  
+      // Check if the platform icon exists in the context
       for (const [platform, { domain: platformDomain, icon }] of Object.entries(platformIcons)) {
         if (domain.includes(platformDomain)) {
           return { platform, icon: React.cloneElement(icon, { className: 'link-icon' }) };
         }
       }
+  
+      // If not found in platformIcons, return the website's favicon
+      const faviconUrl = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
+      return { platform: 'unknown', icon: <img src={faviconUrl} alt="Favicon" className="link-icon-favicon " /> };
+  
     } catch (error) {
       console.error('Invalid URL:', url);
     }
-    return { platform: 'unknown', icon: <FaGlobe className="link-icon" /> }; // Default for unsupported platforms
+  
+    // Default to FaGlobe if everything fails
+    return { platform: 'unknown', icon: <FaGlobe className="link-icon" /> };
   };
+  
   
   if (error || !data || !data.card || !data.template) {
     document.title = '404';
@@ -177,13 +187,15 @@ export default function Card() {
             <p>No links available</p>
           )}
         </div>
+        <Link to="/" className="footer-link">
         <div className="footer-container">
   <span className="footer-text">Powered by</span>
-  <Link to="/" className="footer-link">
+  
     <img className='cardly-link-logo' src={Logo} alt="Cardly Logo" />
-  </Link>
+ 
 </div>
 
+</Link>
 
       </div>
       

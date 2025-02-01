@@ -9,7 +9,7 @@ export const CardProvider = ({ children }) => {
     title: "",
     bio: "",
     url: "",
-    template: "1",
+    template: "5",
     links: [{ title: '', url: '' }],
   });
 

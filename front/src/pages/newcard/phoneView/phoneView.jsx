@@ -15,17 +15,31 @@ export default function PhoneView({ togglePhoneView }) {
   // Function to detect platform from URL
   const detectPlatform = (url) => {
     try {
-      const domain = new URL(url).hostname.toLowerCase();
-      for (const [platform, { domain: platformDomain, icon }] of Object.entries(platformIcons)) {
-        if (domain.includes(platformDomain)) {
-          return { platform, icon };
+        const domain = new URL(url).hostname.toLowerCase();
+
+        // Check if the platform icon exists in the context
+        for (const [platform, { domain: platformDomain, icon }] of Object.entries(platformIcons)) {
+            if (domain.includes(platformDomain)) {
+                return { platform, icon: React.cloneElement(icon, { className: 'link-ico' }) };
+            }
         }
-      }
+
+        // If not found in platformIcons, return the website's favicon
+        const faviconUrl = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
+        return {
+            platform: 'unknown',
+            icon: <img src={faviconUrl} alt="Favicon" className="link-icon-favicon-new-card" />
+        };
+
     } catch (error) {
-      console.error('Invalid URL:', url);
+        console.error('Invalid URL:', url);
     }
-    return { platform: 'unknown', icon: <FaGlobe className="link-icon-new-card" /> }; // Default for unsupported platforms
-  };
+
+    // Default to FaGlobe if everything fails
+    return { platform: 'unknown', icon: <FaGlobe className="link-ico" /> };
+};
+
+  
 
   useEffect(() => {
     const fetchTemplateDetails = async () => {
@@ -127,8 +141,11 @@ export default function PhoneView({ togglePhoneView }) {
           ) : (
             <p>No links available</p>
           )}
+            
         </div>
+        
       </div>
+    
     </div>
   );
 }

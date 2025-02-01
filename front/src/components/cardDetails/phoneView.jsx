@@ -17,22 +17,28 @@ export default function PhoneView() {
   // Function to detect platform from URL
   // Function to detect platform from URL
 const detectPlatform = (url) => {
-  try {
-    const domain = new URL(url).hostname.toLowerCase(); // Get the full hostname
-    
-    // Loop through platform icons and compare the full domain
-    for (const [platform, { domain: platformDomain, icon }] of Object.entries(platformIcons)) {
-      // Check if the domain exactly matches the platform domain
-      if (domain === platformDomain || domain.endsWith(`.${platformDomain}`)) {
-        return { platform, icon }; // Return correct platform icon
-      }
-    }
-  } catch (error) {
-    console.error('Invalid URL:', url);
-  }
+    try {
+      const domain = new URL(url).hostname.toLowerCase();
   
-  return { platform: 'unknown', icon: <FaGlobe className="link-icon-new-card" /> }; // Default for unsupported platforms
-};
+      // Check if the platform icon exists in the context
+      for (const [platform, { domain: platformDomain, icon }] of Object.entries(platformIcons)) {
+        if (domain.includes(platformDomain)) {
+          return { platform, icon: React.cloneElement(icon, { className: 'link-ico' }) };
+        }
+      }
+  
+      // If not found in platformIcons, return the website's favicon
+      const faviconUrl = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
+      return { platform: 'unknown', icon: <img src={faviconUrl} alt="Favicon" className="link-icon-favicon-new-card  " /> };
+  
+    } catch (error) {
+      console.error('Invalid URL:', url);
+    }
+  
+    // Default to FaGlobe if everything fails
+    return { platform: 'unknown', icon: <FaGlobe className="link-ico" /> };
+  };
+  
 
 
   useEffect(() => {
