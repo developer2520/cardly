@@ -49,6 +49,7 @@
     border: 1px solid #e5e7eb;
     border-radius: 4px;
     font-size: 0.875rem;
+    resize: none;
   }
   
   .input:focus {

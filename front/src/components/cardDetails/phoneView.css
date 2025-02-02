@@ -1,27 +1,54 @@
-.phoneView {
-  position: relative; /* Ensure normal layout behavior */
+.phoneview__container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; 
+  width: 315px; 
+  overflow: auto;
+  background-color: #ffffff;
+  position:relative ;
   top: 0;
-  left: 0;
-  width: 315px; /* Fixed width for larger screens */
-  height: 500px; /* Typical height for a phone view */
-  background-color: rgb(255, 255, 255);
+  right: 0;
+  padding: 0rem 2rem 0rem 2rem;
+  box-sizing: content-box;
+  -ms-overflow-style: none; /* Hides the scrollbar */
+}
+
+.phoneView {
+  width: 100%; 
+  height: 490px; 
+  background: white;
   border-radius: 30px;
   border: 7px solid black;
+  /* box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset; */
+  overflow: auto;
+  -ms-overflow-style: none; /* Hides the scrollbar */
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start; /* Align content to the top */
-  padding: 1rem;
-  margin: auto;
-  margin-right: 20px;
-  margin-left: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  overflow-y: auto; /* Enable scrolling */
-  -ms-overflow-style: none; /* Hide scrollbar in IE */
-  scrollbar-width: none; /* Hide scrollbar in Firefox */
+  padding: 10px;
 }
-  
-  @media (max-width: 800px) {
+
+
+.phoneview__container::-webkit-scrollbar,
+.phoneView::-webkit-scrollbar {
+  display: none;
+}
+.linksContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 8px; /* Better spacing */
+}
+
+.phoneview__container,
+.phoneView {
+  scrollbar-width: none;
+}
+
+ @media (max-width: 800px) {
     .phoneView {
       position: absolute;
       top: 0;
@@ -71,4 +98,10 @@
     background-color: rgba(0, 123, 255, 0.1); /* Light background on hover */
     transform: scale(1.02); /* Slight scale effect on hover */
   }
-  
+
+  .link-preview-real {
+    color: rgb(9, 105, 201);
+  }
+  .link-preview-real:hover {
+    color: rgb(6, 77, 148);
+  }

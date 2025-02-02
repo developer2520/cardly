@@ -4,6 +4,7 @@ import { useCard } from './../../context/editPreviewContext';
 import {IconContext} from './../../context/icons'
 import axios from 'axios';
 import {FaGlobe} from 'react-icons/fa';
+import ProfileLink from '../profileLink/profileLink'
 
 
 
@@ -63,6 +64,8 @@ const detectPlatform = (url) => {
   const [hoveredLinkIndex, setHoveredLinkIndex] = useState(null);
 
   return (
+    <div className="phoneview__container">
+       {/* <ProfileLink username={data.url} /> */}
     <div
       className="phoneView"
       style={{
@@ -145,6 +148,11 @@ const detectPlatform = (url) => {
           )}
         </div>
       </div>
+    </div>
+    <a className='link-preview-real' target="_blank" href={`https://www.cardly.uz/${data.url}`}>
+  {`cardly.uz/${data.url}`}
+</a>
+
     </div>
   );
 }

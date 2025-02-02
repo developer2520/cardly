@@ -63,6 +63,9 @@ export default function PhoneView({ togglePhoneView }) {
   const [hoveredLinkIndex, setHoveredLinkIndex] = useState(null);
 
   return (
+    <div className="phoneview__container">
+
+   
     <div
       className="phoneView"
       style={{
@@ -145,7 +148,12 @@ export default function PhoneView({ togglePhoneView }) {
         </div>
         
       </div>
+     
     
+    </div>
+    <a className='link-preview-real' target="_blank" href={`https://www.cardly.uz/${data.url}`}>
+  {`cardly.uz/${data.url}`}
+</a>
     </div>
   );
 }
