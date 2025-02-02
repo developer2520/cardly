@@ -22,21 +22,7 @@ const NotFoundPage = ({ error, username }) => {
         </Link>
         <button onClick={Login} className="create-link">Claim {username}</button>
       </div>
-      <Link  to="/" className="footer-link">
-              <div className="footer-container">
-        <span style={{
-          
-          
-          
-         
-          
-        }} className="footer-text">Powered by</span>
-        
-          <img className='cardly-link-logo' src={Logo} alt="Cardly Logo" />
-       
-      </div>
       
-      </Link>
     </div>
   );
 };

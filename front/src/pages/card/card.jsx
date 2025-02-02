@@ -67,6 +67,11 @@ export default function Card() {
     );
   }
 
+  if (error === 'No card found') {
+    return <NotFoundPage username={url} />;
+  }
+  
+
   const detectPlatform = (url) => {
     try {
       const domain = new URL(url).hostname.toLowerCase();
@@ -90,7 +95,7 @@ export default function Card() {
     return { platform: 'unknown', icon: <FaGlobe className="link-icon" /> };
   };
 
-  const card = data.card;
+  
   const template = data.template;
   const templateStyles = template.styles || {};
   const linkStyles = templateStyles.linkStyles || {};
@@ -195,8 +200,7 @@ export default function Card() {
 
         <div className="footer-container">
         <Link to="/" className="footer-link" style={{ color: linkStyles.textColor}}>
-          cardly.uz
-        </Link>
+          cardly.uz</Link>                                                                                 
         </div>
       
       </div>
