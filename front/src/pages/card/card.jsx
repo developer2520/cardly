@@ -95,7 +95,7 @@ export default function Card() {
     return { platform: 'unknown', icon: <FaGlobe className="link-icon" /> };
   };
 
-  
+  const card = data.card
   const template = data.template;
   const templateStyles = template.styles || {};
   const linkStyles = templateStyles.linkStyles || {};
@@ -199,7 +199,7 @@ export default function Card() {
         </div>
 
         <div className="footer-container">
-        <Link to="/" className="footer-link" style={{ color: linkStyles.textColor}}>
+        <Link to="/" className="footer-link" style={{ color: linkStyles.backgroundColor}}>
           cardly.uz</Link>                                                                                 
         </div>
       

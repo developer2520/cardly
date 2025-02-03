@@ -1,11 +1,8 @@
-.topbar-container {
-    width: 100%
-}
 
 .back-to-cardlist {
     display: none;
     height: 50px;
-
+align-items: stretch;
   
 }
 

@@ -39,7 +39,7 @@ const Topbar = ({ card, setSelectedCard }) => {
 
   return (
     <div className="topbar-container">
-      
+       <div className="tab-container-container">
       <div className="tab-container">
         
         {["Main", "Design", "Settings"].map((tab, index) => (
@@ -53,9 +53,12 @@ const Topbar = ({ card, setSelectedCard }) => {
           </div>
         ))}
         <div className="indicator" style={indicatorStyle}></div>
+        </div>
       </div>
+      
       <div className="content">{renderComponent()}</div>
-    </div>
+      </div>
+    
   );
 };
 

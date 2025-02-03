@@ -5,7 +5,7 @@ import LandingPage from './pages/landingPage/landingPage';
 import Dashboard from './pages/dashboard/dashboard';
 import Settings from './pages/settings/settings';
 import Account from './pages/account/account';
-import Analytics from './pages/analytics/analytics';
+// import Analytics from './pages/analytics/analytics';
 import Newcard from './pages/newcard/newcard';
 import Card from './pages/card/card';
 import UserProvider from './context/userContext';
@@ -40,8 +40,8 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/home" element={<Dashboard />} />
           <Route path="/home/account" element={<Account />} />
-          <Route path="/home/settings" element={<Settings />} />
-          <Route path="/home/analytics" element={<Analytics />} />
+          {/* <Route path="/home/settings" element={<Settings />} /> */}
+          {/* <Route path="/home/analytics" element={<Analytics />} /> */}
           <Route path="/home/newcard" element={<Newcard />} />
           <Route path="/:url" element={<Card />} /> {/* Corrected dynamic route */}
           {/* <Route path="/cards" element={<CardsList />} /> */}

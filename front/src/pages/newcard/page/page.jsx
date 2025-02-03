@@ -317,7 +317,7 @@ export default function Page({ setSelectedCard, setIsCreatingNewCard }) {
               />
               <input
                 type="text"
-                placeholder="URL"
+                placeholder="https://link.com/username"
                 value={link.url}
                 onChange={(e) => updateLink(index, 'url', e.target.value)}
                 className="input"

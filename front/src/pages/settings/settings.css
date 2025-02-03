@@ -18,8 +18,8 @@ html, body {
     flex-direction: column; /* Stack content vertically */
    
     width: 100%; /* Take full width */
-    max-width: 1400px; /* Limit maximum width for large screens */
-    margin: 0 auto;
+    max-width: 7800px; 
+    margin: 0 auto; 
 }
 
 body {

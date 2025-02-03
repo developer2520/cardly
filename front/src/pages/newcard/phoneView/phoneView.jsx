@@ -151,9 +151,9 @@ export default function PhoneView({ togglePhoneView }) {
      
     
     </div>
-    <a className='link-preview-real' target="_blank" href={`https://www.cardly.uz/${data.url}`}>
+    {/* <a className='link-preview-real' target="_blank" href={`https://www.cardly.uz/${data.url}`}>
   {`cardly.uz/${data.url}`}
-</a>
+</a> */}
     </div>
   );
 }

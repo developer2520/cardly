@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { GoHome } from 'react-icons/go';
 import { RiSettingsLine } from 'react-icons/ri';
@@ -10,22 +10,22 @@ import Limit from './../limit/limit';
 import './sidebar.css';
 
 const Sidebar = ({ onCreateNewCard }) => {
-  const { user, loading: userLoading, error: userError } = useContext(UserContext);
+  const { user, loading: userLoading, error: userError, fetchUser } = useContext(UserContext);
   const navigate = useNavigate();
   const { ownCards, loading: cardsLoading, error: cardsError } = useContext(OwnCardsContext);
 
-  const [isLimitReached, setIsLimitReached] = useState(false); // State for tracking limit visibility
+  const [isLimitReached, setIsLimitReached] = useState(false);
+
+  useEffect(() => {
+    if (!user) fetchUser(); // Fetch user only if it is null
+  }, [user]);
 
   const handleNewCardClick = () => {
     if (ownCards.length >= 5) {
-      setIsLimitReached(true); // Show limit message if 5 pages are reached
+      setIsLimitReached(true);
     } else {
-      navigate('/home', { state: { createNewCard: true } });
+      navigate("/home", { state: { createNewCard: true } });
     }
-  };
-
-  const handleLimitClose = () => {
-    setIsLimitReached(false); // Close limit message when "Got it!" is clicked
   };
 
   return (
@@ -46,12 +46,14 @@ const Sidebar = ({ onCreateNewCard }) => {
         </button>
       </div>
 
-      {isLimitReached && <Limit onClose={handleLimitClose} />} {/* Pass onClose function to Limit component */}
+      {isLimitReached && <Limit onClose={() => setIsLimitReached(false)} />}
 
       <div className="sidebar-item last-item">
         <NavLink to="/home/account" className="sidebar-link">
           <RiSettingsLine className="sidebar-icon" />
-          <span className="user_name">{userLoading ? 'User' : userError ? 'Error' : user.name}</span>
+          <span className="user_name">
+            {userLoading ? "Loading..." : userError ? "Error" : user?.name || "User"}
+          </span>
         </NavLink>
       </div>
     </div>

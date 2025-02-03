@@ -4,6 +4,8 @@
   width: 100%;
   font-family: Arial, sans-serif;
   color: #333;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 /* Responsive template grid */
@@ -11,9 +13,10 @@
 .templates-grid-loader {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-  gap: 20px;
+  gap: 30px;
   justify-items: center;
   margin-top: 20px;
+  max-width: 100%;
   width: 100%;
 }
 

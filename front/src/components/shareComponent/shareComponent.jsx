@@ -19,7 +19,7 @@ export default function ShareComponent({ onClose, url = "https://cardly.uz/" }) 
   }, []);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(url).then(() => {
+    navigator.clipboard.writeText(`https://cardly.uz/${url}`).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     });
