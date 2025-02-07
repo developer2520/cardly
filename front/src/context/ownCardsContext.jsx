@@ -17,7 +17,7 @@ export const OwnCardsProvider = ({ children }) => {
         if (user && user.googleId) {
             setLoading(true);
             try {
-                const response = await axios.get(`/cards?googleId=${user.googleId}`, {
+                const response = await axios.get(`/cards/cards?googleId=${user.googleId}`, {
                     withCredentials: true,
                 });
                 setOwnCards(response.data);

@@ -5,13 +5,29 @@ import Swal from "sweetalert2"; // Import SweetAlert2
 import { Trash2 } from "lucide-react";
 import { toast } from "sonner"; // Import Sonner
 import "./settings.css"; // Import your styles
+import  supabase  from "./../../../../../supabaseClient"; // Assuming you have Supabase client initialized
 
 const Settings = ({ card, setSelectedCard }) => {
   const { refetch } = useContext(OwnCardsContext);
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`/cards/${card._id}`);
+      // Delete the card from the database
+      await axios.delete(`/cards/cards/${card._id}`);
+
+      // Delete the image from Supabase storage
+      const imagePath = card.imageUrl.split('/').pop(); // Extract the image file name from the URL
+      const { error } = await supabase.storage
+        .from('images') // Replace 'images' with your Supabase bucket name
+        .remove([imagePath]);
+
+      if (error) {
+        console.error("Error deleting image:", error.message);
+        toast.error(`Failed to delete image ❌ ${error.message}`);
+      } else {
+        toast.success("Image deleted successfully! 🎉");
+      }
+
       toast.success("Card deleted successfully! 🎉"); // Sonner toast for success
       setSelectedCard(null);
       refetch();

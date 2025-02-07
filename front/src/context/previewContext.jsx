@@ -11,6 +11,9 @@ export const CardProvider = ({ children }) => {
     url: "",
     template: "5",
     links: [{ title: '', url: '' }],
+    imageUrl: "",
+    previewUrl: "",
+    urlStatus: "",
   });
 
   return (

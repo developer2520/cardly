@@ -2,18 +2,52 @@ const express = require('express');
 const router = express.Router();
 const LinkPage = require('../models/linkModel');
 const Template = require('../models/template');
+const multer = require('multer');
+const storage = multer.memoryStorage();
+const supabase = require('../config/supabaseClient');
+
+const upload = multer({
+  storage,
+  limits: { fileSize: 2 * 1024 * 1024 }, // 2MB limit
+  fileFilter: (req, file, cb) => {
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+    if (!allowedTypes.includes(file.mimetype)) {
+      return cb(new Error('Invalid file type. Only JPG, PNG, and WEBP are allowed.'));
+    }
+    cb(null, true);
+  },
+});
+
 
 // Create Card
-router.post('/cards', async (req, res) => {
-  let { title, bio, links, url, userId, template } = req.body;
+router.post('/cards', upload.single('image'), async (req, res) => {
+  let { title, bio, links, url, userId, template,imageUrl } = req.body;
+  
+
   try {
     url = url.toLowerCase();
     const existingCard = await LinkPage.findOne({ url });
     if (existingCard) {
       return res.status(400).json({ message: 'Card with this URL already exists' });
     }
-    const card = new LinkPage({ title, bio, links, url, userId, template });
+
+    // If an image is uploaded, upload it to Supabase Storage
+    if (req.file) {
+      const fileExt = req.file.mimetype.split('/')[1]; // Get file extension
+      const fileName = `${Date.now()}-${userId}.${fileExt}`; // Unique file name
+      const { data, error } = await supabase.storage.from('profile-images').upload(fileName, req.file.buffer, {
+        contentType: req.file.mimetype,
+      });
+
+      if (error) throw error;
+
+      // Get the public URL of the uploaded image
+      imageUrl = `${process.env.SUPABASE_URL}/storage/v1/object/public/profile-images/${fileName}`;
+    }
+
+    const card = new LinkPage({ title, bio, links, url, userId, template, imageUrl });
     await card.save();
+
     res.status(201).json({ message: 'Card created successfully', card });
   } catch (err) {
     console.error(err);
@@ -21,10 +55,11 @@ router.post('/cards', async (req, res) => {
   }
 });
 
+
 // Update Card
 router.put('/cards/:id', async (req, res) => {
   const { id } = req.params;
-  let { title, bio, links, url, template } = req.body;
+  let { title, bio, links, url, template, imageUrl } = req.body;
   try {
     url = url.toLowerCase();
     if (!id || !title || !url) {
@@ -36,7 +71,7 @@ router.put('/cards/:id', async (req, res) => {
     }
     const updatedCard = await LinkPage.findByIdAndUpdate(
       id,
-      { title, bio, links, url, template },
+      { title, bio, links, url, template, imageUrl },
       { new: true, runValidators: true }
     );
     if (!updatedCard) {

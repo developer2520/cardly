@@ -1,0 +1,63 @@
+.url-input-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    
+    width: 100%;
+  }
+  
+ 
+  /* Status colors */
+  .input.available {
+    border-color: #22c55e;
+  }
+  
+  .input.taken {
+    border-color: #ef4444;
+  }
+  
+  .input.error {
+    border-color: #f59e0b;
+  }
+  
+  /* Icon positioning */
+  .icon-container {
+    position: absolute;
+    right: 12px;
+   top: 50%;
+   transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .icon {
+    width: 22px;
+    height: 22px;
+    transition: 0.3s ease-in-out;
+  }
+  
+  /* Colors */
+  .success {
+    color: #22c55e;
+  }
+  
+  .error {
+    color: #ef4444;
+  }
+  
+  .loading {
+    color: #f59e0b;
+    animation: spin 1s linear infinite;
+  }
+  
+  /* Loading animation */
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  

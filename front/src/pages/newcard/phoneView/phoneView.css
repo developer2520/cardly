@@ -15,3 +15,12 @@
     
    
 }
+.profile-image-preview {
+    width: 70px;  /* Adjust size */
+    height: 70px;
+    border-radius: 50%; /* Circular image */
+    object-fit: cover; /* Ensure the image doesn't stretch or distort */
+    border: 2px solid #ccc;  /* Border around the image */
+    margin-bottom: 10px;
+    transition: transform 0.3s ease-in-out; /* Smooth hover effect */
+}

@@ -23,7 +23,7 @@ export default function Card() {
 
   useEffect(() => {
     axios
-      .get(`/cards/${url}`, { withCredentials: true })
+      .get(`/cards/cards/${url}`, { withCredentials: true })
       .then((response) => {
         setData(response.data);
         setLoading(false);
@@ -117,7 +117,7 @@ export default function Card() {
             <ShareComponent onClose={() => setShowShare(false)} url={url} />
           </div>
         )}
-
+{card.imageUrl ? <img src={card.imageUrl} alt="Profile" className="profile-imagee" /> : ""}
         <h1 className="cardTitle" style={{ color: templateStyles.textColor }}>
           {card.title}
         </h1>

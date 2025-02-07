@@ -11,6 +11,9 @@ export const EditCardProvider = ({ children }) => {
     url: "",
     template: "",
     links: [{ title: '', url: '' }],
+    imageUrl: "",
+    previewUrl: "",
+    urlStatus: "",
   });
 
   return (

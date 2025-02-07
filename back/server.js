@@ -27,10 +27,10 @@ app.use(session);
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Routes
-app.use(authRoutes);
-app.use(cardRoutes);
-app.use(templateRoutes);
+// ✅ Add base path for routes
+app.use("/auth", authRoutes);
+app.use("/cards", cardRoutes);
+app.use("/templates", templateRoutes);
 
 // Start Server
 const PORT = process.env.PORT || 4000;

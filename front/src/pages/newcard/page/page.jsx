@@ -2,10 +2,12 @@ import React, { useState, useContext, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { PlusCircle, Trash2, Save, CheckCircle, XCircle, Loader } from 'lucide-react';
 import Layout from './../../../components/layout/layout';
+import supabase from '/supabaseClient'
 import { UserContext } from './../../../context/userContext';
 import { useCard } from "./../../../context/previewContext";
 import { OwnCardsContext } from './../../../context/ownCardsContext';
 import { toast } from 'sonner';
+import UrlChecker from './../../../components/urlChecker/urlChecker';
 import './page.css';
 
 export default function Page({ setSelectedCard, setIsCreatingNewCard }) {
@@ -16,194 +18,41 @@ export default function Page({ setSelectedCard, setIsCreatingNewCard }) {
   
   // State management
   const [isLoading, setIsLoading] = useState(false);
-  const [urlState, setUrlState] = useState({
-    value: '',
-    status: '',
-    isChecking: false,
-    errorMessage: '',
-    validationTimeout: null
-  });
-  
+ 
+  const [imageUrl, setImageUrl] = useState(null);
+const fileInputRef = useRef(null);
+
+const handleImageSelect = (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const previewUrl = URL.createObjectURL(file); // Generate preview URL
+
+  setData(prev => ({
+    ...prev,
+    previewUrl, // Store preview for UI
+    imageFile: file // Store file for later upload
+  }));
+};
+
+
+
   // Ref for holding the URL state
-  const urlRef = useRef(urlState.value);
+ 
 
   // URL validation rules
-  const URL_RULES = {
-    minLength: 3,
-    maxLength: 30,
-    pattern: /^[a-zA-Z0-9][a-zA-Z0-9._]*[a-zA-Z0-9]$/,
-    noConsecutiveSpecials: /[._]{2,}/
-  };
 
   // Effect to handle URL validation when switching tabs
-  useEffect(() => {
-    if (data.url && urlState.value !== data.url) {
-      const validation = validateUrl(data.url);
-      
-      setUrlState(prev => ({
-        ...prev,
-        value: data.url,
-        status: validation.isValid ? 'checking' : 'invalid',
-        errorMessage: validation.message
-      }));
-
-      // If URL is valid, check its availability
-      if (validation.isValid) {
-        checkUrlAvailability(data.url);
-      }
-    }
-  }, [data.url]); // Run when data.url changes
-
+  
   // Cleanup effect
-  useEffect(() => {
-    return () => {
-      if (urlState.validationTimeout) {
-        clearTimeout(urlState.validationTimeout);
-      }
-    };
-  }, []);
 
   // Validate URL
-  const validateUrl = (url) => {
-    if (!url) {
-      return { isValid: false, message: 'URL cannot be empty' };
-    }
+ 
 
-    if (url.length < URL_RULES.minLength) {
-      return { isValid: false, message: `URL must be at least ${URL_RULES.minLength} characters` };
-    }
-
-    if (url.length > URL_RULES.maxLength) {
-      return { isValid: false, message: `URL cannot exceed ${URL_RULES.maxLength} characters` };
-    }
-
-    if (!URL_RULES.pattern.test(url)) {
-      return {
-        isValid: false,
-        message: 'URL can only contain letters, numbers, dots, and underscores. Must start and end with a letter or number'
-      };
-    }
-
-    if (URL_RULES.noConsecutiveSpecials.test(url)) {
-      return {
-        isValid: false,
-        message: 'URL cannot contain consecutive dots or underscores'
-      };
-    }
-
-    return { isValid: true, message: '' };
-  };
 
   // Check URL availability
-  const checkUrlAvailability = async (url) => {
-    setUrlState(prev => ({ ...prev, isChecking: true }));
-    try {
-      const response = await axios.get(`/check-url-availability?url=${url}`);
-      setUrlState(prev => ({
-        ...prev,
-        status: response.data.available ? 'available' : 'taken',
-        errorMessage: response.data.available ? '' : 'This URL is already taken'
-      }));
-    } catch (error) {
-      setUrlState(prev => ({
-        ...prev,
-        status: 'error',
-        errorMessage: 'Error checking URL availability'
-      }));
-    } finally {
-      setUrlState(prev => ({ ...prev, isChecking: false }));
-    }
-  };
+  
 
-  // Handle URL input changes
-  const handleUrlChange = (e) => {
-    const value = e.target.value.trim().toLowerCase();
-    
-    // Clear previous timeout if exists
-    if (urlState.validationTimeout) {
-      clearTimeout(urlState.validationTimeout);
-    }
-
-    // Update URL state immediately
-    setUrlState(prev => ({
-      ...prev,
-      value,
-      status: value ? 'checking' : 'empty'
-    }));
-
-    // Update parent state
-    setData(prev => ({ ...prev, url: value }));
-
-    if (!value) {
-      setUrlState(prev => ({
-        ...prev,
-        status: 'empty',
-        errorMessage: 'URL cannot be empty'
-      }));
-      return;
-    }
-
-    // Validate URL format
-    const validation = validateUrl(value);
-    if (!validation.isValid) {
-      setUrlState(prev => ({
-        ...prev,
-        status: 'invalid',
-        errorMessage: validation.message
-      }));
-      return;
-    }
-
-    // Set timeout for availability check
-    const timeoutId = setTimeout(() => {
-      checkUrlAvailability(value);
-    }, 500);
-
-    setUrlState(prev => ({ ...prev, validationTimeout: timeoutId }));
-  };
-
-  // Get URL status display component
-  const getUrlStatusDisplay = () => {
-    if (urlState.isChecking) {
-      return (
-        <span className="loading-text">
-          <Loader className="icon spinning" /> Checking...
-        </span>
-      );
-    }
-
-    switch (urlState.status) {
-      case 'available':
-        return (
-          <span className="success-text">
-            <CheckCircle className="icon success" /> Available
-          </span>
-        );
-      case 'taken':
-        return (
-          <span className="error-text">
-            <XCircle className="icon error" /> {urlState.errorMessage || 'This URL is already taken'}
-          </span>
-        );
-      case 'invalid':
-        return (
-          <span className="error-text">
-            <XCircle className="icon error" /> {urlState.errorMessage}
-          </span>
-        );
-      case 'empty':
-        return (
-          <span className="error-text">
-            <XCircle className="icon error" /> {urlState.errorMessage || 'URL cannot be empty'}
-          </span>
-        );
-      default:
-        return null;
-    }
-  };
-
-  // Check if URL is valid for form submission
-  const isUrlValid = () => urlState.status === 'available';
 
   // Link management functions
   const addLink = () => {
@@ -225,47 +74,71 @@ export default function Page({ setSelectedCard, setIsCreatingNewCard }) {
 
   // Handle form submission
   const handleSave = async () => {
-    if (urlState.isChecking || !isUrlValid()) return;
+  setIsLoading(true);
+  try {
+    const file = data.imageFile;
+    let imageUrl = null;
 
-    setIsLoading(true);
-    try {
-      await axios.post('/cards', {
-        title: data.title,
-        bio: data.bio,
-        links: (data.links || []).filter((link) => link.title && link.url),
-        url: data.url,
-        userId,
-        template: data.template,
-      });
+    if (file) {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${userId}-${Date.now()}.${fileExt}`;
+      const filePath = `card-profile-pictures/${fileName}`;
 
-      toast.success('New card created successfully! 🎉');
-      setData({
-        title: '',
-        bio: '',
-        url: '',
-        template: '1',
-        links: [{ title: '', url: '' }],
-      });
-      
-      // Reset URL state
-      setUrlState({
-        value: '',
-        status: '',
-        isChecking: false,
-        errorMessage: '',
-        validationTimeout: null
-      });
-      
-      refetch();
-    } catch (error) {
-      const errorMessage = error.response?.data?.message || error.message || 'Unknown error occurred';
-      toast.error(errorMessage);
-    } finally {
-      setIsLoading(false);
-      setSelectedCard(null);
-      setIsCreatingNewCard(false);
+      // Upload the file
+      const { error: uploadError } = await supabase.storage
+        .from('cardly-pfp-images')
+        .upload(filePath, file);
+
+      if (uploadError) {
+        console.error('Upload error:', uploadError);
+        throw uploadError;
+      }
+
+      // Get public URL
+      const { data: publicUrlData } = supabase.storage.from('cardly-pfp-images').getPublicUrl(filePath);
+      imageUrl = publicUrlData?.publicUrl;
+
+      if (!imageUrl) {
+        throw new Error("Failed to retrieve public URL");
+      }
     }
-  };
+
+    // Send data to backend
+    await axios.post('/cards/cards', {
+      title: data.title,
+      bio: data.bio,
+      links: (data.links || []).filter(link => link.title && link.url),
+      url: data.url,
+      userId,
+      template: data.template,
+      imageUrl, // Image URL will be null if no image is selected
+    });
+
+    toast.success('New card created successfully! 🎉');
+
+    // Reset data
+    setData({
+      title: '',
+      bio: '',
+      url: '',
+      template: '1',
+      links: [{ title: '', url: '' }],
+      previewUrl: "",
+      imageFile: null, 
+    });
+
+    refetch();
+  } catch (error) {
+    console.error(error);
+    toast.error(error.message || 'Unknown error occurred');
+  } finally {
+    setIsLoading(false);
+    setSelectedCard(null);
+    setIsCreatingNewCard(false);
+  }
+};
+
+
 
   return (
     <div className="container">
@@ -283,20 +156,23 @@ export default function Page({ setSelectedCard, setIsCreatingNewCard }) {
             className="input profile-input"
           />
 
-          <div className="url-input-container">
-          
-<input
-  type="text"
-  placeholder="Choose your URL"
-  value={urlState.value}
-  onChange={handleUrlChange}
-  className={`input ${urlState.status !== 'available' && urlState.status !== 'checking' && urlState.value ? 'input-error' : ''}`}
-/>
-            <div className="url-status">
-              {getUrlStatusDisplay()}
-            </div>
-          </div>
+<UrlChecker url={data.url} onUrlChange={(newUrl) => setData(prev => ({ ...prev, url: newUrl }))} />
 
+          <div className="image-upload">
+          {data.previewUrl && <img src={data.previewUrl} alt="Profile Preview" className="profile-image" />}
+
+            <input
+  type="file"
+  accept="image/*"
+  onChange={handleImageSelect} // Fix this
+  ref={fileInputRef}
+  style={{ display: 'none' }}
+/>
+
+            <button className="button button-outline" onClick={() => fileInputRef.current.click()}>
+              <Save className="icon" /> Upload Image
+            </button>
+          </div>
           <textarea
             name="bio"
             id="bio"
@@ -336,7 +212,7 @@ export default function Page({ setSelectedCard, setIsCreatingNewCard }) {
             <button
               className="button button-primary"
               onClick={handleSave}
-              disabled={isLoading || !isUrlValid() || urlState.isChecking}
+              disabled={isLoading }
             >
               <Save className="icon" />
               {isLoading ? 'Saving...' : 'Save'}

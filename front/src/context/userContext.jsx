@@ -16,7 +16,7 @@ export const UserProvider = ({ children }) => {
     const fetchUser = async () => {
         setState((prev) => ({ ...prev, loading: true }));
         try {
-            const { data } = await axios.get("/user", { withCredentials: true });
+            const { data } = await axios.get("/auth/user", { withCredentials: true });
             setState({ user: data, loading: false, error: null });
         } catch (error) {
             setState({

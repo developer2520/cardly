@@ -146,3 +146,40 @@
     color: #991b1b;
     border: 1px solid #fecaca;
   }
+
+  .image-upload {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  margin-bottom: 20px;
+}
+
+.profile-image {
+  width: 100px;  /* Adjust size */
+  height: 100px;
+  border-radius: 50%; /* Circular image */
+  object-fit: cover; /* Ensure the image doesn't stretch or distort */
+  border: 2px solid #ccc;  /* Border around the image */
+  margin-bottom: 10px;
+  transition: transform 0.3s ease-in-out; /* Smooth hover effect */
+}
+
+.profile-image:hover {
+  transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+.button-outline {
+  background-color: #f0f0f0;
+  border: 2px solid #ccc;
+  color: #333;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.button-outline:hover {
+  background-color: #ddd;
+  transform: translateY(-2px); /* Slight hover lift */
+}

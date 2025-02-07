@@ -51,7 +51,7 @@ const Topbar = ({ card, isNewCard, setSelectedCard, setIsCreatingNewCard }) => {
       </div>
        </div>
       
-      <div className="content">{renderComponent()}</div>
+      <div className="contennt">{renderComponent()}</div>
     </div>
   );
 };

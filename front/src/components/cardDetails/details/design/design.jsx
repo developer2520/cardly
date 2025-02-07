@@ -13,7 +13,7 @@ const Design = () => {
     async function fetchTemplates() {
       setLoading(true);
       try {
-        const response = await axios.get('/templates');
+        const response = await axios.get('/templates/templates');
         setTemplates(response.data);
         
       } catch (error) {

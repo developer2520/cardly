@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const linkPageSchema = new mongoose.Schema({
   userId: { type: String, required: true },
   url: { type: String, required: true, trim: true }, // Original URL for display
- 
+  imageUrl: { type: String, required: false},
   title: { type: String, required: true, trim: true }, // Title of the link
   bio: { type: String, required: false, trim: true }, // Description of the link
   links: [

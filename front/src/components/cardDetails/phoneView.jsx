@@ -46,7 +46,7 @@ const detectPlatform = (url) => {
     const fetchTemplateDetails = async () => {
       if (data.template) {
         try {
-          const response = await axios.get(`/templates/${data.template}`);
+          const response = await axios.get(`/templates/templates/${data.template}`);
           setTemplateStyles(response.data.styles);
         } catch (error) {
           console.error('Error fetching template styles:', error);
@@ -76,6 +76,7 @@ const detectPlatform = (url) => {
       }}
     >
       <div className="content">
+      {data.previewUrl == "" ?"" :  <img src={data.previewUrl} className='profile-image-preview' alt="" />}
         <h1 className="cardTitle" style={{ color: phoneStyles.textColor }}>
           {data.title}
         </h1>

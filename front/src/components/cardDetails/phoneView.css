@@ -18,7 +18,7 @@
 
 .phoneView {
   width: 100%; 
-  height: 490px; 
+  height: 450px; 
   background: white;
   border-radius: 30px;
   border: 7px solid black;
@@ -104,4 +104,11 @@
   }
   .link-preview-real:hover {
     color: rgb(6, 77, 148);
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }

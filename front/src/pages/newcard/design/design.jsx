@@ -12,7 +12,7 @@ const Design = () => {
     async function fetchTemplates() {
       setLoading(true);
       try {
-        const response = await axios.get('/templates'); // Fetch templates from server
+        const response = await axios.get('/templates/templates'); // Fetch templates from server
         setTemplates(response.data);
       } catch (error) {
         console.error('Error fetching templates:', error);

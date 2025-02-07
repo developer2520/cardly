@@ -7,7 +7,9 @@ router.get("/google", passport.authenticate("google", { scope: ["profile", "emai
 router.get(
   "/google/callback",
   passport.authenticate("google", { failureRedirect: "/" }),
-  (req, res) => res.redirect(`${process.env.FRONTEND_URL}/home`)
+  (req, res) => {
+    res.redirect(`${process.env.FRONTEND_URL}/home`);
+  }
 );
 
 router.get("/logout", (req, res) => {
@@ -21,6 +23,11 @@ router.get("/logout", (req, res) => {
 
 router.get("/user", (req, res) => {
   res.json(req.isAuthenticated() ? req.user : { error: "User not authenticated" });
+});
+
+// ✅ Test route to check if auth routes are working
+router.get("/test", (req, res) => {
+  res.send("Auth route is working");
 });
 
 module.exports = router;
