@@ -14,20 +14,22 @@ const Settings = ({ card, setSelectedCard }) => {
     try {
       // Delete the card from the database
       await axios.delete(`/cards/cards/${card._id}`);
-
-      // Delete the image from Supabase storage
-      const imagePath = card.imageUrl.split('/').pop(); // Extract the image file name from the URL
-      const { error } = await supabase.storage
-        .from('images') // Replace 'images' with your Supabase bucket name
-        .remove([imagePath]);
-
-      if (error) {
-        console.error("Error deleting image:", error.message);
-        toast.error(`Failed to delete image ❌ ${error.message}`);
-      } else {
-        toast.success("Image deleted successfully! 🎉");
+  
+      // Delete the image from Supabase storage only if the card has an image
+      if (card.imageUrl) {
+        const imagePath = card.imageUrl.split('/').pop(); // Extract the image file name from the URL
+        const { error } = await supabase.storage
+          .from('images') // Replace 'images' with your Supabase bucket name
+          .remove([imagePath]);
+  
+        if (error) {
+          console.error("Error deleting image:", error.message);
+          toast.error(`Failed to delete image ❌ ${error.message}`);
+        } else {
+          toast.success("Image deleted successfully! 🎉");
+        }
       }
-
+  
       toast.success("Card deleted successfully! 🎉"); // Sonner toast for success
       setSelectedCard(null);
       refetch();
@@ -37,6 +39,7 @@ const Settings = ({ card, setSelectedCard }) => {
       toast.error(`Failed to delete card ❌ ${errorMessage}`); // Sonner toast for error
     }
   };
+  
 
   const showConfirmDialog = () => {
     Swal.fire({

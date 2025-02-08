@@ -13,6 +13,8 @@ export default function Page({ card }) {
   const { refetch } = useContext(OwnCardsContext);
   const { data, setData } = useCard();
   const [selectedImage, setSelectedImage] = useState(null);
+  const [urlStatus, setUrlStatus] = useState(null);
+
 
   useEffect(() => {
     if (data.cardId !== card._id) {
@@ -103,6 +105,7 @@ export default function Page({ card }) {
     }
   };
 
+  
   return (
     <div className="container">
       <div className="cardd">
@@ -117,14 +120,21 @@ export default function Page({ card }) {
             onChange={(e) => updateField('title', e.target.value)}
             className="input profile-input"
           />
-          <img src={data.previewUrl} className="profile-image" alt="Preview" />
+          <img src={data.previewUrl} className="profile-image" alt="" />
           <input
             type="file"
             accept="image/*"
             onChange={handleImageChange}
             className="input"
           />
-     <UrlChecker url={data.url} onUrlChange={(newUrl) => updateField('url', newUrl)} currentUrl={card.url} />
+<UrlChecker 
+  url={data.url} 
+  onUrlChange={(newUrl) => updateField('url', newUrl)}
+  currentUrl={card.url} 
+  onStatusChange={setUrlStatus} // Make sure setUrlStatus exists
+/>
+
+
 
 
 
@@ -162,9 +172,14 @@ export default function Page({ card }) {
             <button className="button button-outline" onClick={addLink}>
               <PlusCircle className="icon white-plus" /> Add Link
             </button>
-            <button className="button button-primary" onClick={handleSave} disabled={isLoading}>
-              <Save className="icon" /> {isLoading ? 'Saving...' : 'Save'}
-            </button>
+            <button 
+  className="button button-primary" 
+  onClick={handleSave} 
+  disabled={isLoading || urlStatus === 'taken'}
+>
+  <Save className="icon" /> {isLoading ? 'Saving...' : 'Save'}
+</button>
+
           </div>
         </div>
       </div>

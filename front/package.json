@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@cheprasov/qrcode": "^0.1.0",
     "@reduxjs/toolkit": "^2.5.0",
     "@supabase/supabase-js": "^2.48.1",
     "axios": "^1.7.9",

@@ -159,7 +159,7 @@ const handleImageSelect = (e) => {
 <UrlChecker url={data.url} onUrlChange={(newUrl) => setData(prev => ({ ...prev, url: newUrl }))} />
 
           <div className="image-upload">
-          {data.previewUrl && <img src={data.previewUrl} alt="Profile Preview" className="profile-image" />}
+          {data.previewUrl && <img src={data.previewUrl} alt="" className="profile-image" />}
 
             <input
   type="file"

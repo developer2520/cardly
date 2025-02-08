@@ -5,14 +5,22 @@
     
     width: 100%;
   }
-  
- 
+  .input-url {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+    resize: none;
+    outline: none;
+  }
   /* Status colors */
-  .input.available {
+  .input-url.available {
     border-color: #22c55e;
   }
   
-  .input.taken {
+  .input-url.taken {
     border-color: #ef4444;
   }
   

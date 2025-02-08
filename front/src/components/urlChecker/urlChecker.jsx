@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Loader, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
-import './urlChecker.css'; // Import the styles
+import './urlChecker.css'; 
 
-const UrlChecker = ({ url, onUrlChange, currentUrl }) => {
+const UrlChecker = ({ url, onUrlChange, currentUrl, onStatusChange }) => {
   const [checking, setChecking] = useState(false);
   const [status, setStatus] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
@@ -12,7 +12,6 @@ const UrlChecker = ({ url, onUrlChange, currentUrl }) => {
   useEffect(() => {
     if (!initialized && currentUrl) {
       onUrlChange(currentUrl.trim().toLowerCase());
-      setStatus('available');
       setInitialized(true);
     }
   }, [currentUrl, onUrlChange, initialized]);
@@ -30,6 +29,7 @@ const UrlChecker = ({ url, onUrlChange, currentUrl }) => {
     if (!url) {
       setStatus(null);
       setErrorMessage('');
+      onStatusChange?.(null);
       return;
     }
 
@@ -40,6 +40,7 @@ const UrlChecker = ({ url, onUrlChange, currentUrl }) => {
     if (validationError) {
       setStatus('invalid');
       setErrorMessage(validationError);
+      onStatusChange?.('invalid');
       return;
     }
 
@@ -47,23 +48,38 @@ const UrlChecker = ({ url, onUrlChange, currentUrl }) => {
 
     if (normalizedUrl === normalizedCurrentUrl) {
       setStatus('available');
+      onStatusChange?.('available');
       return;
     }
+
+    let isMounted = true; // To prevent state updates if component unmounts
 
     const checkAvailability = async () => {
       setChecking(true);
       try {
         const response = await axios.get(`/cards/check-url-availability?url=${normalizedUrl}`);
-        setStatus(response.data.available ? 'available' : 'taken');
+        if (isMounted) {
+          const newStatus = response.data.available ? 'available' : 'taken';
+          setStatus(newStatus);
+          onStatusChange?.(newStatus);
+        }
       } catch (error) {
-        setStatus('error');
+        if (isMounted) {
+          setStatus('error');
+          onStatusChange?.('error');
+        }
       } finally {
-        setChecking(false);
+        if (isMounted) setChecking(false);
       }
     };
 
-    checkAvailability();
-  }, [url]);
+    const delay = setTimeout(() => checkAvailability(), 500); // Debounce API calls
+
+    return () => {
+      clearTimeout(delay);
+      isMounted = false; // Cleanup function to prevent state updates
+    };
+  }, [url, currentUrl, onStatusChange]);
 
   return (
     <div className="url-input-container">
@@ -72,7 +88,7 @@ const UrlChecker = ({ url, onUrlChange, currentUrl }) => {
         placeholder="Choose your URL"
         value={url}
         onChange={(e) => onUrlChange(e.target.value)}
-        className={`input ${status}`}
+        className={`input-url ${status}`}
       />
       <div className="icon-container">
         {checking ? (
@@ -85,9 +101,8 @@ const UrlChecker = ({ url, onUrlChange, currentUrl }) => {
           <AlertCircle className="icon warning" />
         ) : null}
       </div>
-      {errorMessage && <p className="error-text alert-eror error-alert">{errorMessage}</p>}
+      {errorMessage && <p className="error-text alert-error error-alert">{errorMessage}</p>}
     </div>
-    
   );
 };
 
