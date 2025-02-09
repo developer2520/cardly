@@ -1,7 +1,8 @@
 import React, { createContext } from 'react';
 import { FaTelegram,FaPatreon,FaMedium, FaVk,FaSignalMessenger,FaThreads, FaSquareOdnoklassniki, FaXTwitter } from "react-icons/fa6";
 import { FaYoutube,FaLinkedinIn,FaDribbble, FaSnapchatGhost, FaGithub, FaFacebookMessenger, FaDiscord, FaTwitter, FaTwitch,FaStrava,FaProductHunt,FaBehance,FaReddit,FaFigma,FaSteam, FaInstagram, FaWhatsapp, FaFacebook, FaTiktok, FaSpotify, FaGlobe, FaPinterest } from 'react-icons/fa';
-import { SiBuymeacoffee } from "react-icons/si";
+import { SiBuymeacoffee, SiLeetcode } from "react-icons/si";
+
 
 // Create the IconContext
 export const IconContext = createContext();
@@ -38,6 +39,8 @@ export const IconProvider = ({ children }) => {
         reddit: { domain: 'reddit.com', icon: <FaReddit className="link-icon-new-card" /> },
         medium: { domain: 'medium.com', icon: <FaMedium className="link-icon-new-card" /> },
         behance: { domain: 'behance.com', icon: <FaBehance className="link-icon-new-card" /> },
+        leetcode: { domain: 'leetcode.com', icon: <SiLeetcode className="link-icon-new-card" /> },
+        
     };
 
     return (

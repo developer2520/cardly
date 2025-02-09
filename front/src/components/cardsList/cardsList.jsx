@@ -14,7 +14,10 @@ export default function CardList({ onCardSelect, onCreateNewCard, selectedCard }
       </div>
     );
   }
-
+  const getFirstLetter = (text) => {
+    if (!text || typeof text !== "string") return null;
+    return text[0];
+  };
   return (
     <div className="cardlist">
       {ownCards.length === 0 ? (
@@ -33,11 +36,16 @@ export default function CardList({ onCardSelect, onCreateNewCard, selectedCard }
             className={`card ${selectedCard && selectedCard._id === card._id ? 'active' : ''}`}
             onClick={() => onCardSelect(card)} // Pass selected card on click
           >
+           {card.imageUrl ? <img src={card.imageUrl} className="cardlist-card-pfp" alt="" /> : <div className='no-pfp-letter'>{getFirstLetter(`${card.title}`)}</div> }
+
+            <div className="cardlist-card-da">
             <h3>{card.title}</h3>
             <p>@{card.url}</p>
             <a href={card.link} target="_blank" rel="noopener noreferrer">
               {card.link}
             </a>
+            </div>
+            
           </div>
         ))
       )}
