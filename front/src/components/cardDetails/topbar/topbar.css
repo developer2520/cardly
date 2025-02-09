@@ -6,7 +6,7 @@ align-items: stretch;
   
 }
 
-@media (max-width: 800px) {
+@media (max-width: 1000px) {
     .back-to-cardlist {
         display: block;
         display: flex;

@@ -33,7 +33,7 @@ body {
   flex-shrink: 0; /* Prevent shrinking */
 }
 
-@media (max-width: 800px) {
+@media (max-width: 1000px) {
   .cardlist {
     width: 100%;
   }
