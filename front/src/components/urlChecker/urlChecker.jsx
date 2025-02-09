@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Loader, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
+import { Loader, XCircle, AlertCircle } from 'lucide-react';
+import { FaCheckCircle } from "react-icons/fa";
+import { GoXCircleFill } from "react-icons/go";
+import { RiLoader4Fill } from "react-icons/ri";
 import './urlChecker.css'; 
 
 const UrlChecker = ({ url, onUrlChange, currentUrl, onStatusChange }) => {
@@ -92,11 +95,11 @@ const UrlChecker = ({ url, onUrlChange, currentUrl, onStatusChange }) => {
       />
       <div className="icon-container">
         {checking ? (
-          <Loader className="icon loading" />
+          <RiLoader4Fill className="icon loading" />
         ) : status === 'available' ? (
-          <CheckCircle className="icon success" />
+          <FaCheckCircle className="icon success" />
         ) : status === 'taken' ? (
-          <XCircle className="icon error" />
+          <GoXCircleFill className="icon error" />
         ) : status === 'invalid' ? (
           <AlertCircle className="icon warning" />
         ) : null}
