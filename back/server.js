@@ -19,7 +19,7 @@ connectDB();
 app.use(express.json());
 app.set('trust proxy', 1);
 app.use(cors({
-  origin: process.env.NODE_ENV === 'production' ? 'https://cardly-seven.vercel.app' : 'http://localhost:5173',
+  origin: process.env.NODE_ENV === 'production' ? 'https://www.cardly.uz' : 'http://localhost:5173',
   credentials: true,
 }));
 
