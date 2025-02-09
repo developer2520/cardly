@@ -33,7 +33,7 @@ body {
   flex-shrink: 0; /* Prevent shrinking */
 }
 
-@media (max-width: 800px) {
+@media (max-width: 1000px) {
   .cardlist {
     width: 100%;
   }
@@ -45,12 +45,14 @@ body {
 }
 .card {
   background: rgba(204, 204, 204, 0.041);
-  
+  display: flex;
+gap: 15px;
   padding: 10px;
+  height: 70px;
   cursor: pointer;
   transition: background-color 0.2s;
-
-  min-height: 70px; /* Use min-height to allow flexibility */
+justify-content: start;
+  min-height: 50px; /* Use min-height to allow flexibility */
   /* padding: 0 9rem; */
   border-bottom: 1px solid rgba(0, 0, 0, 0.13);
   /* border-radius: 6px; */
@@ -208,4 +210,23 @@ body {
 .card.active {
   background-color: rgba(0, 0, 0, 0.13);
   color: black;
+}
+
+.cardlist-card-pfp {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.no-pfp-letter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  color: white;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: dodgerblue;
 }

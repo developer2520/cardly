@@ -26,7 +26,7 @@
   transform: translateY(0); /* Slide to original position */
 }
 
-@media (max-width: 800px) {
+@media (max-width: 1000px) {
   .detailsContainer {
     flex-direction: column; /* Stack elements vertically on smaller screens */
     height: auto; /* Adjust height for stacked layout */
