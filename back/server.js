@@ -21,6 +21,8 @@ app.set('trust proxy', 1);
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' ? 'https://www.cardly.uz' : 'http://localhost:5173',
   credentials: true,
+
+  
 }));
 
 app.use(session);
