@@ -52,6 +52,7 @@
   
   .error {
     color: #ef4444;
+    
   }
   
   .loading {
@@ -68,4 +69,12 @@
       transform: rotate(360deg);
     }
   }
-  
+  .icon.warning {
+    transform: translateY(-120%)
+  }
+
+  .error-text {
+    margin-top: 10px;
+    padding: 10px;
+    font-weight: 500;
+  }
