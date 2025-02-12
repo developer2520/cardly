@@ -20,6 +20,13 @@ const Sidebar = ({ onCreateNewCard }) => {
     if (!user) fetchUser(); // Fetch user only if it is null
   }, [user]);
 
+  // Redirect to "/" if not authenticated
+  useEffect(() => {
+    if (!user && userError === "User not authenticated") {
+      navigate("/");
+    }
+  }, [user, userError, navigate]);
+
   const handleNewCardClick = () => {
     if (ownCards.length >= 5) {
       setIsLimitReached(true);
