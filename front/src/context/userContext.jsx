@@ -1,11 +1,13 @@
 import React, { createContext, useState } from "react";
 import axios from "axios";
 
+
 // Create the UserContext
 export const UserContext = createContext();
 
 // UserProvider component
 export const UserProvider = ({ children }) => {
+   
     const [state, setState] = useState({
         user: null,
         loading: false,
@@ -24,6 +26,7 @@ export const UserProvider = ({ children }) => {
                 loading: false,
                 error: error.response ? error.response.data.error : error.message,
             });
+
         }
     };
 

@@ -17,7 +17,7 @@ export default function Account() {
 
   const handleLogout = async () => {
     try {
-      const response = await axios.get("/logout", { withCredentials: true });
+      const response = await axios.get("/auth/logout", { withCredentials: true });
 
       if (response.status === 200) {
         navigate("/");

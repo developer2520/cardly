@@ -44,6 +44,26 @@ export default function Card() {
     }
   }, [data]);
 
+
+
+  useEffect(() => {
+    if (data?.card?.imageUrl) {
+      const updateFavicon = (url) => {
+        let link = document.querySelector("link[rel~='icon']");
+        
+        if (!link) {
+          link = document.createElement("link");
+          link.rel = "icon";
+          link.type = "image/png";
+          document.head.appendChild(link);
+        }
+
+        link.href = `${url}?v=${new Date().getTime()}`; // Prevent caching issues
+      };
+
+      updateFavicon(data.card.imageUrl);
+    }
+  }, [data]);
   useEffect(() => {
     function handleClickOutside(event) {
       if (shareRef.current && !shareRef.current.contains(event.target)) {

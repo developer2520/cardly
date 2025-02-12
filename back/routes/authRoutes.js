@@ -22,8 +22,12 @@ router.get("/logout", (req, res) => {
 });
 
 router.get("/user", (req, res) => {
-  res.json(req.isAuthenticated() ? req.user : { error: "User not authenticated" });
+  if (!req.isAuthenticated()) {
+    return res.status(401).json({ error: "User not authenticated" });
+  }
+  res.json(req.user);
 });
+
 
 // ✅ Test route to check if auth routes are working
 router.get("/test", (req, res) => {

@@ -1,7 +1,7 @@
 * {
   margin: 0;
   padding: 0;
-  box-sizing: content-box; /* Border-box is preferred for more predictable sizing */
+  box-sizing: border-box; /* Border-box is preferred for more predictable sizing */
 }
 
 body {

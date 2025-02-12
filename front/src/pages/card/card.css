@@ -12,15 +12,16 @@
 }
 
 .cardPage {
+
   width: 100%; /* Full viewport width */
   min-height: 100vh; /* Full viewport height */
   display: flex;
  /* Center horizontally */
-  align-items: flex-start; /* Start from the top (no vertical centering) */
+  align-items: center; /* Start from the top (no vertical centering) */
   flex-direction: column;
   background-color: #f5f5f5; /* Default background color */
   color: #333; /* Default text color */
-  
+  justify-content: start;
   position: relative;
   box-sizing: border-box;
   margin: 0 ; /* Remove default margin */
@@ -42,7 +43,7 @@
     height: 100px;
     border-radius: 50%; /* Makes it circular */
     object-fit: cover; /* Ensures it covers the area without distortion */
-  
+  margin-top: 3rem;
   }
   
   /* Bio text styling */
@@ -146,17 +147,6 @@
 }
 
 /* General Card Styling */
-.cardPage {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem;
-  padding-bottom: 2rem;
-  position: relative;
-  background-color: #fff;
-  color: #333;
-}
 
 .cardTitle {
   font-size: 2rem;
@@ -250,4 +240,5 @@
 .footer-link:hover {
   text-decoration: underline;
   opacity: 0.9;
+  box-sizing: border-box;
 }
